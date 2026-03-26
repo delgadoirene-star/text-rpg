@@ -110,7 +110,7 @@ Off-tank with high damage. Fights on the front line but focuses on punishing ene
 - **Personality:** Cynical, sarcastic, guarded. Fiercely loyal to those who earn his trust. Would die for his found family.
 
 ### Backstory
-Grew up in the Sump's slums, part of a thieves' guild that became his only family. He is being extorted by a corrupt Guard Captain who threatens to destroy the guild. He wants to buy or steal his guild's freedom.
+Grew up in the Sump's slums, part of a thieves' guild that became his only family. He is being extorted by a corrupt Guard Captain who threatens to destroy the guild unless he works for him. He wants to buy or steal his guild's freedom.
 
 ### Recruitment
 - **Location:** Residential Area (`residential_area`) at night
@@ -121,8 +121,8 @@ Grew up in the Sump's slums, part of a thieves' guild that became his only famil
 ### Quest Subversion: "The Gilded Cage"
 Help him save his guild and truly improve the livelihood of the Sump's underbelly.
 
-- **Good Path:** The crime lord offers a deal: "I'll let the guild go, but you take their place." Bram chooses his freedom over his found family's... no wait. He stays. He finds a real solution that helps everyone, not a temporary fix. He unlocks the **Spymaster** class.
-- **Bad Path:** The player forsakes him and his guild. Bram tries to kill you in retaliation, his rage a kamikaze attack born from losing his only solace. He becomes the cold **Contractor**, doing anything for gold because loyalty is dead.
+- **Good Path:** The Guard Captain offers a deal: "I'll let the guild go, but you take their place." Bram chooses his freedom over his found family's... no wait. He stays. He finds a real solution that helps everyone, not a temporary fix. He unlocks the **Spymaster** class.
+- **Bad Path:** The player forsakes him and his guild. Bram tries to kill you in retaliation, rage and grief from losing his only solace, he loses faith in the fellow. He becomes the cold **Contractor**, doing anything for gold because loyalty and freedom are dead.
 
 ### Combat Role
 Burst melee DPS with high evasion. Excels at backstabbing and applying bleed/poison. Fast, fragile, devastating from stealth.
