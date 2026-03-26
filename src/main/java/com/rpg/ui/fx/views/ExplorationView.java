@@ -2,6 +2,7 @@ package com.rpg.ui.fx.views;
 
 import com.rpg.models.Element;
 import com.rpg.models.Enemy;
+import com.rpg.models.EnemyFactory;
 import com.rpg.models.Stats;
 import com.rpg.ui.fx.GameController;
 import com.rpg.ui.fx.components.TooltipFactory;
@@ -231,50 +232,14 @@ public class ExplorationView {
     private List<Enemy> generateEnemies(Location location) {
         // Generate 1-2 enemies based on location
         int numEnemies = 1 + random.nextInt(2); // 1 or 2 enemies
-        List<Enemy> enemies = new java.util.ArrayList<>();
         
         // Get player level for scaling (if available)
         int playerLevel = controller.getState() != null && controller.getState().getPlayer() != null 
             ? controller.getState().getPlayer().getLevel() 
             : 1;
         
-        // Create simple enemies
-        for (int i = 0; i < numEnemies; i++) {
-            // Generate enemy with level close to player
-            int enemyLevel = Math.max(1, playerLevel + random.nextInt(3) - 1);
-            
-            // Random enemy types
-            String[] enemyNames = {"Goblin", "Bandit", "Wolf", "Skeleton", "Slime"};
-            String name = enemyNames[random.nextInt(enemyNames.length)];
-            
-            // Random elements
-            Element[] elements = {Element.FIRE, Element.WATER, Element.EARTH, Element.WIND, Element.LIGHT, Element.DARK};
-            Element element = elements[random.nextInt(elements.length)];
-            
-            // Calculate stats based on level
-            int baseStatValue = 8 + enemyLevel * 2;
-            Stats stats = new Stats(
-                baseStatValue,     // STR
-                baseStatValue,     // DEX
-                baseStatValue,     // VIT
-                baseStatValue - 2, // INT
-                baseStatValue - 2, // WIS
-                baseStatValue - 1  // LUK
-            );
-            
-            Enemy enemy = new Enemy(
-                "enemy_" + name.toLowerCase() + "_" + i,
-                name,
-                enemyLevel,
-                stats,
-                element,
-                Enemy.AIPattern.AGGRESSIVE
-            );
-            
-            enemies.add(enemy);
-        }
-        
-        return enemies;
+        // Generate enemies using the factory
+        return EnemyFactory.generateEnemies(location.getId().toLowerCase().replace(" ", "_"), playerLevel, numEnemies);
     }
     
     private String getNPCDisplayName(String npcId) {
