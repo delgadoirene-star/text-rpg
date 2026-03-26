@@ -164,13 +164,13 @@ Two independent axes track the player's moral choices:
 |------------|------|---------------|-----------------|
 | **Legionnaire** | Balanced Tank/DPS | STR, VIT | Shield wall, formation |
 | **Berserker** | Risk/Reward DPS | STR, VIT | Rage meter, pain = power |
-| **Weaponmaster** | Versatile DPS | STR, DEX | Weapon switching mid-combat |
+| **Guardian** | Pure Tank | VIT, STR | Taunt, damage mitigation, shields |
 | **Tactician** | Support/Control | INT, STR | Command allies, exploit weakness |
 
 **Advanced Classes (Level 15+):**
 - Legionnaire -> **Centurion** (ally damage reduction) OR **Praetorian** (bodyguard)
 - Berserker -> **Ravager** (AoE destruction) OR **Bloodrager** (lifesteal frenzy)
-- Weaponmaster -> **Blademaster** (perfect technique) OR **Arsenal** (all weapons)
+- Guardian -> **Bulwark** (party-wide shields) OR **Warlord** (offensive tanking)
 - Tactician -> **General** (battlefield control) OR **Veteran** (counter everything)
 
 ---
@@ -183,13 +183,13 @@ Two independent axes track the player's moral choices:
 | **Templar** | Holy Tank | STR, WIS | Holy damage, undead slayer |
 | **Cleric** | Healer | WIS, VIT | Restoration, cleansing |
 | **Oracle** | Utility/Support | WIS, LUK | Prophecy, foresight |
-| **Mendicant** | Melee Support | STR, WIS | Martial arts, ki abilities |
+| **Monk** | Balanced Hybrid | DEX, WIS | Ki abilities, inner balance |
 
 **Advanced Classes (Level 15+):**
 - Templar -> **Crusader** (holy devastation) OR **Justicar** (execute/spare)
 - Cleric -> **High Priest** (mass healing) OR **Exorcist** (banish/purify)
 - Oracle -> **Seer** (see all futures) OR **Fateweaver** (alter probability)
-- Mendicant -> **Enlightened** (transcend limits) OR **Fist of Heaven** (divine strikes)
+- Monk -> **Enlightened** (transcend limits) OR **Void Walker** (embrace emptiness)
 
 ---
 
@@ -263,7 +263,7 @@ Each companion has two potential transformation classes based on the player's in
 
 | Companion | Good Path Class | Evil Path Class |
 |-----------|-----------------|-----------------|
-| **Isolde** | Redeemer | Iron Judge |
+| **Isolde** | Redeemer | Zealot Inquisitor |
 | **Bram** | Spymaster | Contractor |
 | **Sybilla** | True Healer | Blood Alchemist |
 | **Garrick** | Shield-Captain | Reaver |
@@ -382,6 +382,13 @@ Each companion has two potential transformation classes based on the player's in
 ## Summary
 
 **24 Base Classes** (4 per background, no overlaps)
+- Noble Born: Cavalier, Courtier, Duelist, Vanguard
+- Street Urchin: Cutthroat, Grifter, Brawler, Prowler
+- Scholar: Evoker, Enchanter, Naturalist, Chronicler
+- Outlander: Warden, Predator, Wildspeaker, Stormcaller
+- Soldier: Legionnaire, Berserker, Guardian, Tactician
+- Acolyte: Templar, Cleric, Oracle, Monk
+
 **48 Advanced Classes** (2 per base class)
 **16 Event-Based Secret Classes** (Dark, Grey, Light, Discovery paths)
 **22 Companion Transformation Classes** (Good/Evil paths for 11 companions)
