@@ -77,8 +77,20 @@ Daughter of a disgraced Duke who was executed for "treason" - he actually stood 
 ### Quest Subversion: "The Sunken Blade"
 She must confront the truth about her father's death. He wasn't a traitor - he died protecting the innocent.
 
-- **Good Path:** Let go of the sword and the oppression it represents. Like her father, choose compassion over rigid law. She unlocks the **Redeemer** class.
-- **Bad Path:** Double down, condemn her father, and follow the path of the zealots who killed him. She becomes the **Zealot Inquisitor**, an executioner without mercy.
+- **Good Path:** Let go of the sword and the oppression it represents. Like her father, choose compassion over rigid law. She unlocks the **Redeemer** class - a balanced tank who protects AND heals.
+- **Bad Path:** Double down, condemn her father, and follow the path of the zealots who killed him. She becomes the **Zealot Inquisitor**, an executioner without mercy. **Her role shifts from Off-tank to pure reckless DPS.**
+
+### Transformation: Zealot Inquisitor (Bad Path)
+When Isolde transforms, her combat identity flips completely:
+
+| Aspect | Vanguard (Base) | Zealot Inquisitor (Transformed) |
+|--------|-----------------|----------------------------------|
+| Role | Off-tank DPS | Pure Reckless DPS |
+| Unyielding Law | +15% damage resistance at full HP | **Executioner's Right**: +15% damage dealt, but takes +15% more damage |
+| Playstyle | Balanced aggression | Glass cannon - kill before you're killed |
+| Focus | Surviving to punish | Punishing before dying |
+
+**Passive Flip:** Unyielding Law becomes **Executioner's Right**. She no longer cares about protecting herself - only punishing the guilty. The damage resistance is removed; instead, she gains bonus damage output at the cost of taking extra damage.
 
 ### Combat Role
 Off-tank with high damage. Fights on the front line but focuses on punishing enemies rather than soaking damage. Strong against single targets, weak against groups.
@@ -165,8 +177,24 @@ A brilliant researcher from the Royal Academy. She is investigating a magical pl
 ### Quest Subversion: "Echoes of the Arcane"
 Find the cure for the plague.
 
-- **Good Path:** The harmless cure exists but has a massive failure rate and takes decades. People will keep dying in the short term. She chooses this anyway because her Honor demands she not commit a foul act. She unlocks the **True Healer** class - mastery of pure restoration magic.
+- **Good Path:** The harmless cure exists but has a massive failure rate and takes decades. People will keep dying in the short term. She chooses this anyway because her Honor demands she not commit a foul act. She unlocks the **True Healer** class - mastery of pure restoration magic. Healing Light becomes **Rejuvenation**: AoE heal with no resource cost, just Focus.
 - **Bad Path:** The instant, guaranteed cure requires sacrificing a holy being or draining its blood. Her Saint-level Compassion screams to save everyone NOW. She takes the bloody route. She unlocks the **Blood Alchemist** class - healing through forbidden sacrifice.
+
+### Transformation: Blood Alchemist (Bad Path)
+When Sybilla transforms, her healing becomes parasitic and morally gray:
+
+| Aspect | Chronicler (Base) | Blood Alchemist (Transformed) |
+|--------|-------------------|-------------------------------|
+| Healing Source | Focus/Mana | **Dealing or receiving damage** |
+| Healing Light | Standard heal | **Transfusion** (replaces Healing Light) |
+| Playstyle | Safe, consistent | Dirty, sacrificial |
+
+**Transfusion Mechanic:** Sybilla can no longer generate healing from mana alone. Her healing spell, **Transfusion**, now requires dealing damage to an enemy or draining an ally's HP to heal the party. She must hurt to heal. The more damage she deals, the more she can restore - but the party will feel the consequences.
+
+**Specifically:**
+- Transfusion heals the party equal to 50% of damage dealt by Sybilla this turn
+- If she doesn't deal damage, she can drain an ally's max HP (permanent until rest) to heal others
+- The Blood Alchemist path makes her healing powerful but morally repugnant to use
 
 ### Combat Role
 Ranged magic DPS with healing support. Can deal elemental damage from the back line while keeping the party alive. Weak in melee.
@@ -256,6 +284,27 @@ The quest to heal a corrupted ancient tree reveals a devastating truth.
 
 - **Good Path:** Through trial and honest love for nature, the tree is healed and nature rebalanced. She also faces her prejudices - accepting that other sentient beings are part of nature too, not parasites. She unlocks the **Guardian of Growth** class.
 - **Bad Path:** The virus isn't the tree. The forest itself, her clan, and all the creatures are the liches/fungi of this tree, choking it of life. A reality-shattering realization. She turns her ire against her own, becoming **Blight-Touched**.
+
+### Transformation: Guardian of Growth (Good Path)
+When Oona transforms to the good path, her summons evolve:
+
+| Aspect | Wildspeaker (Base) | Guardian of Growth (Transformed) |
+|--------|-------------------|----------------------------------|
+| Summon Type | Fungi/Spores | **Beasts/Elementals** |
+| Healing | Regeneration | **Full heal + nature empowerment** |
+| Playstyle | Defensive control | Aggressive nature magic |
+
+**Summons Upgrade:** Her Summon Spore Guardian changes to **Summon Nature's Wrath** - instead of fungi that taunt and poison, she summons powerful beasts or elementals that deal damage and buff allies. Her Entangling Roots becomes **Thornwall**: a permanent barrier until destroyed.
+
+### Transformation: Blight-Touched (Bad Path)
+When Oona transforms to the bad path, her nature magic becomes parasitic:
+
+| Aspect | Wildspeaker (Base) | Blight-Touched (Transformed) |
+|--------|-------------------|------------------------------|
+| Nature's Blessing | Regen over time | **Parasitic Blessing** |
+| Playstyle | Supportive healing | Poisonous support |
+
+**Parasitic Blessing Mechanic:** Her Nature's Blessing ability is replaced with **Parasitic Blessing**. It still heals the party over time, but it drains the player's max HP for the duration of the fight. The party gains healing, but at a permanent cost to the player's maximum health pool. The more you rely on her corrupted healing, the weaker the player becomes.
 
 ### Combat Role
 Control/Support. Summons nature creatures, roots enemies, applies crowd control, and provides healing over time. Not a tank - she controls the battlefield from mid-range.
@@ -388,8 +437,31 @@ An ogre bound to a symbiotic tree that gives him bark-like armor. Ostracized for
 ### Quest Subversion: "A Giant's Heart"
 The player's combat choices throughout the game influence his outcome.
 
-- **Good Path:** He becomes chieftain and uses his worldly knowledge to help his tribe thrive and protect itself. He unlocks the **Chieftain** class.
+- **Good Path:** He becomes chieftain and uses his worldly knowledge to help his tribe thrive and protect itself. He unlocks the **Chieftain** class - a tank who also provides party-wide buffs based on what he's learned from the player.
 - **Bad Path:** If the player frequently uses "Cruel" or "Deceitful" dialogue options while Ghor is in the party, he learns that "might makes right." He becomes a **Warlord** who leads his tribe into raids of pillaging and killing.
+
+### Transformation: Warlord (Bad Path) - The Nemesis
+Ghor's bad path is the most punishing transformation in the game. He doesn't just become a boss fight - **he becomes a world threat.**
+
+**If Ghor leaves via the Bad Path:**
+1. He returns to the Choke and rallies his tribe
+2. He begins conquering territories on the WorldMap
+3. Zones you've already cleared may fall to his warband
+4. NPC dialogue changes to reference the "Giant's War"
+5. Shops in conquered zones close or raise prices
+6. New quests appear to resist his conquest
+7. He appears as a recurring raid boss - not just one fight
+
+**Nemesis System Mechanics:**
+| Event | Effect |
+|-------|--------|
+| Ghor leaves party | Warlord event begins |
+| 2-3 zones conquered | Shops close, NPCs flee, new resistance quests |
+| Player defeats warband | Temporary reprieve, but Ghor retreats and returns stronger |
+| Ghor reaches player's current zone | Final confrontation - he's leveled up based on how long he's been active |
+| Player never confronts him | He eventually reaches the Archivist Core - endgame crisis |
+
+**The horror:** The player created this monster. Every cruel dialogue choice, every "might makes right" lesson Ghor heard - it all fed into this. The Warlord Ghor fight is emotional because you taught him everything he knows.
 
 ### Combat Role
 Pure Tank. The immovable wall. Highest HP and defense in the party. Draws aggro, shields allies, and soaks damage. Low damage output.
@@ -408,7 +480,7 @@ Pure Tank. The immovable wall. Highest HP and defense in the party. Draws aggro,
 - **Loyalty 20-30:** He becomes confused, questioning his understanding of you
 - **Loyalty 10-20:** He starts mimicking your cruelty in disturbing ways
 - **Loyalty 0-10:** He leaves, heartbroken, returning to his tribe
-- **Breaking Point + Cruelty Lesson:** If you consistently teach him that "might makes right," he doesn't leave - he transforms into the Warlord path even without completing his personal quest, returning later as a raid boss leading his tribe against you
+- **Breaking Point + Cruelty Lesson:** If you consistently teach him that "might makes right," he doesn't just leave - **he transforms into the Warlord path.** See the Nemesis System mechanics in the Quest Subversion section above. He becomes a world-scale threat that the player must confront.
 
 ---
 
