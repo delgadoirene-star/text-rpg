@@ -4,6 +4,7 @@ import com.rpg.combat.CombatEngine;
 import com.rpg.models.*;
 import com.rpg.systems.AlignmentSystem;
 import com.rpg.systems.FlagManager;
+import com.rpg.systems.PartyDynamics;
 import com.rpg.systems.QuestManager;
 import com.rpg.world.Location;
 import com.rpg.world.WorldMap;
@@ -28,6 +29,7 @@ public class GameState {
     // Systems
     private FlagManager flagManager;
     private QuestManager questManager;
+    private PartyDynamics partyDynamics;
     // Note: AlignmentSystem is owned by Player, not GameState
     // Use getAlignmentSystem() which delegates to player.getAlignment()
     
@@ -45,6 +47,7 @@ public class GameState {
         this.allCompanions = new ArrayList<>();
         this.flagManager = new FlagManager();
         this.questManager = new QuestManager();
+        this.partyDynamics = new PartyDynamics();
         this.companionRegistry = new HashMap<>();
         this.currentDay = 1;
         this.gold = 100; // Starting gold
@@ -166,6 +169,7 @@ public class GameState {
     
     public FlagManager getFlagManager() { return flagManager; }
     public QuestManager getQuestManager() { return questManager; }
+    public PartyDynamics getPartyDynamics() { return partyDynamics; }
     
     /**
      * Get the alignment system - delegates to player's alignment.

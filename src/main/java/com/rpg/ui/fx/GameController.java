@@ -17,6 +17,7 @@ import com.rpg.models.Player;
 import com.rpg.models.Stats;
 import com.rpg.models.Background;
 import com.rpg.systems.AlignmentSystem;
+import com.rpg.systems.PartyDynamics;
 import com.rpg.world.Location;
 import com.rpg.world.WorldMap;
 
@@ -25,7 +26,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -236,6 +239,25 @@ public class GameController {
         for (Enemy e : currentEnemies) {
             combatLog.add("- " + e.getName() + " (Lv." + e.getLevel() + ")");
         }
+        
+        // Calculate and display party dynamics
+        PartyDynamics dynamics = state.getPartyDynamics();
+        List<String> companionIds = new ArrayList<>();
+        Map<String, Integer> loyalties = new HashMap<>();
+        for (com.rpg.models.Character c : state.getCombatParty()) {
+            if (c instanceof Companion comp) {
+                companionIds.add(comp.getId());
+                loyalties.put(comp.getId(), comp.getLoyaltyLevel());
+            }
+        }
+        Map<String, Integer> bonuses = dynamics.calculatePartyBonuses(companionIds, loyalties);
+        for (Map.Entry<String, Integer> entry : bonuses.entrySet()) {
+            if (entry.getValue() != 0) {
+                String sign = entry.getValue() > 0 ? "+" : "";
+                combatLog.add("[Party] " + entry.getKey() + ": " + sign + entry.getValue() + "%");
+            }
+        }
+        
         combatLog.add("Select your action...");
         
         inCombat.set(true);
