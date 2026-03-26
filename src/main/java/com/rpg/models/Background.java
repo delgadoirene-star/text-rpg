@@ -2,52 +2,69 @@ package com.rpg.models;
 
 /**
  * Character backgrounds that determine available base classes
+ * Updated to match CLASSES.md v2
  */
 public enum Background {
     NOBLE_BORN("Noble Born", 
-        "Raised in luxury and trained in noble arts",
-        new String[]{"PALADIN", "KNIGHT", "DUELIST", "COMMANDER"}),
+        "Raised in luxury, trained in martial and courtly arts",
+        new String[]{"CAVALIER", "COURTIER", "DUELIST", "VANGUARD"},
+        new String[]{"Authority", "martial prowess", "leadership"}),
     
     STREET_URCHIN("Street Urchin",
         "Survived on the streets through cunning and agility",
-        new String[]{"ROGUE", "BRAWLER", "TRICKSTER", "SCOUT"}),
+        new String[]{"CUTTHROAT", "GRIFTER", "BRAWLER", "PROWLER"},
+        new String[]{"Survival", "adaptability", "cunning"}),
     
     SCHOLAR("Scholar",
         "Devoted years to studying arcane knowledge",
-        new String[]{"MAGE", "SAGE", "ALCHEMIST", "ARCANIST"}),
+        new String[]{"EVOKER", "ENCHANTER", "NATURALIST", "CHRONICLER"},
+        new String[]{"Knowledge", "magical mastery", "discovery"}),
     
     OUTLANDER("Outlander",
         "Lived beyond civilization, connected to nature",
-        new String[]{"RANGER", "DRUID", "BEASTMASTER", "SHAMAN"}),
+        new String[]{"WARDEN", "PREDATOR", "WILDSPEAKER", "STORMCALLER"},
+        new String[]{"Nature", "primal power", "survival"}),
     
     SOLDIER("Soldier",
         "Trained in martial discipline and warfare",
-        new String[]{"WARRIOR", "BERSERKER", "GUARDIAN", "TACTICIAN"}),
+        new String[]{"LEGIONNAIRE", "BERSERKER", "WEAPONMASTER", "TACTICIAN"},
+        new String[]{"Discipline", "strength", "warfare"}),
     
     ACOLYTE("Acolyte",
         "Raised in service to the divine",
-        new String[]{"CLERIC", "MONK", "PRIEST", "INQUISITOR"});
+        new String[]{"TEMPLAR", "CLERIC", "ORACLE", "MENDICANT"},
+        new String[]{"Faith", "divine power", "spiritual balance"});
     
     private final String displayName;
     private final String description;
-    private final String[] availableClasses;
+    private final String[] baseClasses;
+    private final String[] philosophies;
     
-    Background(String displayName, String description, String[] availableClasses) {
+    Background(String displayName, String description, String[] baseClasses, String[] philosophies) {
         this.displayName = displayName;
         this.description = description;
-        this.availableClasses = availableClasses;
+        this.baseClasses = baseClasses;
+        this.philosophies = philosophies;
     }
     
     public String getDisplayName() { return displayName; }
     public String getDescription() { return description; }
-    public String[] getAvailableClasses() { return availableClasses; }
+    public String[] getAvailableClasses() { return baseClasses; }
+    public String[] getPhilosophies() { return philosophies; }
     
+    /**
+     * Check if this background can access a class by ID
+     */
     public boolean canAccessClass(String classId) {
-        for (String availableClass : availableClasses) {
-            if (availableClass.equals(classId)) {
+        // Check base classes
+        for (String baseClass : baseClasses) {
+            if (baseClass.equalsIgnoreCase(classId)) {
                 return true;
             }
         }
+        
+        // Advanced classes are accessible if their prerequisite base class is accessible
+        // This would need to be checked against a class registry in full implementation
         return false;
     }
     
@@ -55,6 +72,42 @@ public enum Background {
      * Check if this background can access a GameClass
      */
     public boolean canAccess(GameClass gameClass) {
-        return canAccessClass(gameClass.getId());
+        if (gameClass == null) return false;
+        
+        // Base classes: check directly
+        if (gameClass.getTier() == GameClass.ClassTier.BASE) {
+            return canAccessClass(gameClass.getId());
+        }
+        
+        // Advanced/Secret classes: check prerequisite chain
+        String prereq = gameClass.getPrerequisiteClass();
+        if (prereq != null) {
+            return canAccessClass(prereq);
+        }
+        
+        // Event-based secret classes may have different requirements
+        // These are typically unlocked via FlagManager, not background
+        return false;
+    }
+    
+    /**
+     * Get detailed background info
+     */
+    public String getDetailedInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("╔═══════════════════════════════════════════════════════════════╗\n");
+        sb.append(String.format("║  %s\n", displayName));
+        sb.append("╠═══════════════════════════════════════════════════════════════╣\n");
+        sb.append(String.format("║  %s\n", description));
+        sb.append("╠═══════════════════════════════════════════════════════════════╣\n");
+        sb.append("║  Philosophy: ");
+        sb.append(String.join(", ", philosophies)).append("\n");
+        sb.append("╠═══════════════════════════════════════════════════════════════╣\n");
+        sb.append("║  Available Classes:\n");
+        for (String className : baseClasses) {
+            sb.append(String.format("║    - %s\n", className));
+        }
+        sb.append("╚═══════════════════════════════════════════════════════════════╝");
+        return sb.toString();
     }
 }

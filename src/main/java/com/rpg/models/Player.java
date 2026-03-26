@@ -2,6 +2,8 @@ package com.rpg.models;
 
 import com.rpg.combat.FocusMeter;
 import com.rpg.combat.Ability;
+import com.rpg.combat.CombatModifiers;
+import com.rpg.systems.AlignmentSystem;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +15,7 @@ public class Player extends Character {
     private Background background;
     private GameClass currentClass;
     private FocusMeter focusMeter;
+    private AlignmentSystem alignment;
     
     // Equipment slots
     private Map<EquipSlot, Equipment> equipment;
@@ -33,6 +36,7 @@ public class Player extends Character {
         this.background = background;
         this.currentClass = startingClass;
         this.focusMeter = new FocusMeter();
+        this.alignment = new AlignmentSystem();
         this.equipment = new HashMap<>();
         this.experience = 0;
         this.experienceToNextLevel = calculateExpForNextLevel(1);
@@ -242,6 +246,29 @@ public class Player extends Character {
         return background;
     }
     
+    // ==================== Alignment System ====================
+    
+    /**
+     * Get the player's alignment system
+     */
+    public AlignmentSystem getAlignment() {
+        return alignment;
+    }
+    
+    /**
+     * Make an alignment-affecting choice
+     */
+    public void makeAlignmentChoice(int honorChange, int compassionChange, String description) {
+        alignment.makeChoice(honorChange, compassionChange, description);
+    }
+    
+    /**
+     * Get combat modifiers based on alignment
+     */
+    public CombatModifiers.ModifierResult getAlignmentCombatModifiers() {
+        return CombatModifiers.getAlignmentModifiers(alignment);
+    }
+    
     // ==================== Experience & Leveling ====================
     
     /**
@@ -384,6 +411,11 @@ public class Player extends Character {
             getCurrentHP(), getMaxHP(), focusMeter.getCurrentFocus(), getElementAffinity()));
         sb.append(String.format("║  EXP: %d/%d (%.1f%%)\n", 
             experience, experienceToNextLevel, getExpProgressPercent()));
+        sb.append("╠═══════════════════════════════════════════════════════════════╣\n");
+        sb.append(String.format("║  ALIGNMENT: %s / %s\n",
+            alignment.getHonorTier().getName(), alignment.getCompassionTier().getName()));
+        sb.append(String.format("║    Honor: %+d | Compassion: %+d\n",
+            alignment.getHonor(), alignment.getCompassion()));
         sb.append("╠═══════════════════════════════════════════════════════════════╣\n");
         sb.append("║  STATS:\n");
         sb.append(String.format("║    STR: %d | DEX: %d | VIT: %d\n",

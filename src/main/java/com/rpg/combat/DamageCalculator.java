@@ -2,11 +2,12 @@ package com.rpg.combat;
 
 import com.rpg.models.Character;
 import com.rpg.models.Element;
+import com.rpg.models.Player;
 
 import java.util.Random;
 
 /**
- * Calculates damage with all modifiers
+ * Calculates damage with all modifiers including alignment bonuses
  */
 public class DamageCalculator {
     private static final Random random = new Random();
@@ -22,9 +23,31 @@ public class DamageCalculator {
     public DamageResult calculateDamage(Character attacker, Character defender, 
                                        double basePower, DamageType damageType, 
                                        Element element) {
+        return calculateDamage(attacker, defender, basePower, damageType, element, null);
+    }
+    
+    /**
+     * Calculate damage with combat modifiers (alignment, class bonuses, etc.)
+     */
+    public DamageResult calculateDamage(Character attacker, Character defender, 
+                                       double basePower, DamageType damageType, 
+                                       Element element, CombatModifiers.ModifierResult modifiers) {
+        
+        // Get modifiers from attacker if they're a Player and no modifiers provided
+        if (modifiers == null && attacker instanceof Player) {
+            modifiers = ((Player) attacker).getAlignmentCombatModifiers();
+        }
+        
+        // Step 0: Check for execute (instant kill for Tyrant path)
+        if (modifiers != null && CombatModifiers.shouldExecute(defender, modifiers)) {
+            defender.takeDamage(defender.getCurrentHP()); // Kill them
+            return new DamageResult(defender.getMaxHP(), false, false, false, 
+                "EXECUTED! (Tyrant's Judgment)");
+        }
         
         // Step 1: Check if attack hits
-        if (!rollHit(attacker, defender)) {
+        double accuracyBonus = modifiers != null ? modifiers.accuracyBonus : 0;
+        if (!rollHit(attacker, defender, accuracyBonus)) {
             return new DamageResult(0, false, false, true, "MISS!");
         }
         
@@ -41,22 +64,31 @@ public class DamageCalculator {
         damage *= elementMultiplier;
         
         // Step 5: Check for critical hit
-        boolean isCrit = rollCrit(attacker);
+        double critBonus = modifiers != null ? modifiers.critRateBonus : 0;
+        boolean isCrit = rollCrit(attacker, critBonus);
         if (isCrit) {
             double critMultiplier = attacker.getTotalStats().getCritDamage() / 100.0;
             damage *= critMultiplier;
         }
         
-        // Step 6: Apply damage caps (Hard mode only)
+        // Step 6: Apply alignment damage modifiers
+        if (modifiers != null) {
+            damage *= modifiers.damageMultiplier;
+            
+            // Wounded damage bonus (Tyrant's "No Mercy")
+            damage *= CombatModifiers.getWoundedBonus(defender, modifiers);
+        }
+        
+        // Step 7: Apply damage caps (Hard mode only)
         if (difficulty.hasDamageCaps()) {
             damage = applyDamageCap(damage);
         }
         
-        // Step 7: Add variance (±10%)
+        // Step 8: Add variance (±10%)
         double variance = 0.9 + (random.nextDouble() * 0.2); // 0.9 to 1.1
         damage *= variance;
         
-        // Step 8: Round to integer
+        // Step 9: Round to integer
         int finalDamage = (int) Math.round(damage);
         
         // Create result message
@@ -68,8 +100,8 @@ public class DamageCalculator {
     /**
      * Roll to see if attack hits
      */
-    private boolean rollHit(Character attacker, Character defender) {
-        double accuracy = attacker.getTotalStats().getAccuracy();
+    private boolean rollHit(Character attacker, Character defender, double accuracyBonus) {
+        double accuracy = attacker.getTotalStats().getAccuracy() + accuracyBonus;
         double evasion = defender.getTotalStats().getEvasion();
         
         double hitChance = accuracy - evasion;
@@ -81,8 +113,8 @@ public class DamageCalculator {
     /**
      * Roll for critical hit
      */
-    private boolean rollCrit(Character attacker) {
-        double critRate = attacker.getTotalStats().getCritRate();
+    private boolean rollCrit(Character attacker, double critBonus) {
+        double critRate = attacker.getTotalStats().getCritRate() + critBonus;
         return random.nextDouble() * 100 < critRate;
     }
     
@@ -153,8 +185,25 @@ public class DamageCalculator {
      * Calculate healing (simplified damage calculation)
      */
     public int calculateHealing(Character caster, double basePower) {
+        return calculateHealing(caster, basePower, null);
+    }
+    
+    /**
+     * Calculate healing with modifiers (Saint path bonus)
+     */
+    public int calculateHealing(Character caster, double basePower, CombatModifiers.ModifierResult modifiers) {
+        // Get modifiers from caster if they're a Player
+        if (modifiers == null && caster instanceof Player) {
+            modifiers = ((Player) caster).getAlignmentCombatModifiers();
+        }
+        
         double magicAtk = caster.getMagicAttack();
         double healing = magicAtk * basePower * 0.5;
+        
+        // Apply healing multiplier (Saint's "Gentle Soul")
+        if (modifiers != null) {
+            healing *= modifiers.healingMultiplier;
+        }
         
         // Add variance
         double variance = 0.9 + (random.nextDouble() * 0.2);

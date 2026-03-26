@@ -1,299 +1,293 @@
-# Class System Design
+# Class System Design v2
 
-## Background → Base Classes → Advanced Classes → Secret Classes
+## Alignment System
 
-### 1. NOBLE_BORN
-**Philosophy:** Honor, leadership, martial excellence, tactical superiority
+### Dual-Axis Morality
+Two independent axes track the player's moral choices:
 
-#### Base Classes:
-- **PALADIN** (Holy Warrior)
-  - Primary: STR, VIT, WIS
-  - Growth: +3 STR, +2 VIT, +2 WIS, +1 DEX, +1 INT, +1 LUK
-  - Playstyle: Tank/Support hybrid with healing and defensive buffs
-  
-- **KNIGHT** (Defensive Tank)
-  - Primary: VIT, STR
-  - Growth: +2 STR, +2 DEX, +4 VIT, +1 INT, +1 WIS, +1 LUK
-  - Playstyle: Pure tank with shield abilities and aggro management
-  
-- **DUELIST** (Agile Fighter)
-  - Primary: DEX, STR
-  - Growth: +3 STR, +4 DEX, +2 VIT, +1 INT, +1 WIS, +2 LUK
-  - Playstyle: High damage single-target fighter with ripostes
-  
-- **COMMANDER** (Tactical Leader)
-  - Primary: INT, WIS
-  - Growth: +2 STR, +2 DEX, +2 VIT, +3 INT, +3 WIS, +1 LUK
-  - Playstyle: Support/Buffer with team-wide abilities
+**HONOR AXIS** (How you act)
+- **Paragon** (+100): Never lies, always keeps promises, fights fairly
+- **Honorable** (+50 to +99): Generally honest and fair
+- **Pragmatic** (-49 to +49): Does what's necessary
+- **Deceitful** (-50 to -99): Regularly manipulates and tricks
+- **Serpent** (-100): Master manipulator, never tells the truth when a lie serves better
 
-#### Advanced Classes (Level 10+):
-- **PALADIN** →
-  - **HOLY CRUSADER**: Offensive paladin (Light element, heavy damage + healing)
-  - **DIVINE GUARDIAN**: Defensive paladin (Shields allies, resurrection abilities)
-  
-- **KNIGHT** →
-  - **DRAGOON**: Lance specialist with aerial attacks
-  - **FORTRESS**: Immovable wall (Taunt, counter-attacks, damage reflection)
-  
-- **DUELIST** →
-  - **BLADE DANCER**: DEX-focused multi-hit specialist
-  - **SWORD SAINT**: Master duelist with perfect counters and instant kills
-  
-- **COMMANDER** →
-  - **TACTICIAN**: Manipulates turn order, applies team buffs/debuffs
-  - **WARLORD**: Damage-focused leader with offensive commands
+**COMPASSION AXIS** (How you treat others)
+- **Saint** (+100): Never harms innocents, always shows mercy
+- **Merciful** (+50 to +99): Generally kind and forgiving
+- **Balanced** (-49 to +49): Judges each situation
+- **Harsh** (-50 to -99): Punishes severely, rarely shows mercy
+- **Tyrant** (-100): Cruelty is a tool, suffering is power
 
-#### Secret Class:
-- **ROYAL CHAMPION** (Requires special flag: "Reclaim_Throne" OR "Unite_Kingdoms")
-  - Ultimate noble class combining best aspects of all four paths
-  - Requires: Level 20+, All 4 base classes at Advanced level
+### Alignment Purity Rewards
+
+**THRESHOLD BUFFS** (Incremental bonuses for staying on path):
+- **|25|**: +5% effectiveness to alignment-related abilities
+- **|50|**: Unique dialogue options unlock
+- **|75|**: +10% effectiveness, minor passive ability
+- **|90|**: +15% effectiveness, alignment-specific ability unlocks
+- **|100| PURE**: Ultimate alignment class unlocks
+
+**PURITY LOCK**: One choice against your axis resets progress toward that extreme. At 100%, a single betrayal of your principles permanently locks you out of that alignment's ultimate class.
 
 ---
 
-### 2. STREET_URCHIN
-**Philosophy:** Survival, cunning, speed, adaptability
+## Background → Base Classes (Revised - No Overlaps)
 
-#### Base Classes:
-- **ROGUE** (Stealth Assassin)
-  - Primary: DEX, LUK
-  - Growth: +2 STR, +4 DEX, +2 VIT, +1 INT, +1 WIS, +3 LUK
-  - Playstyle: High crit, backstab mechanics, status effects
-  
-- **BRAWLER** (Bare-Knuckle Fighter)
-  - Primary: STR, DEX
-  - Growth: +4 STR, +3 DEX, +3 VIT, +1 INT, +1 WIS, +1 LUK
-  - Playstyle: Fast combo attacks, counterattacks, stuns
-  
-- **TRICKSTER** (Debuff Specialist)
-  - Primary: LUK, INT
-  - Growth: +2 STR, +3 DEX, +2 VIT, +2 INT, +2 WIS, +4 LUK
-  - Playstyle: Status effects, traps, misdirection
-  
-- **SCOUT** (Ranged DPS)
-  - Primary: DEX, LUK
-  - Growth: +2 STR, +4 DEX, +2 VIT, +2 INT, +1 WIS, +3 LUK
-  - Playstyle: Ranged attacks, evasion, marking targets
+### 1. NOBLE BORN
+*Philosophy: Authority, martial prowess, leadership*
 
-#### Advanced Classes (Level 10+):
-- **ROGUE** →
-  - **ASSASSIN**: Pure damage dealer (guaranteed crits on debuffed targets)
-  - **SHADOW WALKER**: Stealth master (turn invisibility, ambush attacks)
-  
-- **BRAWLER** →
-  - **PUGILIST**: Multi-hit combo specialist
-  - **STREET KING**: Dirty fighting (ignores honor, extreme damage when below 50% HP)
-  
-- **TRICKSTER** →
-  - **CHARLATAN**: Master of illusions and mind games
-  - **SABOTEUR**: Trap and poison expert
-  
-- **SCOUT** →
-  - **RANGER**: Bow specialist with long-range abilities
-  - **MARKSMAN**: Precision shooter (guaranteed hits, weak point targeting)
+| Base Class | Role | Primary Stats | Unique Mechanic |
+|------------|------|---------------|-----------------|
+| **Cavalier** | Mounted Tank | STR, VIT | Mount abilities, charge attacks |
+| **Courtier** | Support/Buffer | INT, WIS | Inspire allies, diplomatic skills |
+| **Duelist** | Single-target DPS | DEX, LUK | Riposte, perfect counters |
+| **Vanguard** | Off-tank/DPS | STR, DEX | First strike, formation bonuses |
 
-#### Secret Class:
-- **PHANTOM THIEF** (Requires flag: "Steal_Crown_Jewel" AND high Fame)
-  - Master of all roguish arts
-  - Can steal abilities from enemies temporarily
+**Advanced Classes (Level 15+):**
+- Cavalier → **Dragon Knight** (flying mount) OR **Iron Bulwark** (unmovable tank)
+- Courtier → **War Marshal** (army-scale buffs) OR **Silver Tongue** (enemy manipulation)
+- Duelist → **Blade Saint** (instant kill on crit) OR **Phantom Fencer** (afterimages)
+- Vanguard → **Champion** (challenge enemies) OR **Linebreaker** (AoE charge)
+
+---
+
+### 2. STREET URCHIN
+*Philosophy: Survival, adaptability, cunning*
+
+| Base Class | Role | Primary Stats | Unique Mechanic |
+|------------|------|---------------|-----------------|
+| **Cutthroat** | Burst DPS | DEX, LUK | Backstab, assassination |
+| **Grifter** | Debuffer | INT, LUK | Con, misdirect, steal buffs |
+| **Brawler** | Combo DPS | STR, DEX | Combo chains, counterattacks |
+| **Prowler** | Evasion Tank | DEX, VIT | Dodge-tank, smoke bombs |
+
+**Advanced Classes (Level 15+):**
+- Cutthroat → **Deathblade** (guaranteed crits from stealth) OR **Shade** (invisibility master)
+- Grifter → **Mastermind** (control enemy actions) OR **Fence** (item manipulation)
+- Brawler → **Pit Fighter** (stronger when wounded) OR **Street Legend** (intimidation)
+- Prowler → **Phantom** (phase through attacks) OR **Trapmaster** (battlefield control)
 
 ---
 
 ### 3. SCHOLAR
-**Philosophy:** Knowledge, magical mastery, experimentation
+*Philosophy: Knowledge, magical mastery, discovery*
 
-#### Base Classes:
-- **MAGE** (Elemental Caster)
-  - Primary: INT, WIS
-  - Growth: +1 STR, +2 DEX, +2 VIT, +4 INT, +3 WIS, +2 LUK
-  - Playstyle: High damage spells, elemental combos
-  
-- **SAGE** (Support Caster)
-  - Primary: WIS, INT
-  - Growth: +1 STR, +1 DEX, +3 VIT, +3 INT, +4 WIS, +2 LUK
-  - Playstyle: Buffs, healing, utility magic
-  
-- **ALCHEMIST** (Item/Status Specialist)
-  - Primary: INT, LUK
-  - Growth: +1 STR, +2 DEX, +3 VIT, +4 INT, +2 WIS, +3 LUK
-  - Playstyle: Potions, transmutation, status infliction
-  
-- **ARCANIST** (Raw Power Caster)
-  - Primary: INT
-  - Growth: +1 STR, +1 DEX, +2 VIT, +5 INT, +2 WIS, +2 LUK
-  - Playstyle: Massive single-target damage, high focus costs
+| Base Class | Role | Primary Stats | Unique Mechanic |
+|------------|------|---------------|-----------------|
+| **Evoker** | Elemental DPS | INT, WIS | Element mastery, combo spells |
+| **Enchanter** | Buffer/Debuffer | WIS, INT | Weapon/armor enchantments |
+| **Naturalist** | Summoner | INT, VIT | Construct/golem creation |
+| **Chronicler** | Utility | WIS, LUK | Identify weaknesses, lore bonuses |
 
-#### Advanced Classes (Level 10+):
-- **MAGE** →
-  - **ELEMENTALIST**: Master of all 6 elements
-  - **BATTLEMAGE**: Melee + magic hybrid (weapon enchantments)
-  
-- **SAGE** →
-  - **WHITE MAGE**: Ultimate healer and buffer
-  - **TIME MAGE**: Manipulates speed, haste, slow, stop effects
-  
-- **ALCHEMIST** →
-  - **APOTHECARY**: Potion master (double item effects)
-  - **TRANSMUTER**: Matter manipulation (temporary stat changes)
-  
-- **ARCANIST** →
-  - **SORCERER**: Forbidden magic user (HP costs for extreme damage)
-  - **SPELL WEAVER**: Combines multiple spells into one cast
-
-#### Secret Class:
-- **ARCHMAGE** (Requires flag: "Master_All_Elements" OR "Discover_Lost_Spell")
-  - Ultimate magical power
-  - Can cast two spells per turn
+**Advanced Classes (Level 15+):**
+- Evoker → **Archmage** (dual-cast spells) OR **Elementalist** (fuse elements)
+- Enchanter → **Runesmith** (permanent enchants) OR **Hexer** (curse specialist)
+- Naturalist → **Golemancer** (giant constructs) OR **Artificer** (magical items)
+- Chronicler → **Sage** (predict enemy moves) OR **Seeker** (find hidden things)
 
 ---
 
 ### 4. OUTLANDER
-**Philosophy:** Nature, survival, primal power, harmony
+*Philosophy: Nature, primal power, survival*
 
-#### Base Classes:
-- **RANGER** (Nature Warrior)
-  - Primary: DEX, WIS
-  - Growth: +2 STR, +4 DEX, +3 VIT, +1 INT, +3 WIS, +2 LUK
-  - Playstyle: Ranged attacks, nature magic, tracking
-  
-- **DRUID** (Nature Caster)
-  - Primary: WIS, VIT
-  - Growth: +1 STR, +2 DEX, +4 VIT, +2 INT, +4 WIS, +2 LUK
-  - Playstyle: Healing, nature spells, shapeshifting
-  
-- **BEASTMASTER** (Pet Controller)
-  - Primary: WIS, DEX
-  - Growth: +2 STR, +3 DEX, +3 VIT, +1 INT, +4 WIS, +2 LUK
-  - Playstyle: Commands beasts, summons, animal buffs
-  
-- **SHAMAN** (Elemental Mystic)
-  - Primary: WIS, INT
-  - Growth: +1 STR, +2 DEX, +3 VIT, +3 INT, +4 WIS, +2 LUK
-  - Playstyle: Elemental totems, spirit magic, AoE effects
+| Base Class | Role | Primary Stats | Unique Mechanic |
+|------------|------|---------------|-----------------|
+| **Warden** | Nature Tank | VIT, WIS | Nature armor, regeneration |
+| **Predator** | Melee DPS | STR, DEX | Tracking, ambush, bleed |
+| **Wildspeaker** | Summoner | WIS, INT | Beast companions |
+| **Stormcaller** | AoE Caster | INT, WIS | Weather manipulation |
 
-#### Advanced Classes (Level 10+):
-- **RANGER** →
-  - **FOREST SENTINEL**: Master archer with nature abilities
-  - **WILD HUNTER**: Predator-style fighter (tracking, ambush, traps)
-  
-- **DRUID** →
-  - **SHAPESHIFTER**: Multiple animal forms (bear, wolf, eagle)
-  - **NATURE'S WRATH**: Offensive druid (thorns, poison, entangle)
-  
-- **BEASTMASTER** →
-  - **MONSTER TAMER**: Commands powerful monsters
-  - **PACK LEADER**: Multiple beast summons
-  
-- **SHAMAN** →
-  - **SPIRIT CALLER**: Summons ancestor spirits
-  - **TOTEM MASTER**: Creates powerful totems with various effects
-
-#### Secret Class:
-- **WILDLORD** (Requires flag: "Bond_With_Ancient_Beast" OR "Balance_Nature")
-  - Perfect harmony with nature
-  - Can transform into mythical beasts
+**Advanced Classes (Level 15+):**
+- Warden → **Ancient Guardian** (become treant) OR **Earthshaper** (terrain control)
+- Predator → **Alpha** (pack tactics) OR **Skinwalker** (partial beast forms)
+- Wildspeaker → **Beastlord** (legendary beasts) OR **Hivemind** (swarm control)
+- Stormcaller → **Tempest** (continuous storm) OR **Worldsinger** (earthquake/tsunami)
 
 ---
 
 ### 5. SOLDIER
-**Philosophy:** Discipline, strength, endurance, warfare
+*Philosophy: Discipline, strength, warfare*
 
-#### Base Classes:
-- **WARRIOR** (Balanced Fighter)
-  - Primary: STR, VIT
-  - Growth: +4 STR, +2 DEX, +3 VIT, +1 INT, +1 WIS, +2 LUK
-  - Playstyle: Strong all-around physical damage dealer
-  
-- **BERSERKER** (Rage Fighter)
-  - Primary: STR
-  - Growth: +5 STR, +2 DEX, +3 VIT, +1 INT, +1 WIS, +1 LUK
-  - Playstyle: High risk/high reward, stronger when HP is low
-  
-- **GUARDIAN** (Defensive Fighter)
-  - Primary: VIT, STR
-  - Growth: +3 STR, +2 DEX, +4 VIT, +1 INT, +2 WIS, +1 LUK
-  - Playstyle: Protects allies, shields, counters
-  
-- **TACTICIAN** (Strategic Fighter)
-  - Primary: STR, INT
-  - Growth: +3 STR, +3 DEX, +2 VIT, +3 INT, +2 WIS, +1 LUK
-  - Playstyle: Analyzes enemies, exploits weaknesses
+| Base Class | Role | Primary Stats | Unique Mechanic |
+|------------|------|---------------|-----------------|
+| **Legionnaire** | Balanced Tank/DPS | STR, VIT | Shield wall, formation |
+| **Berserker** | Risk/Reward DPS | STR, VIT | Rage meter, pain = power |
+| **Weaponmaster** | Versatile DPS | STR, DEX | Weapon switching mid-combat |
+| **Tactician** | Support/Control | INT, STR | Command allies, exploit weakness |
 
-#### Advanced Classes (Level 10+):
-- **WARRIOR** →
-  - **WEAPON MASTER**: Can switch weapon types mid-battle
-  - **GLADIATOR**: Arena fighter (stronger in 1v1, crowd pleaser)
-  
-- **BERSERKER** →
-  - **BLOOD KNIGHT**: Sacrifices HP for damage
-  - **SAVAGE**: Pure rage (uncontrollable power)
-  
-- **GUARDIAN** →
-  - **SENTINEL**: Ultimate defender (near-immortal tank)
-  - **SHIELD MASTER**: Shield-based attacks and defense
-  
-- **TACTICIAN** →
-  - **BATTLE MASTER**: All-seeing strategist
-  - **WAR VETERAN**: Experience-based bonuses
-
-#### Secret Class:
-- **WAR GOD** (Requires flag: "Win_Grand_Tournament" OR "Defeat_Legendary_Warrior")
-  - Legendary fighter
-  - Can use all weapon types and fighting styles
+**Advanced Classes (Level 15+):**
+- Legionnaire → **Centurion** (ally damage reduction) OR **Praetorian** (bodyguard)
+- Berserker → **Ravager** (AoE destruction) OR **Bloodrager** (lifesteal frenzy)
+- Weaponmaster → **Blademaster** (perfect technique) OR **Arsenal** (all weapons)
+- Tactician → **General** (battlefield control) OR **Veteran** (counter everything)
 
 ---
 
 ### 6. ACOLYTE
-**Philosophy:** Faith, devotion, balance, judgment
+*Philosophy: Faith, divine power, spiritual balance*
 
-#### Base Classes:
-- **CLERIC** (Holy Support)
-  - Primary: WIS, VIT
-  - Growth: +1 STR, +2 DEX, +3 VIT, +2 INT, +4 WIS, +2 LUK
-  - Playstyle: Healing, buffs, Light magic
-  
-- **MONK** (Holy Warrior)
-  - Primary: STR, WIS
-  - Growth: +3 STR, +3 DEX, +3 VIT, +1 INT, +3 WIS, +1 LUK
-  - Playstyle: Unarmed combat, ki abilities, balance
-  
-- **PRIEST** (Pure Caster)
-  - Primary: WIS, INT
-  - Growth: +1 STR, +1 DEX, +2 VIT, +3 INT, +5 WIS, +2 LUK
-  - Playstyle: Light/Dark magic, status removal, resurrection
-  
-- **INQUISITOR** (Holy Warrior)
-  - Primary: STR, WIS
-  - Growth: +4 STR, +2 DEX, +2 VIT, +2 INT, +3 WIS, +1 LUK
-  - Playstyle: Hunts heretics, high damage to demons/undead
+| Base Class | Role | Primary Stats | Unique Mechanic |
+|------------|------|---------------|-----------------|
+| **Templar** | Holy Tank | STR, WIS | Holy damage, undead slayer |
+| **Cleric** | Healer | WIS, VIT | Restoration, cleansing |
+| **Oracle** | Utility/Support | WIS, LUK | Prophecy, foresight |
+| **Mendicant** | Melee Support | STR, WIS | Martial arts, ki abilities |
 
-#### Advanced Classes (Level 10+):
-- **CLERIC** →
-  - **HIGH PRIEST**: Master healer
-  - **ORACLE**: Sees future, can predict enemy moves
-  
-- **MONK** →
-  - **GRAND MASTER**: Perfect martial arts
-  - **ASCETIC**: Transcends physical limits
-  
-- **PRIEST** →
-  - **LIGHT BRINGER**: Pure Light magic offensive caster
-  - **DARK PRIEST**: Embraces Dark magic (fallen priest)
-  
-- **INQUISITOR** →
-  - **ZEALOT**: Fanatical damage dealer
-  - **JUDGE**: Judges enemies (executes low HP targets)
-
-#### Secret Class:
-- **DIVINE HERALD** (Requires flag: "Chosen_By_God" OR "Balance_Light_Dark")
-  - Channel divine power directly
-  - Can resurrect fallen allies mid-battle
+**Advanced Classes (Level 15+):**
+- Templar → **Crusader** (holy devastation) OR **Justicar** (execute/spare)
+- Cleric → **High Priest** (mass healing) OR **Exorcist** (banish/purify)
+- Oracle → **Seer** (see all futures) OR **Fateweaver** (alter probability)
+- Mendicant → **Enlightened** (transcend limits) OR **Fist of Heaven** (divine strikes)
 
 ---
 
-## Secret Class Requirements Summary
-1. **ROYAL CHAMPION**: Unite/reclaim kingdoms (Noble Born)
-2. **PHANTOM THIEF**: Steal legendary item + high fame (Street Urchin)
-3. **ARCHMAGE**: Master all elements or discover lost spell (Scholar)
-4. **WILDLORD**: Bond with ancient beast or restore nature balance (Outlander)
-5. **WAR GOD**: Win grand tournament or defeat legendary warrior (Soldier)
-6. **DIVINE HERALD**: Be chosen by deity or balance Light/Dark (Acolyte)
+## Event-Based Secret Classes
+
+These classes are unlocked through specific story choices, not just gameplay. They represent transformative moments.
+
+### DARK PATH CLASSES
+
+| Class | Unlock Event | Description |
+|-------|-------------|-------------|
+| **Necromancer** | Perform forbidden ritual to raise the dead (sacrifice required) | Commands undead, drains life |
+| **Blood Mage** | Drink from cursed artifact / murder for power | HP costs abilities, massive damage |
+| **Oathbreaker** | Betray a sacred vow or ally at critical moment | Corrupted paladin abilities, fear aura |
+| **Soul Reaver** | Consume the soul of a defeated boss enemy | Absorb enemy abilities permanently |
+| **Heretic** | Defile a sacred temple or kill a high priest | Anti-divine powers, nullify holy |
+| **Tyrant's Hand** | Serve the dark lord willingly, crush rebellion | Domination magic, break wills |
+
+### GREY PATH CLASSES
+
+| Class | Unlock Event | Description |
+|-------|-------------|-------------|
+| **Witch Hunter** | Execute someone who may be innocent "for the greater good" | Anti-mage specialist, ruthless efficiency |
+| **Spymaster** | Build and maintain a spy network through morally ambiguous means | Information warfare, assassination |
+| **Reaver** | Take trophies from fallen foes, embrace battlefield brutality | Fear/intimidation combat style |
+| **Contractor** | Complete morally questionable jobs for gold | No loyalty, pure mercenary efficiency |
+
+### LIGHT PATH CLASSES
+
+| Class | Unlock Event | Description |
+|-------|-------------|-------------|
+| **Redeemer** | Forgive and rehabilitate a major villain | Purification, turn enemies to allies |
+| **Martyr** | Sacrifice yourself to save others (and be resurrected) | Deathless, inspire allies |
+| **Voice of the People** | Lead successful peaceful revolution | Mass inspiration, cannot be silenced |
+| **Saint's Vessel** | Divine entity chooses to inhabit you | Channel divine power directly |
+
+### DISCOVERY CLASSES
+
+| Class | Unlock Event | Description |
+|-------|-------------|-------------|
+| **Void Walker** | Survive exposure to the void between worlds | Reality manipulation, teleportation |
+| **Dragon Heir** | Bond with or absorb a dying dragon | Draconic powers, elemental breath |
+| **Time Sage** | Find and master the Chrono Codex | Manipulate turn order, rewind damage |
+| **Primordial** | Touch the world's creation stone | Raw elemental chaos, transformation |
+
+---
+
+## Alignment-Based Ultimate Classes
+
+### 100% PURITY CLASSES (Never strayed from path)
+
+**HONOR AXIS:**
+
+| Alignment | Ultimate Class | Description |
+|-----------|---------------|-------------|
+| **Paragon (+100)** | **Exemplar** | Perfect technique, all allies gain accuracy/crit when near you, enemies hesitate to attack |
+| **Serpent (-100)** | **Shadowlord** | Master of all deception, create illusory clones, enemies attack each other |
+
+**COMPASSION AXIS:**
+
+| Alignment | Ultimate Class | Description |
+|-----------|---------------|-------------|
+| **Saint (+100)** | **Divine Avatar** | Healing harms undead, resurrect fallen allies, immune to dark damage |
+| **Tyrant (-100)** | **Dread Sovereign** | Fear aura paralyzes weak enemies, execute wounded foes, pain empowers you |
+
+### COMBINED PURITY (Both axes at 100%)
+
+| Honor | Compassion | Ultimate Class | Description |
+|-------|------------|---------------|-------------|
+| Paragon | Saint | **Celestial Champion** | Literally blessed by gods, holy devastation + perfect healing |
+| Paragon | Tyrant | **Iron Judge** | Absolute justice without mercy, execute guilty, smite |
+| Serpent | Saint | **Velvet Hand** | Manipulation for good, enemies become allies, bloodless victory |
+| Serpent | Tyrant | **Dark Messiah** | Ultimate villain class, fear + deception + cruelty combined |
+
+---
+
+## Progressive Alignment Buffs
+
+### HONOR AXIS BUFFS
+
+**Paragon Path (+):**
+- +25: "Trustworthy" - Better prices, NPCs share info
+- +50: "Oath Keeper" - Promises give +10% stats until fulfilled
+- +75: "Incorruptible" - Immune to charm/mind control
+- +90: "Living Legend" - Allies gain +15% all stats in your presence
+- +100: Unlock **Exemplar** class
+
+**Serpent Path (-):**
+- -25: "Silver Tongue" - Unlock deception dialogue options
+- -50: "Web of Lies" - Enemies have -10% accuracy (confusion)
+- -75: "Master of Masks" - Can disguise as any humanoid
+- -90: "Puppeteer" - 20% chance enemies attack each other
+- -100: Unlock **Shadowlord** class
+
+### COMPASSION AXIS BUFFS
+
+**Saint Path (+):**
+- +25: "Gentle Soul" - Healing +10%
+- +50: "Protector" - Allies take -15% damage near you
+- +75: "Beacon" - Undead/demons deal -25% damage to you
+- +90: "Life Giver" - Once per battle, revive ally at 50% HP
+- +100: Unlock **Divine Avatar** class
+
+**Tyrant Path (-):**
+- -25: "Intimidating" - Weaker enemies may flee
+- -50: "No Mercy" - +20% damage to wounded enemies (<50% HP)
+- -75: "Dread Presence" - Enemies have -15% all stats
+- -90: "Executioner" - Instant kill enemies below 10% HP
+- -100: Unlock **Dread Sovereign** class
+
+---
+
+## Alignment Choice Examples
+
+### OBVIOUS EVIL (Tyrant/Serpent choices)
+- Sacrifice innocent villagers to power a dark ritual
+- Torture a prisoner for information
+- Burn down an orphanage to kill one hidden enemy
+- Kill surrendering enemies
+- Betray an ally for personal gain
+
+### SUBTLE CORRUPTION (Slippery slope)
+- Accept "gifts" from suspicious benefactors
+- Let someone else take the fall for your mistake
+- Ignore suffering because "it's not your problem"
+- Make a "small" compromise on your principles
+- Tell a "white lie" that spirals into larger deception
+- Use questionable methods to achieve good ends
+
+### MERCY VS JUSTICE DILEMMAS
+- Villain begs for mercy - spare or execute?
+- Criminal stole to feed family - punish or forgive?
+- Ally made fatal mistake - cover up or expose?
+- Enemy offers valuable information for freedom - deal or refuse?
+
+### HONOR VS PRAGMATISM DILEMMAS
+- Poison the enemy's water supply to save your army?
+- Break a promise to save a life?
+- Cheat to win a duel against a dishonorable opponent?
+- Lie to protect someone's feelings?
+
+---
+
+## Summary
+
+**24 Base Classes** (4 per background, no overlaps)
+**48 Advanced Classes** (2 per base class)
+**16 Event-Based Secret Classes** (Dark, Grey, Light, Discovery paths)
+**6 Alignment Ultimate Classes** (4 single-axis, 2 dual-axis)
+**20 Progressive Alignment Buffs** (5 per axis direction)
+
+Total unique class options: **94 classes**
