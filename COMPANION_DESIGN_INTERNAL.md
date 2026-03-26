@@ -1,18 +1,15 @@
-# Companion Design Internal
+# INTERNAL / SPOILERS — Companion Narrative Design
 
-This document contains detailed narrative content, including all companion backstories, quest subversions, transformations, and breaking points, which are considered spoiler-heavy. Use this document if you are familiar with all the companion narratives and desire in-depth understanding.
+**Audience:** Developers, writers, QA.
 
-## Companion Backstories
-1. **Companion 1**: [Backstory Details]
-2. **Companion 2**: [Backstory Details]
-... (up to 11 companions)
+This document is **internal** and contains **major story spoilers** for all companions (backstories, personal quest climaxes, transformations, betrayal/hostility outcomes).
 
-## Quest Subversions
-- What happens when you deviate from standard quests with these companions.
+If you want the **player-safe** version, see `COMPANIONS.md`.
 
-## Transformations
-- Detailed descriptions of how companions change during the course of the narrative.
+**Important:** Signature abilities, formulas, loyalty math, party dynamics tables, and other systems/mechanics live in `COMPANION_MECHANICS_INTERNAL.md`.
 
-## Breaking Points
-- Insights into critical moments of character decisions and turning points in their arcs.
+---
 
+# Companion Narrative Design (Spoiler-Heavy)
+
+> TODO: Populate this file with the full original narrative content that previously lived in the spoiler-heavy companion document (backstories, quest subversions, transformation outcomes, and breaking points for all 11 companions), excluding signature abilities and other mechanics.
