@@ -30,6 +30,14 @@ public class FocusMeter {
     }
     
     /**
+     * Add focus to the meter (simple version for companions)
+     * @param amount Amount to add
+     */
+    public void addFocus(int amount) {
+        addFocus((double) amount, 1.0);
+    }
+    
+    /**
      * Spend focus for an ability
      * @param cost Focus cost
      * @return true if focus was spent successfully
@@ -40,6 +48,15 @@ public class FocusMeter {
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Check if can afford ability cost
+     * @param cost Focus cost
+     * @return true if player has enough focus
+     */
+    public boolean canAfford(int cost) {
+        return currentFocus >= cost;
     }
     
     /**

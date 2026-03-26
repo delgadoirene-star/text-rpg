@@ -142,6 +142,26 @@ Two independent axes track the player's moral choices:
 
 ---
 
+## Implemented Base Classes
+
+The following classes are currently implemented in `GameClassRegistry.java`:
+
+| Class | Type | Role | Description |
+|-------|------|------|-------------|
+| **Warrior** | Base | Tank/DPS | Balanced martial fighter |
+| **Paladin** | Base | Holy Tank | Divine warrior with healing |
+| **Rogue** | Base | DPS | Stealth and critical strikes |
+| **Scholar** | Base | Utility | Knowledge-based abilities |
+| **Guardian** | Base | Tank | Pure defensive specialist |
+| **Monk** | Base | DPS/Support | Martial arts and ki |
+| **Spy** | Base | DPS/Control | Information warfare |
+| **Brawler** | Base | Combo DPS | Chain attacks |
+| **Arcanist** | Base | Magic DPS | Raw magical power |
+| **Shaman** | Base | Support | Elemental and nature magic |
+| **Priest** | Base | Healer | Divine healing and buffs |
+
+---
+
 ## Event-Based Secret Classes
 
 These classes are unlocked through specific story choices, not just gameplay. They represent transformative moments.
@@ -183,6 +203,32 @@ These classes are unlocked through specific story choices, not just gameplay. Th
 | **Dragon Heir** | Bond with or absorb a dying dragon | Draconic powers, elemental breath |
 | **Time Sage** | Find and master the Chrono Codex | Manipulate turn order, rewind damage |
 | **Primordial** | Touch the world's creation stone | Raw elemental chaos, transformation |
+
+---
+
+## Companion Transformation Classes
+
+Each companion has two potential transformation classes based on the player's influence:
+
+| Companion | Good Path Class | Evil Path Class |
+|-----------|-----------------|-----------------|
+| **Isolde** | Redeemer | Iron Judge |
+| **Bram** | Spymaster | Contractor |
+| **Sybilla** | True Healer | Blood Alchemist |
+| **Garrick** | Shield-Captain | Reaver |
+| **Oona** | Guardian of Growth | Blight-Touched |
+| **Theron** | Bodhisattva | Void Walker |
+| **Sash** | Selfless Spy | Velvet Assassin |
+| **Ghor** | Chieftain | Warlord |
+| **Vek** | Selfless Scholar | Fractured God |
+| **Maeva** | Crystal Sage | Corrupted Crystal |
+| **Silas** | Purified | Shadow-Worn |
+
+**Transformation Mechanics:**
+- Based on player alignment choices
+- Companion loyalty affects outcome
+- Personal quests trigger transformation events
+- Each class grants unique abilities and story implications
 
 ---
 
@@ -287,7 +333,8 @@ These classes are unlocked through specific story choices, not just gameplay. Th
 **24 Base Classes** (4 per background, no overlaps)
 **48 Advanced Classes** (2 per base class)
 **16 Event-Based Secret Classes** (Dark, Grey, Light, Discovery paths)
+**22 Companion Transformation Classes** (Good/Evil paths for 11 companions)
 **6 Alignment Ultimate Classes** (4 single-axis, 2 dual-axis)
 **20 Progressive Alignment Buffs** (5 per axis direction)
 
-Total unique class options: **94 classes**
+Total unique class options: **116+ classes**

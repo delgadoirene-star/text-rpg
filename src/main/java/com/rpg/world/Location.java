@@ -16,6 +16,7 @@ public class Location {
     private String id;
     private String name;
     private String description;
+    private RegionType regionType;  // Cultural region this location belongs to
     
     // Connectivity
     private Map<String, String> connectedLocations; // Direction -> Location ID
@@ -34,9 +35,14 @@ public class Location {
     private boolean visited;
     
     public Location(String id, String name, String description) {
+        this(id, name, description, null);
+    }
+    
+    public Location(String id, String name, String description, RegionType regionType) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.regionType = regionType;
         
         this.connectedLocations = new HashMap<>();
         this.availableQuests = new ArrayList<>();
@@ -56,6 +62,15 @@ public class Location {
         
         public Builder(String id, String name, String description) {
             location = new Location(id, name, description);
+        }
+        
+        public Builder(String id, String name, String description, RegionType regionType) {
+            location = new Location(id, name, description, regionType);
+        }
+        
+        public Builder region(RegionType regionType) {
+            location.regionType = regionType;
+            return this;
         }
         
         public Builder connect(String direction, String locationId) {
@@ -104,6 +119,7 @@ public class Location {
     public List<String> getEnemiesPresent() { return new ArrayList<>(enemiesPresent); }
     public List<GameEvent> getEvents() { return new ArrayList<>(events); }
     public List<String> getRequiredFlags() { return new ArrayList<>(requiredFlags); }
+    public RegionType getRegionType() { return regionType; }
     
     // ==================== State Management ====================
     

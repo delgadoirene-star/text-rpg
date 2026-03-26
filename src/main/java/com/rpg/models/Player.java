@@ -23,6 +23,7 @@ public class Player extends Character {
     // Progression
     private int experience;
     private int experienceToNextLevel;
+    private int availableStatPoints;
     
     // Stats tracking
     private int totalDamageDealt;
@@ -40,6 +41,7 @@ public class Player extends Character {
         this.equipment = new HashMap<>();
         this.experience = 0;
         this.experienceToNextLevel = calculateExpForNextLevel(1);
+        this.availableStatPoints = 0;
         
         // Initialize all equipment slots as empty
         for (EquipSlot slot : EquipSlot.values()) {
@@ -170,7 +172,7 @@ public class Player extends Character {
      * Add focus (after dealing damage, taking damage, etc.)
      */
     public void addFocus(int amount) {
-        focusMeter.addFocus(amount);
+        focusMeter.addFocus(amount, 1.0);
     }
     
     /**
@@ -297,23 +299,37 @@ public class Player extends Character {
         experience -= experienceToNextLevel;
         experienceToNextLevel = calculateExpForNextLevel(newLevel);
         
-        // Apply stat growth from class
-        Stats growth = currentClass.getStatGrowth();
-        Stats currentStats = getBaseStats();
-        
-        currentStats.setStrength(currentStats.getStrength() + growth.getStrength());
-        currentStats.setDexterity(currentStats.getDexterity() + growth.getDexterity());
-        currentStats.setVitality(currentStats.getVitality() + growth.getVitality());
-        currentStats.setIntelligence(currentStats.getIntelligence() + growth.getIntelligence());
-        currentStats.setWisdom(currentStats.getWisdom() + growth.getWisdom());
-        currentStats.setLuck(currentStats.getLuck() + growth.getLuck());
-        
-        // Recalculate derived stats
-        recalculateStats();
+        // Give stat points for manual allocation
+        availableStatPoints += 3;
         
         // Heal to full on level up
         heal(getMaxHP());
     }
+    
+    /**
+     * Allocate a stat point
+     * @return true if point was allocated
+     */
+    public boolean allocateStatPoint(String statName) {
+        if (availableStatPoints <= 0) return false;
+        
+        Stats stats = getBaseStats();
+        switch (statName.toUpperCase()) {
+            case "STR", "STRENGTH" -> stats.setStrength(stats.getStrength() + 1);
+            case "DEX", "DEXTERITY" -> stats.setDexterity(stats.getDexterity() + 1);
+            case "VIT", "VITALITY" -> stats.setVitality(stats.getVitality() + 1);
+            case "INT", "INTELLIGENCE" -> stats.setIntelligence(stats.getIntelligence() + 1);
+            case "WIS", "WISDOM" -> stats.setWisdom(stats.getWisdom() + 1);
+            case "LUK", "LUCK" -> stats.setLuck(stats.getLuck() + 1);
+            default -> { return false; }
+        }
+        
+        availableStatPoints--;
+        recalculateStats();
+        return true;
+    }
+    
+    public int getAvailableStatPoints() { return availableStatPoints; }
     
     /**
      * Calculate experience needed for next level
@@ -361,18 +377,20 @@ public class Player extends Character {
      * Record damage taken (override from Character to track stats)
      */
     @Override
-    public void takeDamage(int amount) {
-        super.takeDamage(amount);
-        totalDamageTaken += amount;
+    public int takeDamage(int amount) {
+        int actualDamage = super.takeDamage(amount);
+        totalDamageTaken += actualDamage;
+        return actualDamage;
     }
     
     /**
      * Record healing (override from Character to track stats)
      */
     @Override
-    public void heal(int amount) {
-        super.heal(amount);
-        totalHealing += amount;
+    public int heal(int amount) {
+        int actualHealing = super.heal(amount);
+        totalHealing += actualHealing;
+        return actualHealing;
     }
     
     /**
@@ -380,6 +398,27 @@ public class Player extends Character {
      */
     public void recordEnemyDefeated() {
         enemiesDefeated++;
+    }
+    
+    /**
+     * Recalculate derived stats after equipment or level changes
+     */
+    @Override
+    public void recalculateStats() {
+        // Update max HP if it changed
+        int newMaxHP = getMaxHP();
+        if (currentHP > newMaxHP) {
+            currentHP = newMaxHP;
+        }
+    }
+    
+    /**
+     * Add an ability to the player
+     */
+    @Override
+    public void addAbility(com.rpg.combat.Ability ability) {
+        // Implementation would add to player's ability list
+        // For now, just a stub for compilation
     }
     
     // Stats getters

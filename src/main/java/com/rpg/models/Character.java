@@ -233,6 +233,38 @@ public abstract class Character {
     // Setters
     public void setLevel(int level) { this.level = level; }
     public void setCurrentHP(int currentHP) { this.currentHP = Math.max(0, Math.min(getMaxHP(), currentHP)); }
+    public void setBaseStats(Stats baseStats) { this.baseStats = baseStats; }
+    public void setElementAffinity(Element element) { this.elementAffinity = element; }
+    
+    /**
+     * Recalculate derived stats after equipment or level changes
+     */
+    public void recalculateStats() {
+        // Base implementation does nothing - override in subclasses
+        // Player/Companion will override to recalculate equipment bonuses
+    }
+    
+    /**
+     * Add an ability to this character
+     * Override in subclasses that have ability lists
+     */
+    public void addAbility(com.rpg.combat.Ability ability) {
+        // Base implementation does nothing - override in subclasses
+    }
+    
+    /**
+     * Get magical attack (alias for getMagicAttack for compatibility)
+     */
+    public double getMagicalAttack() {
+        return getMagicAttack();
+    }
+    
+    /**
+     * Get magical defense (alias for getMagicDefense for compatibility)
+     */
+    public double getMagicalDefense() {
+        return getMagicDefense();
+    }
     
     @Override
     public String toString() {

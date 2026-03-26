@@ -346,6 +346,78 @@ public class AlignmentSystem {
     // ==================== Inner Classes ====================
     
     /**
+     * Companion Alignment Anchor
+     * Defines where a companion naturally sits on the alignment axes
+     * and their breaking point threshold
+     */
+    public static class CompanionAnchor {
+        private final String companionId;
+        private final int honorAnchor;      // Where they naturally sit (-100 to +100)
+        private final int compassionAnchor; // Where they naturally sit (-100 to +100)
+        private final int tolerance;        // How far player can deviate before breaking point
+        
+        public CompanionAnchor(String companionId, int honorAnchor, int compassionAnchor, int tolerance) {
+            this.companionId = companionId;
+            this.honorAnchor = honorAnchor;
+            this.compassionAnchor = compassionAnchor;
+            this.tolerance = tolerance;
+        }
+        
+        /**
+         * Check if player's alignment violates this companion's values
+         * @param playerHonor Player's honor value
+         * @param playerCompassion Player's compassion value
+         * @return true if player has strayed too far from companion's values
+         */
+        public boolean isBreakingPoint(int playerHonor, int playerCompassion) {
+            int honorDiff = Math.abs(playerHonor - honorAnchor);
+            int compassionDiff = Math.abs(playerCompassion - compassionAnchor);
+            
+            // If either axis exceeds tolerance, breaking point reached
+            return honorDiff > tolerance || compassionDiff > tolerance;
+        }
+        
+        /**
+         * Get alignment compatibility score (0-100, higher = more compatible)
+         */
+        public int getCompatibility(int playerHonor, int playerCompassion) {
+            int honorDiff = Math.abs(playerHonor - honorAnchor);
+            int compassionDiff = Math.abs(playerCompassion - compassionAnchor);
+            int totalDiff = honorDiff + compassionDiff;
+            
+            // Convert to 0-100 scale (0 diff = 100 compatibility, max 200 diff = 0 compatibility)
+            return Math.max(0, 100 - (totalDiff / 2));
+        }
+        
+        /**
+         * Get loyalty modifier based on alignment compatibility
+         * Returns value to add/subtract from loyalty per significant choice
+         */
+        public int getLoyaltyModifier(int playerHonor, int playerCompassion) {
+            int compatibility = getCompatibility(playerHonor, playerCompassion);
+            
+            if (compatibility >= 80) return 5;  // Very compatible
+            if (compatibility >= 60) return 2;  // Compatible
+            if (compatibility >= 40) return 0;  // Neutral
+            if (compatibility >= 20) return -2; // Incompatible
+            return -5;  // Very incompatible
+        }
+        
+        public String getCompanionId() { return companionId; }
+        public int getHonorAnchor() { return honorAnchor; }
+        public int getCompassionAnchor() { return compassionAnchor; }
+        public int getTolerance() { return tolerance; }
+        
+        public String getAlignmentDescription() {
+            String honorDesc = honorAnchor > 50 ? "Honorable" : 
+                              honorAnchor < -50 ? "Deceitful" : "Pragmatic";
+            String compassionDesc = compassionAnchor > 50 ? "Merciful" : 
+                                   compassionAnchor < -50 ? "Cruel" : "Balanced";
+            return honorDesc + " / " + compassionDesc;
+        }
+    }
+    
+    /**
      * Record of an alignment-affecting choice
      */
     public static class AlignmentChoice {

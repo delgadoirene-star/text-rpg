@@ -12,7 +12,8 @@ public enum Element {
     WIND,
     LIGHT,
     DARK,
-    NEUTRAL;
+    NEUTRAL,
+    NONE;  // For companions/characters with no element affinity
     
     /**
      * Check if this element has advantage over another
@@ -27,7 +28,7 @@ public enum Element {
             case WATER -> other == FIRE;
             case LIGHT -> other == DARK;
             case DARK -> other == LIGHT;
-            case NEUTRAL -> false;
+            case NEUTRAL, NONE -> false;
         };
     }
     
@@ -37,7 +38,7 @@ public enum Element {
      * @return Damage multiplier (2.0 for advantage, 0.5 for disadvantage, 1.0 neutral)
      */
     public double getDamageMultiplier(Element other) {
-        if (this == NEUTRAL || other == NEUTRAL) return 1.0;
+        if (this == NEUTRAL || this == NONE || other == NEUTRAL || other == NONE) return 1.0;
         if (hasAdvantageOver(other)) return 2.0;
         if (other.hasAdvantageOver(this)) return 0.5;
         return 1.0;

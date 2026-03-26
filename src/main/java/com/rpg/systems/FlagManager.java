@@ -13,6 +13,9 @@ public class FlagManager {
     // Numeric counters for tracking quantities (e.g., "enemies_killed", "gold_spent")
     private Map<String, Integer> counters;
     
+    // Subversion Points for companion quests (tracks hidden morality)
+    private Map<String, SubversionTracker> subversionTrackers;
+    
     // Timed flags that expire after certain conditions
     private Map<String, TimedFlag> timedFlags;
     
@@ -25,6 +28,7 @@ public class FlagManager {
     public FlagManager() {
         this.flags = new HashMap<>();
         this.counters = new HashMap<>();
+        this.subversionTrackers = new HashMap<>();
         this.timedFlags = new HashMap<>();
         this.history = new ArrayList<>();
         this.exclusiveGroups = new HashMap<>();
@@ -178,6 +182,62 @@ public class FlagManager {
      */
     public boolean counterBelow(String counterId, int threshold) {
         return getCounter(counterId) < threshold;
+    }
+    
+    // ==================== Subversion Points ====================
+    
+    /**
+     * Initialize a subversion tracker for a companion's personal quest
+     * @param companionId The companion's ID
+     * @param threshold Points needed to trigger "bad" ending
+     */
+    public void initializeSubversionTracker(String companionId, int threshold) {
+        subversionTrackers.put(companionId, new SubversionTracker(companionId, threshold));
+    }
+    
+    /**
+     * Add subversion points for a companion (tracks immoral choices)
+     * @param companionId The companion's ID
+     * @param points Points to add (positive = toward corruption)
+     * @param reason Description of the choice
+     */
+    public void addSubversionPoints(String companionId, int points, String reason) {
+        SubversionTracker tracker = subversionTrackers.get(companionId);
+        if (tracker != null) {
+            tracker.addPoints(points, reason);
+            
+            // Notify if threshold crossed
+            if (tracker.hasReachedThreshold() && !tracker.wasNotified()) {
+                System.out.println(String.format(
+                    ">>> %s's path darkens... the point of no return approaches.",
+                    companionId
+                ));
+                tracker.setNotified(true);
+            }
+        }
+    }
+    
+    /**
+     * Get subversion points for a companion
+     */
+    public int getSubversionPoints(String companionId) {
+        SubversionTracker tracker = subversionTrackers.get(companionId);
+        return tracker != null ? tracker.getPoints() : 0;
+    }
+    
+    /**
+     * Check if companion has reached corruption threshold
+     */
+    public boolean hasReachedSubversionThreshold(String companionId) {
+        SubversionTracker tracker = subversionTrackers.get(companionId);
+        return tracker != null && tracker.hasReachedThreshold();
+    }
+    
+    /**
+     * Get subversion tracker for debugging
+     */
+    public SubversionTracker getSubversionTracker(String companionId) {
+        return subversionTrackers.get(companionId);
     }
     
     // ==================== Timed Flags ====================
@@ -370,6 +430,81 @@ public class FlagManager {
     }
     
     // ==================== Inner Classes ====================
+    
+    /**
+     * Tracks subversion points for companion personal quests
+     * Hidden morality system that determines good vs bad ending
+     */
+    public static class SubversionTracker {
+        private final String companionId;
+        private int points;
+        private final int threshold;
+        private final List<SubversionChoice> choices;
+        private boolean notified;  // Has player been warned about threshold?
+        
+        public SubversionTracker(String companionId, int threshold) {
+            this.companionId = companionId;
+            this.points = 0;
+            this.threshold = threshold;
+            this.choices = new ArrayList<>();
+            this.notified = false;
+        }
+        
+        public void addPoints(int amount, String reason) {
+            points += amount;
+            choices.add(new SubversionChoice(amount, reason, System.currentTimeMillis()));
+        }
+        
+        public boolean hasReachedThreshold() {
+            return points >= threshold;
+        }
+        
+        public String getCompanionId() { return companionId; }
+        public int getPoints() { return points; }
+        public int getThreshold() { return threshold; }
+        public List<SubversionChoice> getChoices() { return new ArrayList<>(choices); }
+        public boolean wasNotified() { return notified; }
+        public void setNotified(boolean notified) { this.notified = notified; }
+        
+        /**
+         * Get the outcome path (PURE, CORRUPTED, or NEUTRAL)
+         */
+        public String getOutcomePath() {
+            if (points == 0) return "PURE";
+            if (points >= threshold) return "CORRUPTED";
+            return "NEUTRAL";
+        }
+        
+        @Override
+        public String toString() {
+            return String.format("%s: %d/%d points (%s path)", 
+                companionId, points, threshold, getOutcomePath());
+        }
+    }
+    
+    /**
+     * Record of a subversion choice
+     */
+    public static class SubversionChoice {
+        private final int points;
+        private final String reason;
+        private final long timestamp;
+        
+        public SubversionChoice(int points, String reason, long timestamp) {
+            this.points = points;
+            this.reason = reason;
+            this.timestamp = timestamp;
+        }
+        
+        public int getPoints() { return points; }
+        public String getReason() { return reason; }
+        public long getTimestamp() { return timestamp; }
+        
+        @Override
+        public String toString() {
+            return String.format("[%d] +%d: %s", timestamp, points, reason);
+        }
+    }
     
     /**
      * Timed flag that expires after duration

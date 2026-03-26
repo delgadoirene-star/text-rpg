@@ -3,7 +3,9 @@ package com.rpg.models;
 import com.rpg.combat.FocusMeter;
 import com.rpg.combat.Ability;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,6 +41,9 @@ public class Companion extends Character {
     // Dialogue and interactions
     private Map<String, String> dialogueResponses; // Situation → Response
     
+    // Abilities
+    private List<Ability> abilities;
+    
     public Companion(String id, String name, int level, Stats baseStats, 
                      Element elementAffinity, Background background, GameClass startingClass) {
         super(id, name, level, baseStats, elementAffinity);
@@ -70,6 +75,9 @@ public class Companion extends Character {
         
         // Initialize dialogue
         this.dialogueResponses = new HashMap<>();
+        
+        // Initialize abilities
+        this.abilities = new ArrayList<>();
     }
     
     // ==================== Builder Pattern ====================
@@ -232,7 +240,7 @@ public class Companion extends Character {
     }
     
     public void addFocus(int amount) {
-        focusMeter.addFocus(amount);
+        focusMeter.addFocus(amount, 1.0);
     }
     
     public boolean canUseAbility(Ability ability) {
@@ -259,6 +267,35 @@ public class Companion extends Character {
         }
         
         return true;
+    }
+    
+    /**
+     * Add an ability to the companion
+     */
+    @Override
+    public void addAbility(Ability ability) {
+        if (ability != null) {
+            abilities.add(ability);
+        }
+    }
+    
+    /**
+     * Get all abilities this companion has
+     */
+    public List<Ability> getAbilities() {
+        return new ArrayList<>(abilities);
+    }
+    
+    /**
+     * Recalculate derived stats after equipment or level changes
+     */
+    @Override
+    public void recalculateStats() {
+        // Update max HP if it changed
+        int newMaxHP = getMaxHP();
+        if (currentHP > newMaxHP) {
+            currentHP = newMaxHP;
+        }
     }
     
     public boolean canChangeToClass(GameClass newClass) {

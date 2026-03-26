@@ -33,7 +33,48 @@ public enum Background {
     ACOLYTE("Acolyte",
         "Raised in service to the divine",
         new String[]{"TEMPLAR", "CLERIC", "ORACLE", "MENDICANT"},
-        new String[]{"Faith", "divine power", "spiritual balance"});
+        new String[]{"Faith", "divine power", "spiritual balance"}),
+    
+    // Additional backgrounds for companions
+    NOBLE("Noble",
+        "Born to privilege and expectations",
+        new String[]{"CAVALIER", "DUELIST", "COURTIER"},
+        new String[]{"Honor", "tradition", "duty"}),
+    
+    STREET_RAT("Street Rat",
+        "Raised in poverty and crime",
+        new String[]{"CUTTHROAT", "GRIFTER", "PROWLER"},
+        new String[]{"Survival", "pragmatism", "loyalty"}),
+    
+    TRIBAL("Tribal",
+        "From the wild places beyond civilization",
+        new String[]{"WARDEN", "PREDATOR", "WILDSPEAKER"},
+        new String[]{"Nature", "community", "tradition"}),
+    
+    MONK("Monk",
+        "Trained in monastic discipline",
+        new String[]{"TEMPLAR", "MENDICANT", "TACTICIAN"},
+        new String[]{"Balance", "self-mastery", "enlightenment"}),
+    
+    SPY("Spy",
+        "Trained in espionage and subterfuge",
+        new String[]{"PROWLER", "GRIFTER", "CHRONICLER"},
+        new String[]{"Information", "leverage", "survival"}),
+    
+    SHAMAN("Shaman",
+        "Spiritual guide and mystic",
+        new String[]{"WILDSPEAKER", "ORACLE", "NATURALIST"},
+        new String[]{"Spirits", "sacrifice", "balance"}),
+    
+    HERETIC("Heretic",
+        "Cast out from sacred orders",
+        new String[]{"TEMPLAR", "ENCHANTER", "MENDICANT"},
+        new String[]{"Bitterness", "power", "vengeance"}),
+    
+    OUTCAST("Outcast",
+        "Rejected by society",
+        new String[]{"EVOKER", "ENCHANTER", "NATURALIST"},
+        new String[]{"Knowledge", "transcendence", "revenge"});
     
     private final String displayName;
     private final String description;

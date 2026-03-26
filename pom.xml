@@ -7,16 +7,17 @@
 
     <groupId>com.rpg</groupId>
     <artifactId>text-rpg</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Text-Based RPG</name>
-    <description>A complex story-driven text RPG with deep combat mechanics</description>
+    <name>The Shattered Records</name>
+    <description>A complex story-driven RPG with deep combat mechanics - Console and JavaFX GUI</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>21.0.1</javafx.version>
     </properties>
 
     <dependencies>
@@ -39,6 +40,28 @@
             <groupId>org.fusesource.jansi</groupId>
             <artifactId>jansi</artifactId>
             <version>2.4.0</version>
+        </dependency>
+
+        <!-- JavaFX Dependencies -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>${javafx.version}</version>
         </dependency>
 
         <!-- Testing -->
@@ -85,6 +108,26 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- Run with: mvn exec:java (console mode) -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.rpg.Main</mainClass>
+                </configuration>
+            </plugin>
+
+            <!-- JavaFX Maven Plugin - Run with: mvn javafx:run -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>com.rpg.Main</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>

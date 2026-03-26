@@ -1,0 +1,606 @@
+/*
+ * Dark Fantasy RPG - JavaFX Stylesheet
+ * Theme: Dark Fantasy with gold/red accents, medieval aesthetic
+ */
+
+/* ==================== Color Variables ==================== */
+/* Using looked-up colors for consistency */
+.root {
+    -fx-base: #1a1a1a;
+    -fx-background: #0d0d0d;
+    -fx-control-inner-background: #1e1e1e;
+    -fx-accent: #c9a227;
+    -fx-focus-color: #c9a227;
+    -fx-faint-focus-color: transparent;
+    
+    /* Custom colors */
+    -gold: #c9a227;
+    -gold-bright: #e6c35c;
+    -gold-dark: #8b7019;
+    -crimson: #8b0000;
+    -crimson-bright: #dc143c;
+    -blood: #660000;
+    -parchment: #d4c4a8;
+    -parchment-dark: #a89878;
+    -shadow: #0a0a0a;
+    -panel-bg: linear-gradient(to bottom, #1e1e1e, #151515);
+    -panel-border: #3d3d3d;
+}
+
+/* ==================== Root Pane ==================== */
+.root-pane {
+    -fx-background-color: #0d0d0d;
+}
+
+/* ==================== Top Bar ==================== */
+.top-bar {
+    -fx-background-color: linear-gradient(to bottom, #252525, #1a1a1a);
+    -fx-border-color: transparent transparent #c9a227 transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 10 20 10 20;
+}
+
+.info-label {
+    -fx-text-fill: #d4c4a8;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 14px;
+}
+
+.menu-button {
+    -fx-background-color: linear-gradient(to bottom, #3d3d3d, #252525);
+    -fx-text-fill: #c9a227;
+    -fx-border-color: #c9a227;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-padding: 5 15 5 15;
+    -fx-font-family: "Georgia";
+    -fx-cursor: hand;
+}
+
+.menu-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #4d4d4d, #353535);
+    -fx-border-color: #e6c35c;
+}
+
+.menu-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #252525, #1a1a1a);
+}
+
+/* ==================== Content Area ==================== */
+.content-area {
+    -fx-background-color: #0d0d0d;
+    -fx-padding: 10;
+}
+
+/* ==================== Message Display ==================== */
+.message-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.message-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.message-scroll .scroll-bar:vertical {
+    -fx-background-color: #1a1a1a;
+}
+
+.message-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: #3d3d3d;
+    -fx-background-radius: 3;
+}
+
+.message-scroll .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #4d4d4d;
+}
+
+.message-display {
+    -fx-background-color: linear-gradient(to bottom, #1a1a1a, #121212);
+    -fx-padding: 10;
+    -fx-border-color: #3d3d3d;
+    -fx-border-width: 1;
+}
+
+.message-text {
+    -fx-fill: #d4c4a8;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 13px;
+}
+
+/* ==================== Action Panel ==================== */
+.action-panel {
+    -fx-background-color: linear-gradient(to right, #1a1a1a, #151515);
+    -fx-border-color: #c9a227 transparent transparent transparent;
+    -fx-border-width: 2 0 0 0;
+    -fx-padding: 15;
+}
+
+.panel-title {
+    -fx-text-fill: #c9a227;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;
+}
+
+.action-button {
+    -fx-background-color: linear-gradient(to bottom, #2d2d2d, #1e1e1e);
+    -fx-text-fill: #d4c4a8;
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-padding: 8 15 8 15;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.action-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #3d3d3d, #2d2d2d);
+    -fx-border-color: #c9a227;
+    -fx-text-fill: #c9a227;
+}
+
+.action-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #1e1e1e, #151515);
+}
+
+.action-button:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* ==================== Party Status Bar ==================== */
+.party-status-bar {
+    -fx-background-color: linear-gradient(to top, #1a1a1a, #252525);
+    -fx-border-color: #c9a227 transparent transparent transparent;
+    -fx-border-width: 2 0 0 0;
+    -fx-padding: 10 20 10 20;
+}
+
+.character-card {
+    -fx-background-color: linear-gradient(to bottom, #252525, #1e1e1e);
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8;
+}
+
+.character-card:hover {
+    -fx-border-color: #c9a227;
+}
+
+.player-card {
+    -fx-border-color: #c9a227;
+    -fx-border-width: 2;
+}
+
+.character-name {
+    -fx-text-fill: #e6c35c;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.character-class {
+    -fx-text-fill: #a89878;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 11px;
+}
+
+.stat-label {
+    -fx-text-fill: #888888;
+    -fx-font-family: "Consolas";
+    -fx-font-size: 10px;
+}
+
+.stat-value {
+    -fx-text-fill: #d4c4a8;
+    -fx-font-family: "Consolas";
+    -fx-font-size: 10px;
+}
+
+/* HP Bar */
+.hp-bar {
+    -fx-accent: #8b0000;
+}
+
+.hp-bar .track {
+    -fx-background-color: #2d2d2d;
+    -fx-background-radius: 3;
+}
+
+.hp-bar .bar {
+    -fx-background-color: linear-gradient(to bottom, #dc143c, #8b0000);
+    -fx-background-radius: 3;
+    -fx-background-insets: 0;
+}
+
+/* MP Bar */
+.mp-bar {
+    -fx-accent: #1e3a5f;
+}
+
+.mp-bar .track {
+    -fx-background-color: #2d2d2d;
+    -fx-background-radius: 3;
+}
+
+.mp-bar .bar {
+    -fx-background-color: linear-gradient(to bottom, #4a90d9, #1e3a5f);
+    -fx-background-radius: 3;
+    -fx-background-insets: 0;
+}
+
+/* ==================== Title Screen ==================== */
+.title-screen {
+    -fx-background-color: linear-gradient(to bottom, #0a0a0a, #1a1a1a, #0a0a0a);
+}
+
+.title-text {
+    -fx-fill: #c9a227;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #8b0000, 10, 0.5, 0, 2);
+}
+
+.subtitle-text {
+    -fx-fill: #a89878;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+}
+
+.title-button {
+    -fx-background-color: linear-gradient(to bottom, #2d2d2d, #1a1a1a);
+    -fx-text-fill: #c9a227;
+    -fx-border-color: #c9a227;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 12 40 12 40;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, #000000, 5, 0.5, 0, 2);
+}
+
+.title-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #3d3d3d, #252525);
+    -fx-border-color: #e6c35c;
+    -fx-text-fill: #e6c35c;
+}
+
+.title-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #1a1a1a, #0d0d0d);
+}
+
+/* ==================== Character Creation ==================== */
+.creation-panel {
+    -fx-background-color: linear-gradient(to bottom, #1e1e1e, #151515);
+    -fx-border-color: #c9a227;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 30;
+}
+
+.creation-title {
+    -fx-text-fill: #c9a227;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.creation-label {
+    -fx-text-fill: #d4c4a8;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 14px;
+}
+
+.creation-input {
+    -fx-background-color: #252525;
+    -fx-text-fill: #d4c4a8;
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-padding: 8;
+    -fx-font-family: "Georgia";
+}
+
+.creation-input:focused {
+    -fx-border-color: #c9a227;
+}
+
+/* ==================== Tooltips ==================== */
+.game-tooltip {
+    -fx-background-color: linear-gradient(to bottom, #252525, #1a1a1a);
+    -fx-text-fill: #d4c4a8;
+    -fx-border-color: #c9a227;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 12px;
+    -fx-effect: dropshadow(gaussian, #000000, 8, 0.5, 0, 2);
+}
+
+.tooltip-title {
+    -fx-fill: #c9a227;
+    -fx-font-weight: bold;
+}
+
+.tooltip-stat {
+    -fx-fill: #d4c4a8;
+}
+
+.tooltip-description {
+    -fx-fill: #a89878;
+    -fx-font-style: italic;
+}
+
+/* Status effect colors */
+.status-buff {
+    -fx-fill: #4a90d9;
+}
+
+.status-debuff {
+    -fx-fill: #dc143c;
+}
+
+.status-neutral {
+    -fx-fill: #a89878;
+}
+
+/* ==================== Combat View ==================== */
+.combat-area {
+    -fx-background-color: linear-gradient(to bottom, #151515, #0d0d0d);
+    -fx-padding: 20;
+}
+
+.enemy-card {
+    -fx-background-color: linear-gradient(to bottom, #2d1515, #1e0a0a);
+    -fx-border-color: #8b0000;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+}
+
+.enemy-card:hover {
+    -fx-border-color: #dc143c;
+}
+
+.enemy-name {
+    -fx-text-fill: #dc143c;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.combat-log {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #3d3d3d;
+    -fx-border-width: 1;
+}
+
+.combat-log .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #d4c4a8;
+    -fx-font-family: "Consolas";
+    -fx-font-size: 12px;
+    -fx-padding: 2 5 2 5;
+}
+
+.combat-log .list-cell:odd {
+    -fx-background-color: #1e1e1e;
+}
+
+/* ==================== Exploration View ==================== */
+.exploration-area {
+    -fx-background-color: #0d0d0d;
+    -fx-padding: 15;
+}
+
+.location-card {
+    -fx-background-color: linear-gradient(to bottom, #1e1e1e, #151515);
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 20;
+}
+
+.location-name {
+    -fx-text-fill: #c9a227;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.location-description {
+    -fx-text-fill: #a89878;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 14px;
+    -fx-wrap-text: true;
+}
+
+.location-type {
+    -fx-text-fill: #666666;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+}
+
+/* ==================== Dialog ==================== */
+.game-dialog {
+    -fx-background-color: #1a1a1a;
+}
+
+.game-dialog .dialog-pane {
+    -fx-background-color: linear-gradient(to bottom, #1e1e1e, #151515);
+    -fx-border-color: #c9a227;
+    -fx-border-width: 2;
+}
+
+.game-dialog .dialog-pane > .button-bar > .container {
+    -fx-background-color: #1a1a1a;
+}
+
+.game-dialog .header-panel {
+    -fx-background-color: linear-gradient(to bottom, #252525, #1e1e1e);
+}
+
+.game-dialog .header-panel .label {
+    -fx-text-fill: #c9a227;
+    -fx-font-family: "Georgia";
+    -fx-font-size: 16px;
+}
+
+/* ==================== Scroll Bars ==================== */
+.scroll-bar {
+    -fx-background-color: #1a1a1a;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #3d3d3d;
+    -fx-background-radius: 3;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #4d4d4d;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: #252525;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: #666666;
+}
+
+/* ==================== Combo Box ==================== */
+.combo-box {
+    -fx-background-color: #252525;
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.combo-box:hover {
+    -fx-border-color: #c9a227;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: #252525;
+    -fx-text-fill: #d4c4a8;
+    -fx-font-family: "Georgia";
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #252525;
+    -fx-border-color: #c9a227;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #3d3d3d;
+}
+
+.combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: #8b7019;
+}
+
+/* ==================== Check Box ==================== */
+.check-box {
+    -fx-text-fill: #d4c4a8;
+    -fx-font-family: "Georgia";
+}
+
+.check-box .box {
+    -fx-background-color: #252525;
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 1;
+    -fx-border-radius: 2;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #c9a227;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #1a1a1a;
+}
+
+/* ==================== Alignment Display ==================== */
+.alignment-meter {
+    -fx-background-color: #252525;
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 1;
+    -fx-border-radius: 3;
+}
+
+.alignment-honor {
+    -fx-background-color: linear-gradient(to right, #c9a227, #e6c35c);
+}
+
+.alignment-pragmatic {
+    -fx-background-color: linear-gradient(to right, #666666, #888888);
+}
+
+.alignment-compassion {
+    -fx-background-color: linear-gradient(to right, #4a90d9, #6ab0f9);
+}
+
+.alignment-ruthless {
+    -fx-background-color: linear-gradient(to right, #8b0000, #dc143c);
+}
+
+/* ==================== Element Icons ==================== */
+.element-fire {
+    -fx-text-fill: #ff4500;
+}
+
+.element-water {
+    -fx-text-fill: #4169e1;
+}
+
+.element-earth {
+    -fx-text-fill: #8b4513;
+}
+
+.element-air {
+    -fx-text-fill: #87ceeb;
+}
+
+.element-light {
+    -fx-text-fill: #ffd700;
+}
+
+.element-dark {
+    -fx-text-fill: #4b0082;
+}
+
+.element-lightning {
+    -fx-text-fill: #ffff00;
+}
+
+.element-ice {
+    -fx-text-fill: #00ced1;
+}
+
+.element-nature {
+    -fx-text-fill: #228b22;
+}
+
+.element-arcane {
+    -fx-text-fill: #9932cc;
+}

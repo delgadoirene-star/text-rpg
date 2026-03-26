@@ -1,6 +1,7 @@
 package com.rpg.combat;
 
 import com.rpg.models.Character;
+import com.rpg.models.Companion;
 import com.rpg.models.Element;
 import com.rpg.models.Enemy;
 
@@ -192,25 +193,195 @@ public class CombatEngine {
     }
     
     /**
-     * Execute player turn (for now, just basic attack on random enemy)
+     * Execute player turn - uses companion AI for Companion characters
      */
     private List<TurnEvent> executePlayerTurn(Character player) {
         List<TurnEvent> events = new ArrayList<>();
         
-        // Select random alive enemy
         List<Enemy> aliveEnemies = getAliveEnemies();
         if (aliveEnemies.isEmpty()) {
             return events;
         }
         
-        Enemy target = aliveEnemies.get(new Random().nextInt(aliveEnemies.size()));
+        // Check if this character is a Companion with AI
+        if (player instanceof Companion companion) {
+            return executeCompanionTurn(companion, aliveEnemies);
+        }
         
+        // Default: basic attack on random enemy
+        Enemy target = aliveEnemies.get(new Random().nextInt(aliveEnemies.size()));
         events.add(new TurnEvent(TurnEvent.Type.ACTION, player, target,
             player.getName() + " attacks " + target.getName() + "!"));
-        
         events.addAll(executeBasicAttack(player, target));
         
         return events;
+    }
+    
+    /**
+     * Execute companion turn using AI based on combatRole and preferredTarget
+     */
+    private List<TurnEvent> executeCompanionTurn(Companion companion, List<Enemy> aliveEnemies) {
+        List<TurnEvent> events = new ArrayList<>();
+        
+        CompanionAIDecision decision = makeCompanionDecision(companion, aliveEnemies);
+        
+        events.add(new TurnEvent(TurnEvent.Type.ACTION, companion, decision.target,
+            companion.getName() + "'s turn: " + decision.reasoning));
+        
+        if (decision.ability != null && companion.canUseAbility(decision.ability)) {
+            events.addAll(executeAbility(companion, decision.target, decision.ability));
+            companion.spendFocus(decision.ability);
+        } else {
+            events.addAll(executeBasicAttack(companion, decision.target));
+        }
+        
+        return events;
+    }
+    
+    /**
+     * Make an AI decision for a companion based on combatRole and preferredTarget
+     */
+    private CompanionAIDecision makeCompanionDecision(Companion companion, List<Enemy> enemies) {
+        String role = companion.getCombatRole();
+        String targetPref = companion.getPreferredTarget();
+        
+        // Select target based on preferredTarget
+        Character target = selectTarget(companion, enemies, targetPref);
+        
+        // Select action based on combatRole
+        Ability ability = selectAbility(companion, role, target, enemies);
+        
+        String reasoning;
+        if (ability != null) {
+            reasoning = String.format("[%s] Using %s on %s", role, ability.getName(), target.getName());
+        } else {
+            reasoning = String.format("[%s] Attacking %s", role, target.getName());
+        }
+        
+        return new CompanionAIDecision(ability, target, reasoning);
+    }
+    
+    /**
+     * Select target based on companion's preferredTarget setting
+     */
+    private Character selectTarget(Companion companion, List<Enemy> enemies, String preferredTarget) {
+        return switch (preferredTarget != null ? preferredTarget : "Random") {
+            case "Weakest" -> enemies.stream()
+                .min(Comparator.comparingInt(Character::getCurrentHP))
+                .orElse(enemies.get(0));
+            case "Strongest" -> enemies.stream()
+                .max(Comparator.comparingInt(Character::getCurrentHP))
+                .orElse(enemies.get(0));
+            case "LowestHP%" -> enemies.stream()
+                .min(Comparator.comparingDouble(Character::getHPPercentage))
+                .orElse(enemies.get(0));
+            case "ElementWeak" -> {
+                // Find enemy weak against companion's element
+                Element compElement = companion.getElementAffinity();
+                Character weakTarget = enemies.stream()
+                    .filter(e -> compElement.hasAdvantageOver(e.getElementAffinity()))
+                    .findFirst()
+                    .orElse(null);
+                yield weakTarget != null ? weakTarget : enemies.get(0);
+            }
+            default -> // "Random" or unknown
+                enemies.get(new Random().nextInt(enemies.size()));
+        };
+    }
+    
+    /**
+     * Select ability based on combat role
+     */
+    private Ability selectAbility(Companion companion, String role, Character target, List<Enemy> enemies) {
+        List<Ability> readyAbilities = companion.getAbilities() != null ?
+            companion.getAbilities().stream()
+                .filter(a -> a.isReady() && companion.canUseAbility(a))
+                .collect(Collectors.toList()) :
+            Collections.emptyList();
+        
+        if (readyAbilities.isEmpty()) return null;
+        
+        return switch (role != null ? role : "Balanced") {
+            case "Tank" -> selectTankAbility(readyAbilities, companion);
+            case "DPS" -> selectDPSAbility(readyAbilities, target);
+            case "Support" -> selectSupportAbility(readyAbilities, companion, getAlivePlayerParty());
+            default -> selectBalancedAbility(readyAbilities, companion, target);
+        };
+    }
+    
+    /**
+     * Tank role: Prefer defensive/self-buff abilities
+     */
+    private Ability selectTankAbility(List<Ability> abilities, Companion self) {
+        // Prioritize defensive abilities (self-buffs, barriers)
+        for (Ability ability : abilities) {
+            if (ability.getTargetType() == AbilityTarget.SELF && !ability.getStatusEffects().isEmpty()) {
+                return ability;
+            }
+            if (ability.getTargetType() == AbilityTarget.ALL_ALLIES && !ability.getStatusEffects().isEmpty()) {
+                return ability;
+            }
+        }
+        // Fall back to highest power attack
+        return abilities.stream()
+            .max(Comparator.comparingDouble(Ability::getBasePower))
+            .orElse(null);
+    }
+    
+    /**
+     * DPS role: Prefer highest damage abilities
+     */
+    private Ability selectDPSAbility(List<Ability> abilities, Character target) {
+        return abilities.stream()
+            .filter(a -> a.getDamageType() != DamageType.HEALING)
+            .max(Comparator.comparingDouble(Ability::getBasePower))
+            .orElse(abilities.get(0));
+    }
+    
+    /**
+     * Support role: Prefer healing/buffing abilities
+     */
+    private Ability selectSupportAbility(List<Ability> abilities, Companion self, List<Character> allies) {
+        // Check if any ally is below 50% HP - heal them
+        boolean allyNeedsHealing = allies.stream()
+            .anyMatch(a -> a.getHPPercentage() < 50);
+        
+        if (allyNeedsHealing) {
+            Ability heal = abilities.stream()
+                .filter(a -> a.getDamageType() == DamageType.HEALING)
+                .findFirst()
+                .orElse(null);
+            if (heal != null) return heal;
+        }
+        
+        // Otherwise, use a buff ability
+        Ability buff = abilities.stream()
+            .filter(a -> a.getTargetType() == AbilityTarget.ALL_ALLIES)
+            .findFirst()
+            .orElse(null);
+        if (buff != null) return buff;
+        
+        // Fall back to any available ability
+        return abilities.get(0);
+    }
+    
+    /**
+     * Balanced role: Mix of offense and defense
+     */
+    private Ability selectBalancedAbility(List<Ability> abilities, Companion self, Character target) {
+        // If self HP is low, prefer healing
+        if (self.getHPPercentage() < 30) {
+            Ability heal = abilities.stream()
+                .filter(a -> a.getDamageType() == DamageType.HEALING)
+                .findFirst()
+                .orElse(null);
+            if (heal != null) return heal;
+        }
+        
+        // Otherwise use the highest power ability available
+        return abilities.stream()
+            .max(Comparator.comparingDouble(Ability::getBasePower))
+            .orElse(null);
     }
     
     /**
@@ -418,5 +589,20 @@ public class CombatEngine {
         
         public boolean isVictory() { return victory; }
         public String getMessage() { return message; }
+    }
+    
+    /**
+     * Decision made by companion AI
+     */
+    private static class CompanionAIDecision {
+        final Ability ability;
+        final Character target;
+        final String reasoning;
+        
+        CompanionAIDecision(Ability ability, Character target, String reasoning) {
+            this.ability = ability;
+            this.target = target;
+            this.reasoning = reasoning;
+        }
     }
 }

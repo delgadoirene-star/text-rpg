@@ -1,64 +1,128 @@
 package com.rpg.ui;
 
-import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.AnsiConsole;
-
-import static org.fusesource.jansi.Ansi.ansi;
+import java.util.Scanner;
 
 /**
- * Handles all console output and formatting
+ * Handles all console output and formatting.
+ * ANSI colors are optional - works fine in plain terminals too.
  */
 public class ConsoleUI {
     
+    private final Scanner scanner;
+    private final boolean ansiEnabled;
+    
+    // ANSI escape codes (no library needed)
+    private static final String RESET = "\u001B[0m";
+    private static final String RED = "\u001B[31m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String CYAN = "\u001B[36m";
+    private static final String BOLD = "\u001B[1m";
+    
     public ConsoleUI() {
-        AnsiConsole.systemInstall();
+        this.scanner = new Scanner(System.in);
+        this.ansiEnabled = detectAnsi();
     }
+    
+    private boolean detectAnsi() {
+        // Check if terminal supports ANSI
+        String term = System.getenv("TERM");
+        String os = System.getProperty("os.name", "").toLowerCase();
+        if (os.contains("win")) {
+            // Windows CMD/PowerShell - ANSI support varies
+            return System.getenv("WT_SESSION") != null || // Windows Terminal
+                   System.getenv("TERM_PROGRAM") != null; // VS Code terminal, etc.
+        }
+        // Unix/macOS - almost always supports ANSI
+        return term != null && !term.equals("dumb");
+    }
+    
+    // ==================== ANSI helpers ====================
+    
+    private String color(String code, String text) {
+        if (ansiEnabled) return code + text + RESET;
+        return text;
+    }
+    
+    // ==================== Display Methods ====================
     
     public void displayWelcome() {
         clearScreen();
         
-        System.out.println(ansi().fg(Ansi.Color.CYAN).a(
-            """
+        String title = """
             ╔═══════════════════════════════════════════════════════════════╗
             ║                                                               ║
-            ║                    TEXT-BASED RPG                             ║
+            ║                  THE SHATTERED RECORDS                        ║
             ║                                                               ║
-            ║              A Story-Driven Adventure                         ║
+            ║              A Story-Driven Alpha Demo                        ║
             ║                                                               ║
             ╚═══════════════════════════════════════════════════════════════╝
-            """
-        ).reset());
+            """;
+        System.out.println(color(CYAN, title));
     }
     
     public void displayMessage(String message) {
         System.out.println(message);
     }
     
-    public void displayMessage(String message, Ansi.Color color) {
-        System.out.println(ansi().fg(color).a(message).reset());
+    public void displayColored(String message, String colorCode) {
+        System.out.println(color(colorCode, message));
+    }
+    
+    /**
+     * Compatibility method for old Jansi-based callers
+     */
+    public void displayMessage(String message, Object color) {
+        System.out.println(message);
     }
     
     public void displayError(String error) {
-        System.out.println(ansi().fg(Ansi.Color.RED).a("ERROR: " + error).reset());
+        System.out.println(color(RED, "ERROR: " + error));
     }
     
     public void displaySuccess(String success) {
-        System.out.println(ansi().fg(Ansi.Color.GREEN).a(success).reset());
+        System.out.println(color(GREEN, success));
     }
     
     public void displayWarning(String warning) {
-        System.out.println(ansi().fg(Ansi.Color.YELLOW).a("WARNING: " + warning).reset());
+        System.out.println(color(YELLOW, "WARNING: " + warning));
     }
     
     public void clearScreen() {
-        System.out.print(ansi().eraseScreen().cursor(1, 1));
+        // Try ANSI clear, fall back to blank lines
+        if (ansiEnabled) {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+        } else {
+            for (int i = 0; i < 3; i++) System.out.println();
+        }
     }
     
     public void displaySeparator() {
         System.out.println("═══════════════════════════════════════════════════════════════");
     }
     
+    // ==================== Input Methods ====================
+    
+    /**
+     * Prompt for yes/no confirmation
+     */
+    public boolean displayConfirm(String prompt) {
+        System.out.println(prompt + " [y/n]");
+        System.out.print("> ");
+        String input = scanner.nextLine().trim().toLowerCase();
+        return input.equals("y") || input.equals("yes");
+    }
+    
+    /**
+     * Prompt for a line of input
+     */
+    public String promptInput(String prompt) {
+        System.out.print(prompt + " ");
+        return scanner.nextLine().trim();
+    }
+    
     public void cleanup() {
-        AnsiConsole.systemUninstall();
+        // Nothing to clean up without Jansi
     }
 }
