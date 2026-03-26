@@ -1,5 +1,17 @@
 # Class System Design v2
 
+## The Companion Rework Framework
+
+To rework a companion, put them through this three-step design filter:
+
+1. **The Alignment Anchor**: Where does this companion naturally sit on the Dual-Axis (Honor <-> Deceit, Compassion <-> Cruelty)?
+
+2. **The Breaking Point**: What specific player alignment or action (Flag) will cause them to lose loyalty, leave the party, or even turn hostile?
+
+3. **The Quest Subversion**: How can their personal quest challenge their alignment anchor, forcing the player to either push them toward an "Ultimate/Secret" mindset or ruin their purity?
+
+---
+
 ## Alignment System
 
 ### Dual-Axis Morality
@@ -32,7 +44,46 @@ Two independent axes track the player's moral choices:
 
 ---
 
-## Background → Base Classes (Revised - No Overlaps)
+## Worldbuilding: The Four Regions
+
+### 1. The Archivist Core (Formerly The Hegemony)
+
+- **Cultural Vibe**: Obsessed with permanence, history, and rigid law. They are not "evil military guys" - they record everything. Their magic is geometric and bound by strict laws.
+- **Alignment Tendency**: +Honor (Lawful), -Compassion (Bureaucratic/Cold)
+- **Phonetics**: Persian/Sanskrit rhythms with architectural/metallic concepts. Polysyllabic, rolling, ending in sharp resonant sounds (-ath, -el, -za).
+- **Naming Convention**: [Given Name] + [Caste-Prefix] + [Patron/Guild]
+  - `vex` = military caste
+  - `ves` = academic/licensed mage caste
+  - `nul` = caste-less or exiled
+- **Examples**: Isolde vex-Torvath, Dr. Sybilla ves-Vael, Garrick nul-Kael
+
+### 2. The Sump / The Drowned Wards
+
+- **Cultural Vibe**: A vertical, waterlogged slum built into ancient ruins. Everyone is hustling to survive. Time is money, people speak fast and clip words.
+- **Alignment Tendency**: -Honor (Deceitful/Pragmatic), +Compassion (Community-focused)
+- **Phonetics**: Creole/Pidgin concepts. Short vowels, glottal stops, dropped syllables. Names are often clipped monikers.
+- **Naming Convention**: Surnames don't exist. [One-Syllable Name] + [Earned Moniker/Trade/Flaw]
+- **Examples**: Bram "The Vulture", Sash "Velvet", Vek "Glass"
+
+### 3. The Choke / The Symbiote Wilds
+
+- **Cultural Vibe**: A hyper-evolved, aggressive ecosystem. People survive by merging with nature through biological symbiosis. They romanticize their horrific bond with the wild.
+- **Alignment Tendency**: 0 Honor (Wild), Variable Compassion
+- **Phonetics**: Clicking consonants (Q, K, X) mixed with deep guttural vowels (U, O). Sounds like things snapping and growing.
+- **Naming Convention**: [Given Name] + [Biological Bond]. Their name reflects what organism they are bound to.
+- **Examples**: Oona Pale-Sap, Ghor Iron-Root, Maeva Still-Water
+
+### 4. The Zenith / The Deep Cloisters
+
+- **Cultural Vibe**: Monasteries built in extreme elemental hazard zones (active volcanoes, anti-gravity rocks). They believe mortal attachments weigh the soul down.
+- **Alignment Tendency**: Extreme Purity (+100 or -100)
+- **Phonetics**: Breathless, resonant sounds. Monosyllabic. Lots of M, N, L, and soft vowels. Like meditation chants.
+- **Naming Convention**: Upon joining, they surrender their birth name and take a [Concept Title] + [Numerical Rank]
+- **Examples**: Balance-Ninth, Void-Exile
+
+---
+
+## Background -> Base Classes (Revised - No Overlaps)
 
 ### 1. NOBLE BORN
 *Philosophy: Authority, martial prowess, leadership*
@@ -45,10 +96,10 @@ Two independent axes track the player's moral choices:
 | **Vanguard** | Off-tank/DPS | STR, DEX | First strike, formation bonuses |
 
 **Advanced Classes (Level 15+):**
-- Cavalier → **Dragon Knight** (flying mount) OR **Iron Bulwark** (unmovable tank)
-- Courtier → **War Marshal** (army-scale buffs) OR **Silver Tongue** (enemy manipulation)
-- Duelist → **Blade Saint** (instant kill on crit) OR **Phantom Fencer** (afterimages)
-- Vanguard → **Champion** (challenge enemies) OR **Linebreaker** (AoE charge)
+- Cavalier -> **Dragon Knight** (flying mount) OR **Iron Bulwark** (unmovable tank)
+- Courtier -> **War Marshal** (army-scale buffs) OR **Silver Tongue** (enemy manipulation)
+- Duelist -> **Blade Saint** (instant kill on crit) OR **Phantom Fencer** (afterimages)
+- Vanguard -> **Champion** (challenge enemies) OR **Linebreaker** (AoE charge)
 
 ---
 
@@ -63,10 +114,10 @@ Two independent axes track the player's moral choices:
 | **Prowler** | Evasion Tank | DEX, VIT | Dodge-tank, smoke bombs |
 
 **Advanced Classes (Level 15+):**
-- Cutthroat → **Deathblade** (guaranteed crits from stealth) OR **Shade** (invisibility master)
-- Grifter → **Mastermind** (control enemy actions) OR **Fence** (item manipulation)
-- Brawler → **Pit Fighter** (stronger when wounded) OR **Street Legend** (intimidation)
-- Prowler → **Phantom** (phase through attacks) OR **Trapmaster** (battlefield control)
+- Cutthroat -> **Deathblade** (guaranteed crits from stealth) OR **Shade** (invisibility master)
+- Grifter -> **Mastermind** (control enemy actions) OR **Fence** (item manipulation)
+- Brawler -> **Pit Fighter** (stronger when wounded) OR **Street Legend** (intimidation)
+- Prowler -> **Phantom** (phase through attacks) OR **Trapmaster** (battlefield control)
 
 ---
 
@@ -81,10 +132,10 @@ Two independent axes track the player's moral choices:
 | **Chronicler** | Utility | WIS, LUK | Identify weaknesses, lore bonuses |
 
 **Advanced Classes (Level 15+):**
-- Evoker → **Archmage** (dual-cast spells) OR **Elementalist** (fuse elements)
-- Enchanter → **Runesmith** (permanent enchants) OR **Hexer** (curse specialist)
-- Naturalist → **Golemancer** (giant constructs) OR **Artificer** (magical items)
-- Chronicler → **Sage** (predict enemy moves) OR **Seeker** (find hidden things)
+- Evoker -> **Archmage** (dual-cast spells) OR **Elementalist** (fuse elements)
+- Enchanter -> **Runesmith** (permanent enchants) OR **Hexer** (curse specialist)
+- Naturalist -> **Golemancer** (giant constructs) OR **Artificer** (magical items)
+- Chronicler -> **Sage** (predict enemy moves) OR **Seeker** (find hidden things)
 
 ---
 
@@ -99,10 +150,10 @@ Two independent axes track the player's moral choices:
 | **Stormcaller** | AoE Caster | INT, WIS | Weather manipulation |
 
 **Advanced Classes (Level 15+):**
-- Warden → **Ancient Guardian** (become treant) OR **Earthshaper** (terrain control)
-- Predator → **Alpha** (pack tactics) OR **Skinwalker** (partial beast forms)
-- Wildspeaker → **Beastlord** (legendary beasts) OR **Hivemind** (swarm control)
-- Stormcaller → **Tempest** (continuous storm) OR **Worldsinger** (earthquake/tsunami)
+- Warden -> **Ancient Guardian** (become treant) OR **Earthshaper** (terrain control)
+- Predator -> **Alpha** (pack tactics) OR **Skinwalker** (partial beast forms)
+- Wildspeaker -> **Beastlord** (legendary beasts) OR **Hivemind** (swarm control)
+- Stormcaller -> **Tempest** (continuous storm) OR **Worldsinger** (earthquake/tsunami)
 
 ---
 
@@ -117,10 +168,10 @@ Two independent axes track the player's moral choices:
 | **Tactician** | Support/Control | INT, STR | Command allies, exploit weakness |
 
 **Advanced Classes (Level 15+):**
-- Legionnaire → **Centurion** (ally damage reduction) OR **Praetorian** (bodyguard)
-- Berserker → **Ravager** (AoE destruction) OR **Bloodrager** (lifesteal frenzy)
-- Weaponmaster → **Blademaster** (perfect technique) OR **Arsenal** (all weapons)
-- Tactician → **General** (battlefield control) OR **Veteran** (counter everything)
+- Legionnaire -> **Centurion** (ally damage reduction) OR **Praetorian** (bodyguard)
+- Berserker -> **Ravager** (AoE destruction) OR **Bloodrager** (lifesteal frenzy)
+- Weaponmaster -> **Blademaster** (perfect technique) OR **Arsenal** (all weapons)
+- Tactician -> **General** (battlefield control) OR **Veteran** (counter everything)
 
 ---
 
@@ -135,10 +186,10 @@ Two independent axes track the player's moral choices:
 | **Mendicant** | Melee Support | STR, WIS | Martial arts, ki abilities |
 
 **Advanced Classes (Level 15+):**
-- Templar → **Crusader** (holy devastation) OR **Justicar** (execute/spare)
-- Cleric → **High Priest** (mass healing) OR **Exorcist** (banish/purify)
-- Oracle → **Seer** (see all futures) OR **Fateweaver** (alter probability)
-- Mendicant → **Enlightened** (transcend limits) OR **Fist of Heaven** (divine strikes)
+- Templar -> **Crusader** (holy devastation) OR **Justicar** (execute/spare)
+- Cleric -> **High Priest** (mass healing) OR **Exorcist** (banish/purify)
+- Oracle -> **Seer** (see all futures) OR **Fateweaver** (alter probability)
+- Mendicant -> **Enlightened** (transcend limits) OR **Fist of Heaven** (divine strikes)
 
 ---
 
@@ -164,7 +215,7 @@ The following classes are currently implemented in `GameClassRegistry.java`:
 
 ## Event-Based Secret Classes
 
-These classes are unlocked through specific story choices, not just gameplay. They represent transformative moments.
+These classes are unlocked through specific story choices. They represent transformative moments.
 
 ### DARK PATH CLASSES
 
@@ -208,7 +259,7 @@ These classes are unlocked through specific story choices, not just gameplay. Th
 
 ## Companion Transformation Classes
 
-Each companion has two potential transformation classes based on the player's influence:
+Each companion has two potential transformation classes based on the player's influence, triggered by their personal quest subversion:
 
 | Companion | Good Path Class | Evil Path Class |
 |-----------|-----------------|-----------------|
@@ -225,9 +276,9 @@ Each companion has two potential transformation classes based on the player's in
 | **Silas** | Purified | Shadow-Worn |
 
 **Transformation Mechanics:**
-- Based on player alignment choices
-- Companion loyalty affects outcome
-- Personal quests trigger transformation events
+- Based on player alignment choices throughout the companion's personal quest
+- Companion loyalty affects outcome (low loyalty = rebellion against player's path)
+- Quest subversion resolution triggers transformation event
 - Each class grants unique abilities and story implications
 
 ---
