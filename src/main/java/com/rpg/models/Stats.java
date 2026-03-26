@@ -113,6 +113,14 @@ public class Stats {
         return new Stats(strength, dexterity, vitality, intelligence, wisdom, luck);
     }
     
+    /**
+     * Check if all stats are zero
+     */
+    public boolean isZero() {
+        return strength == 0 && dexterity == 0 && vitality == 0 && 
+               intelligence == 0 && wisdom == 0 && luck == 0;
+    }
+    
     @Override
     public String toString() {
         return String.format(

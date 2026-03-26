@@ -50,4 +50,11 @@ public enum Background {
         }
         return false;
     }
+    
+    /**
+     * Check if this background can access a GameClass
+     */
+    public boolean canAccess(GameClass gameClass) {
+        return canAccessClass(gameClass.getId());
+    }
 }
