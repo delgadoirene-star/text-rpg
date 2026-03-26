@@ -367,32 +367,69 @@ public class GameView {
             card.getStyleClass().add("player-card");
         }
         card.setPadding(new Insets(8));
-        card.setPrefWidth(150);
+        card.setPrefWidth(160);
         
-        // Name and level - get class name based on type
-        Label nameLabel = new Label(character.getName());
+        // Name with element icon
+        String elementSymbol = getElementSymbol(character.getElementAffinity());
+        Label nameLabel = new Label(elementSymbol + " " + character.getName());
         nameLabel.getStyleClass().add("character-name");
         
+        // Class and level
         String className = "Unknown";
         if (character instanceof Player player) {
             className = player.getCurrentClass().getName();
         } else if (character instanceof Companion companion) {
             className = companion.getCurrentClass().getName();
         }
-        
         Label levelLabel = new Label("Lv." + character.getLevel() + " " + className);
         levelLabel.getStyleClass().add("character-class");
         
-        // HP Bar (no MP in this system - uses Focus)
+        // HP Bar
         HBox hpBar = createStatBar("HP", character.getCurrentHP(), character.getMaxHP(), "hp-bar");
         
         card.getChildren().addAll(nameLabel, levelLabel, hpBar);
+        
+        // Focus bar for player
+        if (character instanceof Player player) {
+            int focus = (int) player.getFocusMeter().getCurrentFocus();
+            HBox focusBar = createStatBar("FP", focus, 100, "focus-bar");
+            card.getChildren().add(focusBar);
+        }
+        
+        // Loyalty indicator for companions
+        if (character instanceof Companion companion) {
+            int loyalty = companion.getLoyaltyLevel();
+            String loyaltyColor = loyalty >= 60 ? "#228b22" : loyalty >= 30 ? "#c9a227" : "#dc143c";
+            Label loyaltyLabel = new Label(getLoyaltyHeart(loyalty) + " " + companion.getLoyaltyDescription());
+            loyaltyLabel.setStyle("-fx-text-fill: " + loyaltyColor + "; -fx-font-size: 9px;");
+            card.getChildren().add(loyaltyLabel);
+        }
         
         // Add tooltip with detailed stats
         Tooltip tooltip = TooltipFactory.createCharacterTooltip(character);
         Tooltip.install(card, tooltip);
         
         return card;
+    }
+    
+    private String getElementSymbol(Element element) {
+        return switch (element) {
+            case FIRE -> "F";
+            case WATER -> "W";
+            case EARTH -> "E";
+            case WIND -> "N";
+            case LIGHT -> "L";
+            case DARK -> "D";
+            case NEUTRAL, NONE -> "-";
+        };
+    }
+    
+    private String getLoyaltyHeart(int loyalty) {
+        if (loyalty >= 80) return "\u2764";
+        if (loyalty >= 60) return "\u2665";
+        if (loyalty >= 40) return "\u2661";
+        if (loyalty >= 20) return "\u2743";
+        return "\u2620";
     }
     
     private HBox createStatBar(String label, int current, int max, String styleClass) {

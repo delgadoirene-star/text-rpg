@@ -57,13 +57,15 @@ public class GameController {
         public final boolean victory;
         public final int expGained;
         public final int goldLooted;
+        public final int goldLost;
         public final boolean leveledUp;
         public final String summary;
         
-        public BattleResult(boolean victory, int expGained, int goldLooted, boolean leveledUp, String summary) {
+        public BattleResult(boolean victory, int expGained, int goldLooted, int goldLost, boolean leveledUp, String summary) {
             this.victory = victory;
             this.expGained = expGained;
             this.goldLooted = goldLooted;
+            this.goldLost = goldLost;
             this.leveledUp = leveledUp;
             this.summary = summary;
         }
@@ -172,6 +174,20 @@ public class GameController {
         state.registerCompanion(CompanionFactory.createVek(GameClassRegistry.createArcanistClass()));
         state.registerCompanion(CompanionFactory.createMaeva(GameClassRegistry.createShamanClass()));
         state.registerCompanion(CompanionFactory.createSilas(GameClassRegistry.createPriestClass()));
+        
+        // Register alignment anchors for loyalty system
+        AlignmentSystem alignment = state.getAlignmentSystem();
+        alignment.registerCompanionAnchor(CompanionFactory.getIsoldeAnchor());
+        alignment.registerCompanionAnchor(CompanionFactory.getBramAnchor());
+        alignment.registerCompanionAnchor(CompanionFactory.getSybillaAnchor());
+        alignment.registerCompanionAnchor(CompanionFactory.getGarrickAnchor());
+        alignment.registerCompanionAnchor(CompanionFactory.getOonaAnchor());
+        alignment.registerCompanionAnchor(CompanionFactory.getTheronAnchor());
+        alignment.registerCompanionAnchor(CompanionFactory.getSashAnchor());
+        alignment.registerCompanionAnchor(CompanionFactory.getGhorAnchor());
+        alignment.registerCompanionAnchor(CompanionFactory.getVekAnchor());
+        alignment.registerCompanionAnchor(CompanionFactory.getMaevaAnchor());
+        alignment.registerCompanionAnchor(CompanionFactory.getSilasAnchor());
     }
     
     public void travel(String direction) {
@@ -196,7 +212,10 @@ public class GameController {
         if (state == null) return;
         state.healParty();
         state.advanceDay();
-        addMessage("Your party rests and recovers.");
+        addMessage("Your party rests and recovers. HP and Focus fully restored.");
+        if (gameView != null) {
+            gameView.updatePartyStatus();
+        }
     }
     
     // ==================== Combat System ====================
@@ -344,11 +363,37 @@ public class GameController {
     }
     
     private void executeCompanionTurns() {
+        Random rng = new Random();
         for (com.rpg.models.Character c : state.getCombatParty()) {
             if (c instanceof Companion companion && companion.isAlive() && c != state.getPlayer()) {
                 Enemy target = getRandomAliveEnemy();
                 if (target == null) break;
-                executeBasicAttack(companion, target);
+                
+                // Try to use a signature ability if available
+                List<Ability> companionAbilities = companion.getAbilities();
+                boolean usedAbility = false;
+                
+                if (companionAbilities != null && !companionAbilities.isEmpty()) {
+                    // Random chance to use ability (50% per turn)
+                    if (rng.nextBoolean()) {
+                        // Try each ability in random order
+                        List<Ability> shuffled = new ArrayList<>(companionAbilities);
+                        java.util.Collections.shuffle(shuffled, rng);
+                        
+                        for (Ability ab : shuffled) {
+                            if (ab.isReady() && companion.getFocusMeter().getCurrentFocus() >= ab.getFocusCost()) {
+                                companion.spendFocus(ab);
+                                executeAbility(companion, target, ab);
+                                usedAbility = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                if (!usedAbility) {
+                    executeBasicAttack(companion, target);
+                }
             }
         }
     }
@@ -508,9 +553,24 @@ public class GameController {
         
         if (allDead) {
             combatLog.add("=== Defeat! Your party has fallen... ===");
+            
+            // Lose 20-30% of current gold (not game over)
+            int currentGold = state.getGold();
+            int goldLost = (int)(currentGold * (0.2 + new Random().nextDouble() * 0.1));
+            if (goldLost < 5 && currentGold >= 5) goldLost = 5;
+            state.removeGold(goldLost);
+            
+            // Heal party - they survived but lost gold
             state.healParty();
-            lastBattleResult = new BattleResult(false, 0, 0, false,
-                "Your party has fallen! HP has been restored.");
+            
+            combatLog.add("Lost " + goldLost + " gold as the monsters looted your fallen body...");
+            combatLog.add("Your party wakes up at the last camp.");
+            
+            String summary = "Your party was defeated!\n" +
+                            "Lost: " + goldLost + " Gold\n" +
+                            "Your party recovered but must rest to fight again.";
+            
+            lastBattleResult = new BattleResult(false, 0, 0, goldLost, false, summary);
             endCombat(false);
             return true;
         }
@@ -532,7 +592,7 @@ public class GameController {
             if (leveledUp) {
                 summary += "\n*** LEVEL UP! ***\nYou have " + state.getPlayer().getAvailableStatPoints() + " stat points to allocate.";
             }
-            lastBattleResult = new BattleResult(true, expGain, goldGain, leveledUp, summary);
+            lastBattleResult = new BattleResult(true, expGain, goldGain, 0, leveledUp, summary);
             endCombat(false);
             return true;
         }

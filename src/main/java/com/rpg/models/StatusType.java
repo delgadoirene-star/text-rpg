@@ -16,6 +16,8 @@ public enum StatusType {
     BARRIER("Barrier", true, false),
     COUNTER("Counter", true, false),
     INVULNERABLE("Invulnerable", true, false),
+    STEALTH("Stealth", true, false),
+    TAUNT("Taunt", true, false),
     
     // Debuffs
     ATK_DOWN("Attack Down", false, false),
@@ -24,12 +26,14 @@ public enum StatusType {
     MAG_DEF_DOWN("Magic Defense Down", false, false),
     SPD_DOWN("Speed Down", false, false),
     ACCURACY_DOWN("Accuracy Down", false, false),
+    VULNERABLE("Vulnerable", false, false),
     
     // Damage over Time
     POISON("Poison", false, true),
     BURN("Burn", false, true),
     BLEED("Bleed", false, true),
     CURSE("Curse", false, true),
+    DRAIN("Drain", false, true),
     
     // Crowd Control
     STUN("Stun", false, false),
@@ -39,6 +43,8 @@ public enum StatusType {
     FEAR("Fear", false, false),
     SILENCE("Silence", false, false),
     BLIND("Blind", false, false),
+    ROOT("Root", false, false),
+    CONFUSION("Confusion", false, false),
     
     // Special States
     BERSERK("Berserk", false, false),

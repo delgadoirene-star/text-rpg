@@ -235,6 +235,22 @@
     -fx-background-insets: 0;
 }
 
+/* Focus Bar */
+.focus-bar {
+    -fx-accent: #4a4a9d;
+}
+
+.focus-bar .track {
+    -fx-background-color: #2d2d2d;
+    -fx-background-radius: 3;
+}
+
+.focus-bar .bar {
+    -fx-background-color: linear-gradient(to bottom, #7b68ee, #4a4a9d);
+    -fx-background-radius: 3;
+    -fx-background-insets: 0;
+}
+
 /* ==================== Title Screen ==================== */
 .title-screen {
     -fx-background-color: linear-gradient(to bottom, #0a0a0a, #1a1a1a, #0a0a0a);

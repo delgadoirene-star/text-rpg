@@ -184,6 +184,7 @@ public class GameState {
     public int getGold() { return gold; }
     public void setGold(int gold) { this.gold = gold; }
     public void addGold(int amount) { this.gold += amount; }
+    public void removeGold(int amount) { this.gold = Math.max(0, this.gold - amount); }
     public boolean spendGold(int amount) {
         if (gold >= amount) {
             gold -= amount;
@@ -209,5 +210,34 @@ public class GameState {
             c.heal(c.getMaxHP());
         }
         System.out.println("All party members fully healed!");
+    }
+    
+    /**
+     * Update all companion loyalty based on current alignment.
+     * Call this after major alignment choices.
+     */
+    public void updateCompanionLoyalty() {
+        AlignmentSystem alignment = getAlignmentSystem();
+        if (alignment == null) return;
+        
+        for (Companion companion : allCompanions) {
+            if (!companion.isRecruited()) continue;
+            
+            String id = companion.getId();
+            int modifier = alignment.getCompanionLoyaltyModifier(id);
+            
+            if (modifier != 0) {
+                companion.changeLoyalty(modifier);
+            }
+            
+            // Check breaking point
+            if (alignment.isCompanionBreakingPoint(id)) {
+                int currentLoyalty = companion.getLoyaltyLevel();
+                // Breaking point causes rapid loyalty drain
+                if (currentLoyalty > 10) {
+                    companion.changeLoyalty(-5);
+                }
+            }
+        }
     }
 }

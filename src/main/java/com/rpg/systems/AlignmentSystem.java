@@ -1,7 +1,9 @@
 package com.rpg.systems;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Dual-axis alignment system tracking Honor and Compassion
@@ -32,6 +34,9 @@ public class AlignmentSystem {
     
     // History of alignment-affecting choices
     private List<AlignmentChoice> choiceHistory;
+    
+    // Companion anchors for loyalty tracking
+    private Map<String, CompanionAnchor> companionAnchors;
     
     // ==================== Alignment Tiers ====================
     
@@ -110,6 +115,7 @@ public class AlignmentSystem {
         this.peakTyrant = 0;
         
         this.choiceHistory = new ArrayList<>();
+        this.companionAnchors = new HashMap<>();
     }
     
     // ==================== Alignment Modification ====================
@@ -335,6 +341,53 @@ public class AlignmentSystem {
         
         bar.append(String.format("] %s", posLabel));
         return bar.toString();
+    }
+    
+    // ==================== Companion Anchor Management ====================
+    
+    /**
+     * Register a companion's alignment anchor
+     */
+    public void registerCompanionAnchor(CompanionAnchor anchor) {
+        companionAnchors.put(anchor.getCompanionId(), anchor);
+    }
+    
+    /**
+     * Get a companion's anchor
+     */
+    public CompanionAnchor getCompanionAnchor(String companionId) {
+        return companionAnchors.get(companionId);
+    }
+    
+    /**
+     * Check if a companion has reached their breaking point
+     */
+    public boolean isCompanionBreakingPoint(String companionId) {
+        CompanionAnchor anchor = companionAnchors.get(companionId);
+        if (anchor == null) return false;
+        return anchor.isBreakingPoint(honor, compassion);
+    }
+    
+    /**
+     * Get loyalty modifier for a companion based on current alignment
+     */
+    public int getCompanionLoyaltyModifier(String companionId) {
+        CompanionAnchor anchor = companionAnchors.get(companionId);
+        if (anchor == null) return 0;
+        return anchor.getLoyaltyModifier(honor, compassion);
+    }
+    
+    /**
+     * Get all companion IDs whose breaking points have been reached
+     */
+    public List<String> getBreakingPointCompanions() {
+        List<String> breaking = new ArrayList<>();
+        for (Map.Entry<String, CompanionAnchor> entry : companionAnchors.entrySet()) {
+            if (entry.getValue().isBreakingPoint(honor, compassion)) {
+                breaking.add(entry.getKey());
+            }
+        }
+        return breaking;
     }
     
     // ==================== Utility ====================

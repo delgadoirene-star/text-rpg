@@ -98,6 +98,9 @@ public class PartyMenuView {
         // HP bar (uses Focus system, not MP)
         HBox hpBar = createProgressBar("HP", player.getCurrentHP(), player.getMaxHP(), "#dc143c");
         HBox focusBar = createProgressBar("Focus", (int) player.getFocusMeter().getCurrentFocus(), 100, "#4a90d9");
+        Tooltip focusTooltip = new Tooltip("Focus is your ability resource (0-100).\nGain Focus by attacking and taking damage.\nSpend Focus to use powerful abilities.\nRecharges after each fight.");
+        focusTooltip.getStyleClass().add("game-tooltip");
+        Tooltip.install(focusBar, focusTooltip);
         
         // Stats grid with allocation buttons
         GridPane statsGrid = new GridPane();

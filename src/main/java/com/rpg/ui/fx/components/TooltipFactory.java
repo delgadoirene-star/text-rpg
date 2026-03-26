@@ -276,17 +276,21 @@ public class TooltipFactory {
         Text nameText = new Text(statName);
         nameText.getStyleClass().add("tooltip-title");
         
-        Text valueText = new Text("\nValue: " + value);
+        int modifier = (value - 10) / 2;
+        String modStr = modifier >= 0 ? "+" + modifier : String.valueOf(modifier);
+        
+        Text valueText = new Text("\nValue: " + value + " (" + modStr + ")");
         valueText.getStyleClass().add("tooltip-stat");
         
-        Text modText = new Text("\nModifier: " + getModifier(value));
-        modText.getStyleClass().add("tooltip-stat");
-        
-        Text descText = new Text("\n\n" + getStatDescription(statName));
+        Text descText = new Text("\n" + getStatDescription(statName));
         descText.getStyleClass().add("tooltip-description");
-        descText.setWrappingWidth(200);
+        descText.setWrappingWidth(220);
         
-        content.getChildren().addAll(nameText, valueText, modText, descText);
+        Text effectText = new Text("\n" + getStatEffect(statName, value, modifier));
+        effectText.setStyle("-fx-fill: #c9a227; -fx-font-size: 10px;");
+        effectText.setWrappingWidth(220);
+        
+        content.getChildren().addAll(nameText, valueText, descText, effectText);
         
         return createStyledTooltip(content);
     }
@@ -378,10 +382,22 @@ public class TooltipFactory {
         return switch (stat.toUpperCase()) {
             case "STR", "STRENGTH" -> "Physical power. Increases melee damage and carrying capacity.";
             case "DEX", "DEXTERITY" -> "Agility and reflexes. Affects accuracy, evasion, and initiative.";
-            case "CON", "CONSTITUTION" -> "Endurance and vitality. Increases HP and resistance to status effects.";
-            case "INT", "INTELLIGENCE" -> "Mental acuity. Increases magic damage and MP pool.";
-            case "WIS", "WISDOM" -> "Perception and insight. Affects magic resistance and healing power.";
-            case "CHA", "CHARISMA" -> "Force of personality. Affects dialogue options and companion relationships.";
+            case "VIT", "VITALITY" -> "Endurance and toughness. Increases max HP and resistance to status effects.";
+            case "INT", "INTELLIGENCE" -> "Mental acuity. Increases magic damage and Focus generation.";
+            case "WIS", "WISDOM" -> "Perception and insight. Affects magic resistance, healing power, and companion loyalty gains.";
+            case "LUK", "LUCK" -> "Fortune and fate. Affects critical hit chance, drop rates, and rare outcomes.";
+            default -> "";
+        };
+    }
+    
+    private static String getStatEffect(String stat, int value, int modifier) {
+        return switch (stat.toUpperCase()) {
+            case "STR", "STRENGTH" -> "Melee damage: +" + modifier + " | Carry: " + (value * 5) + " lbs";
+            case "DEX", "DEXTERITY" -> "Evasion: " + (modifier + 5) + "% | Flee chance: +" + modifier + "%";
+            case "VIT", "VITALITY" -> "Max HP: +" + (modifier * 10) + " | DoT resist: +" + modifier + "%";
+            case "INT", "INTELLIGENCE" -> "Magic power: +" + modifier + " | Focus/turn: +" + (modifier / 2);
+            case "WIS", "WISDOM" -> "Magic resist: +" + modifier + "% | Healing: +" + modifier + "%";
+            case "LUK", "LUCK" -> "Crit chance: " + (3 + modifier) + "% | Drop rate: +" + modifier + "%";
             default -> "";
         };
     }

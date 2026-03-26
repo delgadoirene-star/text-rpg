@@ -108,10 +108,10 @@ public class CombatView {
         if (result == null) return;
         
         // Summary panel
-        VBox summaryPanel = new VBox(15);
+        VBox summaryPanel = new VBox(12);
         summaryPanel.setAlignment(Pos.CENTER);
         summaryPanel.setPadding(new Insets(30));
-        summaryPanel.setMaxWidth(400);
+        summaryPanel.setMaxWidth(450);
         
         if (result.victory) {
             summaryPanel.setStyle("-fx-background-color: #1a2a1a; -fx-border-color: #228b22; " +
@@ -137,40 +137,69 @@ public class CombatView {
                 
                 summaryPanel.getChildren().addAll(levelUpText, pointsText);
             }
+            
+            // Party status for victory
+            addPartyStatusSection(summaryPanel);
         } else {
             summaryPanel.setStyle("-fx-background-color: #2a1a1a; -fx-border-color: #8b0000; " +
                                  "-fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10;");
             
-            Text defeatText = new Text("DEFEAT");
+            Text defeatText = new Text("DEFEATED");
             defeatText.setStyle("-fx-fill: #dc143c; -fx-font-size: 28px; -fx-font-weight: bold;");
             
-            Text infoText = new Text(result.summary);
-            infoText.setStyle("-fx-fill: #a89878; -fx-font-size: 14px;");
+            Text flavorText = new Text("Your party collapses to the ground...");
+            flavorText.setStyle("-fx-fill: #a89878; -fx-font-size: 13px; -fx-font-style: italic;");
             
-            summaryPanel.getChildren().addAll(defeatText, infoText);
-        }
-        
-        // Show party status in summary
-        Text partyTitle = new Text("Party Status");
-        partyTitle.setStyle("-fx-fill: #a89878; -fx-font-size: 12px; -fx-font-weight: bold;");
-        summaryPanel.getChildren().add(partyTitle);
-        
-        for (com.rpg.models.Character c : controller.getAliveParty()) {
-            Text memberText = new Text(c.getName() + " - HP: " + c.getCurrentHP() + "/" + c.getMaxHP());
-            memberText.setStyle("-fx-fill: #a89878; -fx-font-size: 11px;");
-            summaryPanel.getChildren().add(memberText);
+            Text separatorText = new Text("---");
+            separatorText.setStyle("-fx-fill: #555555; -fx-font-size: 14px;");
+            
+            Text recoveryText = new Text("You wake up at the last camp.");
+            recoveryText.setStyle("-fx-fill: #c9a227; -fx-font-size: 14px;");
+            
+            Text hpText = new Text("HP has been restored.");
+            hpText.setStyle("-fx-fill: #228b22; -fx-font-size: 14px;");
+            
+            summaryPanel.getChildren().addAll(defeatText, flavorText, separatorText, recoveryText, hpText);
+            
+            if (result.goldLost > 0) {
+                Text goldLostText = new Text("Gold lost: -" + result.goldLost);
+                goldLostText.setStyle("-fx-fill: #dc143c; -fx-font-size: 16px;");
+                summaryPanel.getChildren().add(goldLostText);
+            }
+            
+            Text tipText = new Text("Tip: Rest at camp to recover before fighting again.");
+            tipText.setStyle("-fx-fill: #888888; -fx-font-size: 11px; -fx-font-style: italic;");
+            summaryPanel.getChildren().add(tipText);
         }
         
         // Continue button
         Button continueBtn = new Button("Continue");
         continueBtn.getStyleClass().add("title-button");
-        continueBtn.setPrefWidth(150);
+        continueBtn.setPrefWidth(200);
         continueBtn.setOnAction(e -> controller.showExploration());
         summaryPanel.getChildren().add(continueBtn);
         
         // Replace content
         root.getChildren().clear();
         root.getChildren().add(summaryPanel);
+    }
+    
+    private void addPartyStatusSection(VBox panel) {
+        Text partyTitle = new Text("Party Status");
+        partyTitle.setStyle("-fx-fill: #a89878; -fx-font-size: 12px; -fx-font-weight: bold;");
+        panel.getChildren().add(partyTitle);
+        
+        for (com.rpg.models.Character c : controller.getAliveParty()) {
+            String className = "";
+            if (c instanceof com.rpg.models.Player player) {
+                className = " " + player.getCurrentClass().getName();
+            } else if (c instanceof com.rpg.models.Companion companion) {
+                className = " " + companion.getCurrentClass().getName();
+            }
+            Text memberText = new Text(c.getName() + className + " - HP: " + c.getCurrentHP() + "/" + c.getMaxHP());
+            memberText.setStyle("-fx-fill: #a89878; -fx-font-size: 11px;");
+            panel.getChildren().add(memberText);
+        }
     }
     
     private VBox createEnemyCard(Enemy enemy) {
