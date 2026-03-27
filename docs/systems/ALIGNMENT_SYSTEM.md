@@ -9,17 +9,17 @@ Two independent axes track moral choices:
                         ↑
                         |
     Harsh ←─────────────┼────────────→ Merciful
-    (-100)             │            (+100)
+    (-100)              │              (+100)
                         ↓
                       CRUELTY
 ```
 
 ```
-                    HONOR
+                      HONOR
                         ↑
                         |
-   Deceitful ←─────────┼────────────→ Honorable
-    (-100)             │             (+100)
+   Deceitful ←──────────┼────────────→ Honorable
+    (-100)              │              (+100)
                         ↓
                      PRAGMATIC
 ```
