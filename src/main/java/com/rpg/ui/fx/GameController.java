@@ -212,7 +212,8 @@ public class GameController {
                 RegionType destRegion = destination.getRegionType();
                 ReputationSystem repSystem = state.getReputationSystem();
                 
-                int travelDays = worldMap.calculateTravelDays(destRegion);
+                int staminaCost = worldMap.getStaminaCost(current, destination);
+                int travelDays = staminaCost;
                 for (int i = 0; i < travelDays; i++) {
                     state.advanceDay();
                 }
@@ -222,6 +223,7 @@ public class GameController {
                 state.setCurrentLocation(destination);
                 
                 addMessage("Traveled to " + destination.getName() + " (" + destRegion.getDisplayName() + ")");
+                addMessage("Stamina spent: " + staminaCost);
                 
                 if (repSystem.isSullied(destRegion)) {
                     addMessage("[WARNING] You are SULLIED in this region! Shops are hostile and enemies are aggressive.");

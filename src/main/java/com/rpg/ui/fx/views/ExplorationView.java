@@ -225,13 +225,22 @@ public class ExplorationView {
             eventArea.getChildren().add(travelLabel);
             
             FlowPane connectionButtons = new FlowPane(10, 10);
+            var worldMap = controller.getState().getWorldMap();
+            
             for (var entry : connections.entrySet()) {
-                Button destBtn = new Button(entry.getKey() + ": " + entry.getValue());
-                destBtn.getStyleClass().add("action-button");
                 String direction = entry.getKey();
+                String destId = entry.getValue();
+                var destLoc = worldMap.getLocation(destId);
+                int staminaCost = worldMap.getStaminaCost(location, destLoc);
+                
+                String btnText = direction + ": " + (destLoc != null ? destLoc.getName() : destId);
+                btnText += " [" + staminaCost + " stamina]";
+                
+                Button destBtn = new Button(btnText);
+                destBtn.getStyleClass().add("action-button");
                 destBtn.setOnAction(e -> controller.travel(direction));
                 
-                Tooltip tooltip = new Tooltip("Travel " + entry.getKey());
+                Tooltip tooltip = new Tooltip("Travel " + direction + " (" + staminaCost + " stamina)");
                 tooltip.getStyleClass().add("game-tooltip");
                 destBtn.setTooltip(tooltip);
                 

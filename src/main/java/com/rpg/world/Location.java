@@ -20,6 +20,11 @@ public class Location {
     
     // Connectivity
     private Map<String, String> connectedLocations; // Direction -> Location ID
+    private Map<Location, Integer> connectedNodes; // Location -> Stamina Cost (bidirectional)
+    
+    // Location properties
+    private boolean isSafeZone;
+    private boolean hasShop;
     
     // Content
     private List<String> availableQuests; // Quest IDs
@@ -45,6 +50,7 @@ public class Location {
         this.regionType = regionType;
         
         this.connectedLocations = new HashMap<>();
+        this.connectedNodes = new HashMap<>();
         this.availableQuests = new ArrayList<>();
         this.companionsPresent = new ArrayList<>();
         this.enemiesPresent = new ArrayList<>();
@@ -53,6 +59,8 @@ public class Location {
         
         this.discovered = false;
         this.visited = false;
+        this.isSafeZone = false;
+        this.hasShop = false;
     }
     
     // ==================== Builder Pattern ====================
@@ -103,6 +111,16 @@ public class Location {
             return this;
         }
         
+        public Builder safeZone(boolean safe) {
+            location.isSafeZone = safe;
+            return this;
+        }
+        
+        public Builder shop(boolean shop) {
+            location.hasShop = shop;
+            return this;
+        }
+        
         public Location build() {
             return location;
         }
@@ -120,6 +138,23 @@ public class Location {
     public List<GameEvent> getEvents() { return new ArrayList<>(events); }
     public List<String> getRequiredFlags() { return new ArrayList<>(requiredFlags); }
     public RegionType getRegionType() { return regionType; }
+    public boolean isSafeZone() { return isSafeZone; }
+    public boolean hasShop() { return hasShop; }
+    public Map<Location, Integer> getConnectedNodes() { return new HashMap<>(connectedNodes); }
+    
+    /**
+     * Add a bi-directional connection between this location and the target.
+     * Both locations will be connected with the same stamina cost.
+     * 
+     * @param target The location to connect to
+     * @param staminaCost The cost to travel between these locations
+     */
+    public void addConnection(Location target, int staminaCost) {
+        if (target != null) {
+            this.connectedNodes.put(target, staminaCost);
+            target.connectedNodes.put(this, staminaCost);
+        }
+    }
     
     // ==================== State Management ====================
     

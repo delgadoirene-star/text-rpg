@@ -25,8 +25,9 @@ public class TooltipFactory {
      * Create a detailed tooltip for a character (player or companion)
      */
     public static Tooltip createCharacterTooltip(com.rpg.models.Character character) {
-        VBox content = new VBox(5);
+        VBox content = new VBox(3);
         content.setPadding(new Insets(5));
+        content.setMaxWidth(280);
         
         // Name - need to get class differently for Player vs Companion
         TextFlow header = new TextFlow();
@@ -40,42 +41,36 @@ public class TooltipFactory {
             className = companion.getCurrentClass().getName();
         }
         
-        Text classText = new Text("\nLevel " + character.getLevel() + " " + className);
+        Text classText = new Text(" Lv." + character.getLevel() + " " + className);
         classText.getStyleClass().add("tooltip-stat");
         header.getChildren().addAll(nameText, classText);
         
-        // Stats
-        Stats stats = character.getBaseStats();
-        TextFlow statsFlow = new TextFlow();
-        statsFlow.getChildren().addAll(
-            createStatLine("STR", stats.getStrength()),
-            createStatLine("DEX", stats.getDexterity()),
-            createStatLine("VIT", stats.getVitality()),
-            createStatLine("INT", stats.getIntelligence()),
-            createStatLine("WIS", stats.getWisdom()),
-            createStatLine("LUK", stats.getLuck())
-        );
-        
-        // HP/MP
+        // HP and Element on same line
         TextFlow resourceFlow = new TextFlow();
         Text hpText = new Text("HP: " + character.getCurrentHP() + "/" + character.getMaxHP());
         hpText.setStyle("-fx-fill: #dc143c;");
-        resourceFlow.getChildren().add(hpText);
-        
-        // Element
-        Text elementText = new Text("\nElement: " + character.getElementAffinity().name());
+        Text elementText = new Text(" | Element: " + character.getElementAffinity().name());
         elementText.getStyleClass().add("element-" + character.getElementAffinity().name().toLowerCase());
+        resourceFlow.getChildren().addAll(hpText, elementText);
         
-        content.getChildren().addAll(header, new Text(""), resourceFlow, statsFlow, elementText);
+        // Compact stats in two columns
+        Stats stats = character.getBaseStats();
+        Text statsText = new Text(String.format("STR:%d DEX:%d VIT:%d INT:%d WIS:%d LUK:%d",
+            stats.getStrength(), stats.getDexterity(), stats.getVitality(),
+            stats.getIntelligence(), stats.getWisdom(), stats.getLuck()));
+        statsText.getStyleClass().add("tooltip-stat");
+        TextFlow statsFlow = new TextFlow(statsText);
         
-        // Status effects
+        content.getChildren().addAll(header, resourceFlow, statsFlow);
+        
+        // Status effects (compact)
         if (!character.getStatusEffects().isEmpty()) {
-            Text statusTitle = new Text("\nStatus Effects:");
+            Text statusTitle = new Text("\nEffects:");
             statusTitle.getStyleClass().add("tooltip-title");
             content.getChildren().add(statusTitle);
             
             for (StatusEffect effect : character.getStatusEffects()) {
-                Text effectText = new Text("  " + effect.getType().getDisplayName() + " (" + effect.getDuration() + " turns)");
+                Text effectText = new Text(effect.getType().getDisplayName() + " (" + effect.getDuration() + ") ");
                 if (effect.getType().isBuff()) {
                     effectText.getStyleClass().add("status-buff");
                 } else {
@@ -270,8 +265,9 @@ public class TooltipFactory {
      * Create a tooltip for a stat value
      */
     public static Tooltip createStatTooltip(String statName, int value) {
-        VBox content = new VBox(3);
+        VBox content = new VBox(2);
         content.setPadding(new Insets(5));
+        content.setMaxWidth(250);
         
         Text nameText = new Text(statName);
         nameText.getStyleClass().add("tooltip-title");
@@ -279,16 +275,15 @@ public class TooltipFactory {
         int modifier = (value - 10) / 2;
         String modStr = modifier >= 0 ? "+" + modifier : String.valueOf(modifier);
         
-        Text valueText = new Text("\nValue: " + value + " (" + modStr + ")");
+        Text valueText = new Text("Value: " + value + " (" + modStr + ")");
         valueText.getStyleClass().add("tooltip-stat");
         
-        Text descText = new Text("\n" + getStatDescription(statName));
+        Text descText = new Text(getStatDescription(statName));
         descText.getStyleClass().add("tooltip-description");
-        descText.setWrappingWidth(220);
+        descText.setWrappingWidth(240);
         
-        Text effectText = new Text("\n" + getStatEffect(statName, value, modifier));
-        effectText.setStyle("-fx-fill: #c9a227; -fx-font-size: 10px;");
-        effectText.setWrappingWidth(220);
+        Text effectText = new Text(getStatEffect(statName, value, modifier));
+        effectText.setStyle("-fx-fill: #c9a227;");
         
         content.getChildren().addAll(nameText, valueText, descText, effectText);
         
@@ -333,7 +328,7 @@ public class TooltipFactory {
         tooltip.getStyleClass().add("game-tooltip");
         tooltip.setShowDelay(SHOW_DELAY);
         tooltip.setHideDelay(HIDE_DELAY);
-        tooltip.setShowDuration(Duration.INDEFINITE);
+        tooltip.setShowDuration(Duration.seconds(10));
         return tooltip;
     }
     

@@ -124,12 +124,24 @@ public class PartyMenuView {
             String shortName = statInfo[i][0];
             String fullName = statInfo[i][1];
             String value = statInfo[i][2];
+            int statValue = switch (shortName) {
+                case "STR" -> stats.getStrength();
+                case "DEX" -> stats.getDexterity();
+                case "VIT" -> stats.getVitality();
+                case "INT" -> stats.getIntelligence();
+                case "WIS" -> stats.getWisdom();
+                case "LUK" -> stats.getLuck();
+                default -> 10;
+            };
             
             Label statNameLabel = new Label(fullName + ":");
-            statNameLabel.setStyle("-fx-text-fill: #888888; -fx-min-width: 80;");
+            statNameLabel.setStyle("-fx-text-fill: #888888; -fx-min-width: 80; -fx-cursor: hand;");
+            Tooltip statTip = TooltipFactory.createStatTooltip(shortName, statValue);
+            Tooltip.install(statNameLabel, statTip);
             
             Label valueLabel = new Label(value);
-            valueLabel.setStyle("-fx-text-fill: #c9a227; -fx-font-weight: bold;");
+            valueLabel.setStyle("-fx-text-fill: #c9a227; -fx-font-weight: bold; -fx-cursor: hand;");
+            Tooltip.install(valueLabel, statTip);
             
             statsGrid.add(statNameLabel, 0, i);
             statsGrid.add(valueLabel, 1, i);
@@ -390,13 +402,13 @@ public class PartyMenuView {
     
     private void addStatRow(GridPane grid, int row, String statName, int value) {
         Label nameLabel = new Label(statName + ":");
-        nameLabel.setStyle("-fx-text-fill: #888888;");
+        nameLabel.setStyle("-fx-text-fill: #888888; -fx-cursor: hand;");
         
         int modifier = (value - 10) / 2;
         String modStr = modifier >= 0 ? "+" + modifier : String.valueOf(modifier);
         
         Label valueLabel = new Label(value + " (" + modStr + ")");
-        valueLabel.setStyle("-fx-text-fill: #d4c4a8;");
+        valueLabel.setStyle("-fx-text-fill: #d4c4a8; -fx-cursor: hand;");
         
         // Add tooltip
         Tooltip tooltip = TooltipFactory.createStatTooltip(statName, value);

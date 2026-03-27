@@ -81,78 +81,245 @@ public class WorldMap {
     
     /**
      * Create and connect all game locations
-     * (This would typically be loaded from data files)
+     * Returns the starting location (coreGate)
      */
     public void initializeWorld() {
-        // Create locations - all in ARCHIVIST_CORE region
-        Location town = new Location.Builder("town_square", "Town Square",
-            "The bustling center of the capital city. A large fountain sits in the middle.")
+        // ==================== CORE REGION ====================
+        Location coreGate = new Location.Builder("coreGate", "Core Gate", 
+            "The main entrance to the Archivist Core. Guards check all who enter.")
             .region(RegionType.ARCHIVIST_CORE)
-            .connect("north", "castle_gate")
-            .connect("south", "market_district")
-            .connect("west", "residential_area")
-            .connect("east", "guild_hall")
+            .safeZone(true)
             .build();
         
-        Location castleGate = new Location.Builder("castle_gate", "Castle Gate",
-            "Two enormous guards stand before the majestic gate of the royal castle.")
+        Location coreMarket = new Location.Builder("coreMarket", "Core Market", 
+            "A bustling marketplace with merchants from across all regions.")
             .region(RegionType.ARCHIVIST_CORE)
-            .connect("south", "town_square")
-            .requireFlag("royal_invitation")
+            .safeZone(true)
+            .shop(true)
             .build();
-            
-        Location market = new Location.Builder("market_district", "Market District",
-            "Merchants hawk their wares, from fresh food to shiny trinkets.")
+        
+        Location coreAcademy = new Location.Builder("coreAcademy", "Core Academy", 
+            "The great library-fortress where scholars study ancient records.")
             .region(RegionType.ARCHIVIST_CORE)
-            .connect("north", "town_square")
-            .addCompanion("companion_merchant")
-            .addQuest("quest_lost_goods")
+            .safeZone(true)
             .build();
-            
-        Location guildHall = new Location.Builder("guild_hall", "Adventurer's Guild",
-            "A large hall filled with adventurers seeking fame and fortune.")
+        
+        Location coreKeep = new Location.Builder("coreKeep", "Core Keep", 
+            "The fortified heart of the Core. Only the worthy may enter.")
             .region(RegionType.ARCHIVIST_CORE)
-            .connect("west", "town_square")
-            .addQuest("quest_goblin_slaying")
             .build();
-            
-        Location residential = new Location.Builder("residential_area", "Residential Area",
-            "Quiet streets lined with houses.")
+        
+        Location coreEstates = new Location.Builder("coreEstates", "Core Estates", 
+            "Luxurious mansions of the Core's elite nobility.")
             .region(RegionType.ARCHIVIST_CORE)
-            .connect("east", "town_square")
+            .safeZone(true)
             .build();
-            
-        Location sumpEntrance = new Location.Builder("sump_entrance", "The Sump Gate",
-            "A grim entrance to the waterlogged slums below. The smell of desperation hangs heavy.")
+        
+        Location corePrison = new Location.Builder("corePrison", "Core Prison", 
+            "A grim fortress where the Core's enemies are held.")
+            .region(RegionType.ARCHIVIST_CORE)
+            .build();
+        
+        // ==================== SUMP REGION ====================
+        Location sumpElevator = new Location.Builder("sumpElevator", "Sump Elevator", 
+            "A rickety elevator descending into the vertical slums.")
             .region(RegionType.SUMP)
-            .connect("north", "town_square")
-            .connect("south", "sump_depths")
             .build();
-            
-        Location sumpDepths = new Location.Builder("sump_depths", "The Drowned Wards",
-            "Vertical slums carved into canyon walls. Water drips from every surface.")
+        
+        Location sumpRatways = new Location.Builder("sumpRatways", "Sump Ratways", 
+            "Narrow passages teeming with desperate folk and worse.")
             .region(RegionType.SUMP)
-            .connect("north", "sump_entrance")
             .build();
-            
-        // Add locations to map
-        addLocation(town);
-        addLocation(castleGate);
-        addLocation(market);
-        addLocation(guildHall);
-        addLocation(residential);
-        addLocation(sumpEntrance);
+        
+        Location sumpMarket = new Location.Builder("sumpMarket", "Sump Market", 
+            "A black market where anything can be bought for the right price.")
+            .region(RegionType.SUMP)
+            .shop(true)
+            .build();
+        
+        Location sumpPumps = new Location.Builder("sumpPumps", "Sump Pumps", 
+            "Massive pumps keep the water at bay. They groan constantly.")
+            .region(RegionType.SUMP)
+            .build();
+        
+        Location sumpArena = new Location.Builder("sumpArena", "Sump Arena", 
+            "An illegal fighting pit where blood sport reigns.")
+            .region(RegionType.SUMP)
+            .build();
+        
+        Location sumpDepths = new Location.Builder("sumpDepths", "Sump Depths", 
+            "The lowest levels of the Sump. Few return from here.")
+            .region(RegionType.SUMP)
+            .build();
+        
+        // ==================== CHOKE REGION ====================
+        Location chokeBorder = new Location.Builder("chokeBorder", "Choke Border", 
+            "Where civilization ends and the parasitic forest begins.")
+            .region(RegionType.CHOKE)
+            .build();
+        
+        Location chokeWoods = new Location.Builder("chokeWoods", "Choke Woods", 
+            "Trees with too many eyes watch your every move.")
+            .region(RegionType.CHOKE)
+            .build();
+        
+        Location chokePass = new Location.Builder("chokePass", "Choke Pass", 
+            "A narrow path through the breathing trees.")
+            .region(RegionType.CHOKE)
+            .build();
+        
+        Location chokeHeart = new Location.Builder("chokeHeart", "Choke Heart", 
+            "The living heart of the forest. It pulses with ancient power.")
+            .region(RegionType.CHOKE)
+            .safeZone(true)
+            .build();
+        
+        Location chokeBog = new Location.Builder("chokeBog", "Choke Bog", 
+            "Quicksand and worse lurks in this murky swamp.")
+            .region(RegionType.CHOKE)
+            .build();
+        
+        Location chokeRuins = new Location.Builder("chokeRuins", "Choke Ruins", 
+            "Crumbling structures from before the forest claimed this land.")
+            .region(RegionType.CHOKE)
+            .build();
+        
+        // ==================== ZENITH REGION ====================
+        Location zenithSteps = new Location.Builder("zenithSteps", "Zenith Steps", 
+            "Countless stairs leading up to the monasteries above.")
+            .region(RegionType.ZENITH)
+            .build();
+        
+        Location zenithMonastery = new Location.Builder("zenithMonastery", "Zenith Monastery", 
+            "The main monastery. Monks seek enlightenment here.")
+            .region(RegionType.ZENITH)
+            .safeZone(true)
+            .build();
+        
+        Location zenithGraveyard = new Location.Builder("zenithGraveyard", "Zenith Graveyard", 
+            "Where those who failed their trials are buried.")
+            .region(RegionType.ZENITH)
+            .build();
+        
+        Location zenithPinnacle = new Location.Builder("zenithPinnacle", "Zenith Pinnacle", 
+            "The highest point. Those who reach it are never the same.")
+            .region(RegionType.ZENITH)
+            .build();
+        
+        // ==================== Add All Locations ====================
+        addLocation(coreGate);
+        addLocation(coreMarket);
+        addLocation(coreAcademy);
+        addLocation(coreKeep);
+        addLocation(coreEstates);
+        addLocation(corePrison);
+        addLocation(sumpElevator);
+        addLocation(sumpRatways);
+        addLocation(sumpMarket);
+        addLocation(sumpPumps);
+        addLocation(sumpArena);
         addLocation(sumpDepths);
+        addLocation(chokeBorder);
+        addLocation(chokeWoods);
+        addLocation(chokePass);
+        addLocation(chokeHeart);
+        addLocation(chokeBog);
+        addLocation(chokeRuins);
+        addLocation(zenithSteps);
+        addLocation(zenithMonastery);
+        addLocation(zenithGraveyard);
+        addLocation(zenithPinnacle);
         
-        // Set travel costs
-        setTravelCost("town_square", "market_district", 1);
-        setTravelCost("town_square", "guild_hall", 1);
-        setTravelCost("town_square", "residential_area", 1);
-        setTravelCost("town_square", "sump_entrance", 1);
-        setTravelCost("sump_entrance", "sump_depths", 2);
+        // ==================== Wire Connections ====================
+        // CORE connections
+        coreGate.addConnection(coreMarket, 5);
+        coreMarket.addConnection(coreAcademy, 5);
+        coreAcademy.addConnection(coreKeep, 10);
+        coreMarket.addConnection(coreEstates, 10);
+        coreGate.addConnection(corePrison, 15);
+        
+        // CORE to other regions
+        coreGate.addConnection(sumpElevator, 10);
+        coreGate.addConnection(chokeBorder, 20);
+        
+        // SUMP connections
+        sumpElevator.addConnection(sumpRatways, 10);
+        sumpRatways.addConnection(sumpMarket, 5);
+        sumpRatways.addConnection(sumpArena, 10);
+        sumpMarket.addConnection(sumpPumps, 15);
+        sumpPumps.addConnection(sumpDepths, 20);
+        sumpRatways.addConnection(chokeBorder, 15);
+        
+        // CHOKE connections
+        chokeBorder.addConnection(chokeWoods, 20);
+        chokeWoods.addConnection(chokePass, 25);
+        chokeWoods.addConnection(chokeRuins, 15);
+        chokePass.addConnection(chokeHeart, 20);
+        chokePass.addConnection(chokeBog, 20);
+        chokePass.addConnection(zenithSteps, 30);
+        
+        // ZENITH connections
+        zenithSteps.addConnection(zenithMonastery, 40);
+        zenithMonastery.addConnection(zenithGraveyard, 20);
+        zenithMonastery.addConnection(zenithPinnacle, 50);
+        
+        // ==================== Directional Connections (for UI) ====================
+        // CORE
+        addDirectionalConnection(coreGate, coreMarket, "east");
+        addDirectionalConnection(coreMarket, coreGate, "west");
+        addDirectionalConnection(coreMarket, coreAcademy, "north");
+        addDirectionalConnection(coreAcademy, coreMarket, "south");
+        addDirectionalConnection(coreAcademy, coreKeep, "up");
+        addDirectionalConnection(coreKeep, coreAcademy, "down");
+        addDirectionalConnection(coreMarket, coreEstates, "west");
+        addDirectionalConnection(coreEstates, coreMarket, "east");
+        addDirectionalConnection(coreGate, corePrison, "south");
+        addDirectionalConnection(corePrison, coreGate, "north");
+        
+        // Region transitions
+        addDirectionalConnection(coreGate, sumpElevator, "down");
+        addDirectionalConnection(sumpElevator, coreGate, "up");
+        addDirectionalConnection(coreGate, chokeBorder, "east");
+        addDirectionalConnection(chokeBorder, coreGate, "west");
+        
+        // SUMP
+        addDirectionalConnection(sumpElevator, sumpRatways, "down");
+        addDirectionalConnection(sumpRatways, sumpElevator, "up");
+        addDirectionalConnection(sumpRatways, sumpMarket, "east");
+        addDirectionalConnection(sumpMarket, sumpRatways, "west");
+        addDirectionalConnection(sumpRatways, sumpArena, "south");
+        addDirectionalConnection(sumpArena, sumpRatways, "north");
+        addDirectionalConnection(sumpMarket, sumpPumps, "down");
+        addDirectionalConnection(sumpPumps, sumpMarket, "up");
+        addDirectionalConnection(sumpPumps, sumpDepths, "down");
+        addDirectionalConnection(sumpDepths, sumpPumps, "up");
+        addDirectionalConnection(sumpRatways, chokeBorder, "north");
+        addDirectionalConnection(chokeBorder, sumpRatways, "south");
+        
+        // CHOKE
+        addDirectionalConnection(chokeBorder, chokeWoods, "north");
+        addDirectionalConnection(chokeWoods, chokeBorder, "south");
+        addDirectionalConnection(chokeWoods, chokePass, "north");
+        addDirectionalConnection(chokePass, chokeWoods, "south");
+        addDirectionalConnection(chokeWoods, chokeRuins, "east");
+        addDirectionalConnection(chokeRuins, chokeWoods, "west");
+        addDirectionalConnection(chokePass, chokeHeart, "west");
+        addDirectionalConnection(chokeHeart, chokePass, "east");
+        addDirectionalConnection(chokePass, chokeBog, "east");
+        addDirectionalConnection(chokeBog, chokePass, "west");
+        addDirectionalConnection(chokePass, zenithSteps, "north");
+        addDirectionalConnection(zenithSteps, chokePass, "south");
+        
+        // ZENITH
+        addDirectionalConnection(zenithSteps, zenithMonastery, "up");
+        addDirectionalConnection(zenithMonastery, zenithSteps, "down");
+        addDirectionalConnection(zenithMonastery, zenithGraveyard, "west");
+        addDirectionalConnection(zenithGraveyard, zenithMonastery, "east");
+        addDirectionalConnection(zenithMonastery, zenithPinnacle, "up");
+        addDirectionalConnection(zenithPinnacle, zenithMonastery, "down");
         
         // Set starting location
-        setStartingLocation("town_square");
+        setStartingLocation("coreGate");
         
         // Set current location for travel calculations
         this.currentLocation = getStartingLocation();
@@ -228,6 +395,24 @@ public class WorldMap {
     }
     
     /**
+     * Get stamina cost between two connected locations
+     */
+    public int getStaminaCost(Location from, Location to) {
+        if (from == null || to == null) return Integer.MAX_VALUE;
+        Integer cost = from.getConnectedNodes().get(to);
+        return cost != null ? cost : Integer.MAX_VALUE;
+    }
+    
+    /**
+     * Add a directional connection for UI purposes (north, south, etc.)
+     */
+    public void addDirectionalConnection(Location from, Location to, String direction) {
+        if (from != null && to != null && direction != null) {
+            from.getConnectedLocations().put(direction.toLowerCase(), to.getId());
+        }
+    }
+    
+    /**
      * Travel from current location to a connected destination
      * 
      * @param destination The location to travel to
@@ -239,27 +424,19 @@ public class WorldMap {
             return false;
         }
 
-        String destId = destination.getId();
-        String currentId = currentLocation.getId();
-        
-        if (!currentLocation.getConnectedLocations().containsKey(destId)) {
+        int travelCost = getStaminaCost(currentLocation, destination);
+        if (travelCost == Integer.MAX_VALUE) {
             System.out.printf("[ERROR] %s is not connected to %s!%n", 
                 currentLocation.getName(), destination.getName());
             return false;
         }
-
-        int travelCost = getTravelCost(currentId, destId);
         
         System.out.printf("%n=== TRAVELING ===%n");
         System.out.printf("From: %s [%s]%n", currentLocation.getName(), 
             currentLocation.getRegionType() != null ? currentLocation.getRegionType().getDisplayName() : "Unknown");
         System.out.printf("To:   %s [%s]%n", destination.getName(),
             destination.getRegionType() != null ? destination.getRegionType().getDisplayName() : "Unknown");
-        System.out.printf("Travel time: %d day(s)%n", travelCost);
-
-        if (travelCost > 1) {
-            System.out.println("You travel through wilderness and encounter areas...");
-        }
+        System.out.printf("Travel cost: %d stamina%n", travelCost);
 
         advanceDays(travelCost);
 
@@ -280,7 +457,8 @@ public class WorldMap {
 
         for (Location loc : locations.values()) {
             if (loc.getRegionType() == targetRegion) {
-                return getTravelCost(currentLocation.getId(), loc.getId());
+                int cost = getStaminaCost(currentLocation, loc);
+                return cost != Integer.MAX_VALUE ? cost : 5;
             }
         }
         
