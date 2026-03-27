@@ -3,11 +3,6 @@
 **Audience:** Developers, writers, QA.
 This document contains the fully integrated narrative and mechanical designs for all 11 companions. 
 
-## The Framework
-* **Alignment Anchor:** Where the character naturally sits on the Dual-Axis.
-* **Breaking Point:** What specific player actions cause them to leave, betray, or sully your reputation.
-* **Quest Subversion:** The climactic choice merging narrative flavor with mechanical Class Transformations.
-
 ---
 
 ## 1. Isolde vex-Torvath (The Law Enforcer)
