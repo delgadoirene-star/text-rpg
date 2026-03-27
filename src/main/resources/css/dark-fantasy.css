@@ -1,75 +1,97 @@
 /*
  * Dark Fantasy RPG - JavaFX Stylesheet
- * Theme: Dark Fantasy with gold/red accents, medieval aesthetic
+ * Theme: Dark base with medieval parchment accents
+ * Inspired by old manuscripts, map borders, and medieval illuminated texts
  */
 
-/* ==================== Color Variables ==================== */
-/* Using looked-up colors for consistency */
+/* ==================== Color Palette ====================
+ * 
+ * Background: Deep charcoal (#121210) - like aged leather
+ * Parchment: Warm tan (#c4a875) - like old paper
+ * Bronze: Rich copper (#b8860b) - ornate borders
+ * Gold: Bright accent (#d4a844) - highlights
+ * Ink: Sepia text (#a89068) - quill writing
+ * Crimson: Danger/blood (#8b2500) - combat/danger
+ * 
+ * ====================================================== */
+
 .root {
-    -fx-base: #1a1a1a;
-    -fx-background: #0d0d0d;
-    -fx-control-inner-background: #1e1e1e;
-    -fx-accent: #c9a227;
-    -fx-focus-color: #c9a227;
+    -fx-base: #1a1918;
+    -fx-background: #121210;
+    -fx-control-inner-background: #1e1d1b;
+    -fx-accent: #b8860b;
+    -fx-focus-color: #b8860b;
     -fx-faint-focus-color: transparent;
     
-    /* Custom colors */
-    -gold: #c9a227;
+    /* Custom colors - medieval palette */
+    -parchment: #c4a875;
+    -parchment-dark: #a89068;
+    -parchment-light: #d4c4a0;
+    -bronze: #b8860b;
+    -bronze-dark: #8b6914;
+    -bronze-bright: #d4a844;
+    -gold: #d4a844;
     -gold-bright: #e6c35c;
-    -gold-dark: #8b7019;
-    -crimson: #8b0000;
-    -crimson-bright: #dc143c;
+    -ink: #a89068;
+    -ink-light: #c4b090;
+    -crimson: #8b2500;
+    -crimson-bright: #c41e3a;
     -blood: #660000;
-    -parchment: #d4c4a8;
-    -parchment-dark: #a89878;
-    -shadow: #0a0a0a;
-    -panel-bg: linear-gradient(to bottom, #1e1e1e, #151515);
-    -panel-border: #3d3d3d;
+    -leather: #2a2520;
+    -leather-light: #3a3530;
+    -shadow: #0a0908;
+    -wood: #3d2b1f;
+    -wood-light: #5c4033;
 }
 
 /* ==================== Root Pane ==================== */
 .root-pane {
-    -fx-background-color: #0d0d0d;
+    -fx-background-color: #121210;
 }
 
 /* ==================== Top Bar ==================== */
 .top-bar {
-    -fx-background-color: linear-gradient(to bottom, #252525, #1a1a1a);
-    -fx-border-color: transparent transparent #c9a227 transparent;
-    -fx-border-width: 0 0 2 0;
+    -fx-background-color: linear-gradient(to bottom, #2a2520, #1e1d1b);
+    -fx-border-color: transparent transparent #b8860b transparent;
+    -fx-border-width: 0 0 3 0;
     -fx-padding: 10 20 10 20;
+    -fx-effect: dropshadow(gaussian, #000000, 8, 0.4, 0, 2);
 }
 
 .info-label {
-    -fx-text-fill: #d4c4a8;
-    -fx-font-family: "Georgia";
+    -fx-text-fill: #c4a875;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 14px;
 }
 
 .menu-button {
-    -fx-background-color: linear-gradient(to bottom, #3d3d3d, #252525);
-    -fx-text-fill: #c9a227;
-    -fx-border-color: #c9a227;
-    -fx-border-width: 1;
-    -fx-border-radius: 3;
-    -fx-background-radius: 3;
-    -fx-padding: 5 15 5 15;
-    -fx-font-family: "Georgia";
+    -fx-background-color: linear-gradient(to bottom, #3a3530, #2a2520);
+    -fx-text-fill: #d4a844;
+    -fx-border-color: #8b6914;
+    -fx-border-width: 2;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 6 18 6 18;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-font-size: 13px;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, #000000, 4, 0.3, 0, 1);
 }
 
 .menu-button:hover {
-    -fx-background-color: linear-gradient(to bottom, #4d4d4d, #353535);
-    -fx-border-color: #e6c35c;
+    -fx-background-color: linear-gradient(to bottom, #4a4540, #3a3530);
+    -fx-border-color: #d4a844;
+    -fx-text-fill: #e6c35c;
+    -fx-effect: dropshadow(gaussian, #b8860b, 6, 0.4, 0, 0);
 }
 
 .menu-button:pressed {
-    -fx-background-color: linear-gradient(to bottom, #252525, #1a1a1a);
+    -fx-background-color: linear-gradient(to bottom, #2a2520, #1e1d1b);
 }
 
 /* ==================== Content Area ==================== */
 .content-area {
-    -fx-background-color: #0d0d0d;
+    -fx-background-color: #121210;
     -fx-padding: 10;
 }
 
@@ -84,68 +106,72 @@
 }
 
 .message-scroll .scroll-bar:vertical {
-    -fx-background-color: #1a1a1a;
+    -fx-background-color: #1a1918;
 }
 
 .message-scroll .scroll-bar:vertical .thumb {
-    -fx-background-color: #3d3d3d;
+    -fx-background-color: #3a3530;
     -fx-background-radius: 3;
 }
 
 .message-scroll .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: #4d4d4d;
+    -fx-background-color: #4a4540;
 }
 
 .message-display {
-    -fx-background-color: linear-gradient(to bottom, #1a1a1a, #121212);
-    -fx-padding: 10;
-    -fx-border-color: #3d3d3d;
-    -fx-border-width: 1;
+    -fx-background-color: linear-gradient(to bottom, #1e1d1b, #161512);
+    -fx-padding: 12;
+    -fx-border-color: #3d2b1f;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
 }
 
 .message-text {
-    -fx-fill: #d4c4a8;
-    -fx-font-family: "Georgia";
+    -fx-fill: #c4a875;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 13px;
 }
 
 /* ==================== Action Panel ==================== */
 .action-panel {
-    -fx-background-color: linear-gradient(to right, #1a1a1a, #151515);
-    -fx-border-color: #c9a227 transparent transparent transparent;
-    -fx-border-width: 2 0 0 0;
+    -fx-background-color: linear-gradient(to right, #1e1d1b, #161512);
+    -fx-border-color: #8b6914 transparent transparent transparent;
+    -fx-border-width: 3 0 0 0;
     -fx-padding: 15;
 }
 
 .panel-title {
-    -fx-text-fill: #c9a227;
-    -fx-font-family: "Georgia";
+    -fx-text-fill: #d4a844;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-padding: 0 0 10 0;
 }
 
 .action-button {
-    -fx-background-color: linear-gradient(to bottom, #2d2d2d, #1e1e1e);
-    -fx-text-fill: #d4c4a8;
-    -fx-border-color: #4d4d4d;
-    -fx-border-width: 1;
-    -fx-border-radius: 3;
-    -fx-background-radius: 3;
-    -fx-padding: 8 15 8 15;
-    -fx-font-family: "Georgia";
+    -fx-background-color: linear-gradient(to bottom, #2a2520, #1e1d1b);
+    -fx-text-fill: #c4a875;
+    -fx-border-color: #5c4033;
+    -fx-border-width: 2;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 8 16 8 16;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 13px;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, #000000, 3, 0.2, 0, 1);
 }
 
 .action-button:hover {
-    -fx-background-color: linear-gradient(to bottom, #3d3d3d, #2d2d2d);
-    -fx-border-color: #c9a227;
-    -fx-text-fill: #c9a227;
+    -fx-background-color: linear-gradient(to bottom, #3a3530, #2a2520);
+    -fx-border-color: #b8860b;
+    -fx-text-fill: #d4a844;
+    -fx-effect: dropshadow(gaussian, #8b6914, 6, 0.3, 0, 0);
 }
 
 .action-button:pressed {
-    -fx-background-color: linear-gradient(to bottom, #1e1e1e, #151515);
+    -fx-background-color: linear-gradient(to bottom, #1e1d1b, #161512);
 }
 
 .action-button:disabled {
@@ -154,67 +180,71 @@
 
 /* ==================== Party Status Bar ==================== */
 .party-status-bar {
-    -fx-background-color: linear-gradient(to top, #1a1a1a, #252525);
-    -fx-border-color: #c9a227 transparent transparent transparent;
-    -fx-border-width: 2 0 0 0;
+    -fx-background-color: linear-gradient(to top, #1e1d1b, #2a2520);
+    -fx-border-color: #8b6914 transparent transparent transparent;
+    -fx-border-width: 3 0 0 0;
     -fx-padding: 10 20 10 20;
 }
 
 .character-card {
-    -fx-background-color: linear-gradient(to bottom, #252525, #1e1e1e);
-    -fx-border-color: #4d4d4d;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+    -fx-background-color: linear-gradient(to bottom, #2a2520, #1e1d1b);
+    -fx-border-color: #5c4033;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
     -fx-padding: 8;
+    -fx-effect: dropshadow(gaussian, #000000, 4, 0.3, 0, 2);
 }
 
 .character-card:hover {
-    -fx-border-color: #c9a227;
+    -fx-border-color: #b8860b;
+    -fx-effect: dropshadow(gaussian, #5c4033, 6, 0.4, 0, 0);
 }
 
 .player-card {
-    -fx-border-color: #c9a227;
-    -fx-border-width: 2;
+    -fx-border-color: #d4a844;
+    -fx-border-width: 3;
+    -fx-effect: dropshadow(gaussian, #b8860b, 8, 0.4, 0, 2);
 }
 
 .character-name {
     -fx-text-fill: #e6c35c;
-    -fx-font-family: "Georgia";
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 
 .character-class {
-    -fx-text-fill: #a89878;
-    -fx-font-family: "Georgia";
+    -fx-text-fill: #a89068;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 11px;
+    -fx-font-style: italic;
 }
 
 .stat-label {
-    -fx-text-fill: #888888;
-    -fx-font-family: "Consolas";
+    -fx-text-fill: #8b7a5a;
+    -fx-font-family: "Consolas", "Courier New", monospace;
     -fx-font-size: 10px;
 }
 
 .stat-value {
-    -fx-text-fill: #d4c4a8;
-    -fx-font-family: "Consolas";
+    -fx-text-fill: #c4a875;
+    -fx-font-family: "Consolas", "Courier New", monospace;
     -fx-font-size: 10px;
 }
 
 /* HP Bar */
 .hp-bar {
-    -fx-accent: #8b0000;
+    -fx-accent: #8b2500;
 }
 
 .hp-bar .track {
-    -fx-background-color: #2d2d2d;
+    -fx-background-color: #2a2520;
     -fx-background-radius: 3;
 }
 
 .hp-bar .bar {
-    -fx-background-color: linear-gradient(to bottom, #dc143c, #8b0000);
+    -fx-background-color: linear-gradient(to bottom, #c41e3a, #8b2500);
     -fx-background-radius: 3;
     -fx-background-insets: 0;
 }
@@ -225,7 +255,7 @@
 }
 
 .mp-bar .track {
-    -fx-background-color: #2d2d2d;
+    -fx-background-color: #2a2520;
     -fx-background-radius: 3;
 }
 
@@ -241,7 +271,7 @@
 }
 
 .focus-bar .track {
-    -fx-background-color: #2d2d2d;
+    -fx-background-color: #2a2520;
     -fx-background-radius: 3;
 }
 
@@ -253,111 +283,116 @@
 
 /* ==================== Title Screen ==================== */
 .title-screen {
-    -fx-background-color: linear-gradient(to bottom, #0a0a0a, #1a1a1a, #0a0a0a);
+    -fx-background-color: linear-gradient(to bottom, #0a0908, #121210, #1a1918);
 }
 
 .title-text {
-    -fx-fill: #c9a227;
-    -fx-font-family: "Georgia";
+    -fx-fill: #d4a844;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 48px;
     -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, #8b0000, 10, 0.5, 0, 2);
+    -fx-effect: dropshadow(gaussian, #8b2500, 12, 0.6, 0, 3);
 }
 
 .subtitle-text {
-    -fx-fill: #a89878;
-    -fx-font-family: "Georgia";
+    -fx-fill: #a89068;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 18px;
     -fx-font-style: italic;
 }
 
 .title-button {
-    -fx-background-color: linear-gradient(to bottom, #2d2d2d, #1a1a1a);
-    -fx-text-fill: #c9a227;
-    -fx-border-color: #c9a227;
-    -fx-border-width: 2;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-padding: 12 40 12 40;
-    -fx-font-family: "Georgia";
+    -fx-background-color: linear-gradient(to bottom, #2a2520, #1a1918);
+    -fx-text-fill: #d4a844;
+    -fx-border-color: #8b6914;
+    -fx-border-width: 3;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 14 44 14 44;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 16px;
+    -fx-font-weight: bold;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, #000000, 5, 0.5, 0, 2);
+    -fx-effect: dropshadow(gaussian, #000000, 8, 0.5, 0, 3);
 }
 
 .title-button:hover {
-    -fx-background-color: linear-gradient(to bottom, #3d3d3d, #252525);
-    -fx-border-color: #e6c35c;
+    -fx-background-color: linear-gradient(to bottom, #3a3530, #2a2520);
+    -fx-border-color: #d4a844;
     -fx-text-fill: #e6c35c;
+    -fx-effect: dropshadow(gaussian, #b8860b, 10, 0.5, 0, 0);
 }
 
 .title-button:pressed {
-    -fx-background-color: linear-gradient(to bottom, #1a1a1a, #0d0d0d);
+    -fx-background-color: linear-gradient(to bottom, #1a1918, #0a0908);
 }
 
 /* ==================== Character Creation ==================== */
 .creation-panel {
-    -fx-background-color: linear-gradient(to bottom, #1e1e1e, #151515);
-    -fx-border-color: #c9a227;
-    -fx-border-width: 2;
+    -fx-background-color: linear-gradient(to bottom, #1e1d1b, #161512);
+    -fx-border-color: #8b6914;
+    -fx-border-width: 3;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-padding: 30;
+    -fx-effect: dropshadow(gaussian, #000000, 12, 0.5, 0, 4);
 }
 
 .creation-title {
-    -fx-text-fill: #c9a227;
-    -fx-font-family: "Georgia";
+    -fx-text-fill: #d4a844;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 28px;
     -fx-font-weight: bold;
 }
 
 .creation-label {
-    -fx-text-fill: #d4c4a8;
-    -fx-font-family: "Georgia";
+    -fx-text-fill: #c4a875;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 14px;
 }
 
 .creation-input {
-    -fx-background-color: #252525;
-    -fx-text-fill: #d4c4a8;
-    -fx-border-color: #4d4d4d;
-    -fx-border-width: 1;
-    -fx-border-radius: 3;
-    -fx-background-radius: 3;
+    -fx-background-color: #2a2520;
+    -fx-text-fill: #c4a875;
+    -fx-border-color: #5c4033;
+    -fx-border-width: 2;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
     -fx-padding: 8;
-    -fx-font-family: "Georgia";
+    -fx-font-family: "Georgia", "Times New Roman", serif;
 }
 
 .creation-input:focused {
-    -fx-border-color: #c9a227;
+    -fx-border-color: #b8860b;
+    -fx-effect: dropshadow(gaussian, #8b6914, 6, 0.3, 0, 0);
 }
 
 /* ==================== Tooltips ==================== */
 .game-tooltip {
-    -fx-background-color: linear-gradient(to bottom, #252525, #1a1a1a);
-    -fx-text-fill: #d4c4a8;
-    -fx-border-color: #c9a227;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-padding: 10;
-    -fx-font-family: "Georgia";
+    -fx-background-color: linear-gradient(to bottom, #2a2520, #1e1d1b);
+    -fx-text-fill: #c4a875;
+    -fx-border-color: #8b6914;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 12;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 12px;
-    -fx-effect: dropshadow(gaussian, #000000, 8, 0.5, 0, 2);
+    -fx-effect: dropshadow(gaussian, #000000, 10, 0.6, 0, 3);
 }
 
 .tooltip-title {
-    -fx-fill: #c9a227;
+    -fx-fill: #d4a844;
     -fx-font-weight: bold;
+    -fx-font-size: 14px;
 }
 
 .tooltip-stat {
-    -fx-fill: #d4c4a8;
+    -fx-fill: #c4a875;
 }
 
 .tooltip-description {
-    -fx-fill: #a89878;
+    -fx-fill: #a89068;
     -fx-font-style: italic;
 }
 
@@ -367,209 +402,219 @@
 }
 
 .status-debuff {
-    -fx-fill: #dc143c;
+    -fx-fill: #c41e3a;
 }
 
 .status-neutral {
-    -fx-fill: #a89878;
+    -fx-fill: #a89068;
 }
 
 /* ==================== Combat View ==================== */
 .combat-area {
-    -fx-background-color: linear-gradient(to bottom, #151515, #0d0d0d);
+    -fx-background-color: linear-gradient(to bottom, #161512, #0a0908);
     -fx-padding: 20;
 }
 
 .enemy-card {
-    -fx-background-color: linear-gradient(to bottom, #2d1515, #1e0a0a);
-    -fx-border-color: #8b0000;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-padding: 10;
+    -fx-background-color: linear-gradient(to bottom, #2a1a15, #1e0e0a);
+    -fx-border-color: #8b2500;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 12;
+    -fx-effect: dropshadow(gaussian, #660000, 6, 0.4, 0, 2);
 }
 
 .enemy-card:hover {
-    -fx-border-color: #dc143c;
+    -fx-border-color: #c41e3a;
+    -fx-effect: dropshadow(gaussian, #8b2500, 8, 0.5, 0, 0);
 }
 
 .enemy-name {
-    -fx-text-fill: #dc143c;
-    -fx-font-family: "Georgia";
+    -fx-text-fill: #c41e3a;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 
 .combat-log {
-    -fx-background-color: #1a1a1a;
-    -fx-border-color: #3d3d3d;
-    -fx-border-width: 1;
+    -fx-background-color: #1a1918;
+    -fx-border-color: #3d2b1f;
+    -fx-border-width: 2;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
 }
 
 .combat-log .list-cell {
     -fx-background-color: transparent;
-    -fx-text-fill: #d4c4a8;
-    -fx-font-family: "Consolas";
+    -fx-text-fill: #c4a875;
+    -fx-font-family: "Consolas", "Courier New", monospace;
     -fx-font-size: 12px;
     -fx-padding: 2 5 2 5;
 }
 
 .combat-log .list-cell:odd {
-    -fx-background-color: #1e1e1e;
+    -fx-background-color: #1e1d1b;
 }
 
 /* ==================== Exploration View ==================== */
 .exploration-area {
-    -fx-background-color: #0d0d0d;
+    -fx-background-color: #121210;
     -fx-padding: 15;
 }
 
 .location-card {
-    -fx-background-color: linear-gradient(to bottom, #1e1e1e, #151515);
-    -fx-border-color: #4d4d4d;
-    -fx-border-width: 1;
+    -fx-background-color: linear-gradient(to bottom, #2a2520, #1e1d1b);
+    -fx-border-color: #5c4033;
+    -fx-border-width: 2;
     -fx-border-radius: 8;
     -fx-background-radius: 8;
     -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, #000000, 8, 0.4, 0, 3);
 }
 
 .location-name {
-    -fx-text-fill: #c9a227;
-    -fx-font-family: "Georgia";
+    -fx-text-fill: #d4a844;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
 
 .location-description {
-    -fx-text-fill: #a89878;
-    -fx-font-family: "Georgia";
+    -fx-fill: #a89068;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 14px;
     -fx-wrap-text: true;
 }
 
 .location-type {
-    -fx-text-fill: #666666;
-    -fx-font-family: "Georgia";
+    -fx-text-fill: #8b7a5a;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 12px;
     -fx-font-style: italic;
 }
 
 /* ==================== Dialog ==================== */
 .game-dialog {
-    -fx-background-color: #1a1a1a;
+    -fx-background-color: #1a1918;
 }
 
 .game-dialog .dialog-pane {
-    -fx-background-color: linear-gradient(to bottom, #1e1e1e, #151515);
-    -fx-border-color: #c9a227;
-    -fx-border-width: 2;
+    -fx-background-color: linear-gradient(to bottom, #2a2520, #1e1d1b);
+    -fx-border-color: #8b6914;
+    -fx-border-width: 3;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
 }
 
 .game-dialog .dialog-pane > .button-bar > .container {
-    -fx-background-color: #1a1a1a;
+    -fx-background-color: #1a1918;
 }
 
 .game-dialog .header-panel {
-    -fx-background-color: linear-gradient(to bottom, #252525, #1e1e1e);
+    -fx-background-color: linear-gradient(to bottom, #2a2520, #1e1d1b);
+    -fx-border-color: transparent transparent #5c4033 transparent;
+    -fx-border-width: 0 0 2 0;
 }
 
 .game-dialog .header-panel .label {
-    -fx-text-fill: #c9a227;
-    -fx-font-family: "Georgia";
+    -fx-text-fill: #d4a844;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
     -fx-font-size: 16px;
+    -fx-font-weight: bold;
 }
 
 /* ==================== Scroll Bars ==================== */
 .scroll-bar {
-    -fx-background-color: #1a1a1a;
+    -fx-background-color: #1a1918;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #3d3d3d;
-    -fx-background-radius: 3;
+    -fx-background-color: #3a3530;
+    -fx-background-radius: 4;
 }
 
 .scroll-bar .thumb:hover {
-    -fx-background-color: #4d4d4d;
+    -fx-background-color: #4a4540;
 }
 
 .scroll-bar .increment-button,
 .scroll-bar .decrement-button {
-    -fx-background-color: #252525;
+    -fx-background-color: #2a2520;
 }
 
 .scroll-bar .increment-arrow,
 .scroll-bar .decrement-arrow {
-    -fx-background-color: #666666;
+    -fx-background-color: #8b7a5a;
 }
 
 /* ==================== Combo Box ==================== */
 .combo-box {
-    -fx-background-color: #252525;
-    -fx-border-color: #4d4d4d;
-    -fx-border-width: 1;
-    -fx-border-radius: 3;
-    -fx-background-radius: 3;
+    -fx-background-color: #2a2520;
+    -fx-border-color: #5c4033;
+    -fx-border-width: 2;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
 }
 
 .combo-box:hover {
-    -fx-border-color: #c9a227;
+    -fx-border-color: #b8860b;
 }
 
 .combo-box .list-cell {
-    -fx-background-color: #252525;
-    -fx-text-fill: #d4c4a8;
-    -fx-font-family: "Georgia";
+    -fx-background-color: #2a2520;
+    -fx-text-fill: #c4a875;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
 }
 
 .combo-box-popup .list-view {
-    -fx-background-color: #252525;
-    -fx-border-color: #c9a227;
+    -fx-background-color: #2a2520;
+    -fx-border-color: #8b6914;
 }
 
 .combo-box-popup .list-view .list-cell:hover {
-    -fx-background-color: #3d3d3d;
+    -fx-background-color: #3a3530;
 }
 
 .combo-box-popup .list-view .list-cell:selected {
-    -fx-background-color: #8b7019;
+    -fx-background-color: #5c4033;
 }
 
 /* ==================== Check Box ==================== */
 .check-box {
-    -fx-text-fill: #d4c4a8;
-    -fx-font-family: "Georgia";
+    -fx-text-fill: #c4a875;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
 }
 
 .check-box .box {
-    -fx-background-color: #252525;
-    -fx-border-color: #4d4d4d;
-    -fx-border-width: 1;
-    -fx-border-radius: 2;
+    -fx-background-color: #2a2520;
+    -fx-border-color: #5c4033;
+    -fx-border-width: 2;
+    -fx-border-radius: 3;
 }
 
 .check-box:selected .box {
-    -fx-background-color: #c9a227;
+    -fx-background-color: #b8860b;
 }
 
 .check-box:selected .mark {
-    -fx-background-color: #1a1a1a;
+    -fx-background-color: #1a1918;
 }
 
 /* ==================== Alignment Display ==================== */
 .alignment-meter {
-    -fx-background-color: #252525;
-    -fx-border-color: #4d4d4d;
-    -fx-border-width: 1;
-    -fx-border-radius: 3;
+    -fx-background-color: #2a2520;
+    -fx-border-color: #5c4033;
+    -fx-border-width: 2;
+    -fx-border-radius: 4;
 }
 
 .alignment-honor {
-    -fx-background-color: linear-gradient(to right, #c9a227, #e6c35c);
+    -fx-background-color: linear-gradient(to right, #b8860b, #d4a844);
 }
 
 .alignment-pragmatic {
-    -fx-background-color: linear-gradient(to right, #666666, #888888);
+    -fx-background-color: linear-gradient(to right, #666666, #8b7a5a);
 }
 
 .alignment-compassion {
@@ -577,46 +622,113 @@
 }
 
 .alignment-ruthless {
-    -fx-background-color: linear-gradient(to right, #8b0000, #dc143c);
+    -fx-background-color: linear-gradient(to right, #8b2500, #c41e3a);
 }
 
 /* ==================== Element Icons ==================== */
 .element-fire {
-    -fx-text-fill: #ff4500;
+    -fx-text-fill: #ff6a00;
 }
 
 .element-water {
-    -fx-text-fill: #4169e1;
+    -fx-text-fill: #4a7fbb;
 }
 
 .element-earth {
-    -fx-text-fill: #8b4513;
+    -fx-text-fill: #a0522d;
 }
 
 .element-air {
-    -fx-text-fill: #87ceeb;
+    -fx-text-fill: #87a8b0;
 }
 
 .element-light {
-    -fx-text-fill: #ffd700;
+    -fx-text-fill: #e6c35c;
 }
 
 .element-dark {
-    -fx-text-fill: #4b0082;
+    -fx-text-fill: #6a3d7a;
 }
 
 .element-lightning {
-    -fx-text-fill: #ffff00;
+    -fx-text-fill: #e6e600;
 }
 
 .element-ice {
-    -fx-text-fill: #00ced1;
+    -fx-text-fill: #66cdaa;
 }
 
 .element-nature {
-    -fx-text-fill: #228b22;
+    -fx-text-fill: #4a8b3c;
 }
 
 .element-arcane {
-    -fx-text-fill: #9932cc;
+    -fx-text-fill: #9370db;
+}
+
+/* ==================== Medieval Decorative Borders ==================== */
+
+/* Ornate separator line */
+.separator .line {
+    -fx-border-color: #5c4033;
+    -fx-border-width: 1;
+}
+
+/* Section headers */
+.section-header {
+    -fx-text-fill: #d4a844;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #000000, 4, 0.3, 0, 1);
+}
+
+/* Notification text */
+.notification-text {
+    -fx-fill: #e6c35c;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Gold text glow effect */
+.gold-glow {
+    -fx-effect: dropshadow(gaussian, #b8860b, 6, 0.5, 0, 0);
+}
+
+/* Bronze button */
+.bronze-button {
+    -fx-background-color: linear-gradient(to bottom, #5c4033, #3d2b1f);
+    -fx-text-fill: #d4a844;
+    -fx-border-color: #8b6914;
+    -fx-border-width: 2;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 10 20 10 20;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, #000000, 6, 0.4, 0, 2);
+}
+
+.bronze-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #6a4d3a, #4a3828);
+    -fx-border-color: #d4a844;
+    -fx-effect: dropshadow(gaussian, #8b6914, 8, 0.5, 0, 0);
+}
+
+/* Parchment text style */
+.parchment-text {
+    -fx-fill: #c4a875;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-font-size: 13px;
+}
+
+/* Ink text style */
+.ink-text {
+    -fx-fill: #a89068;
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
 }
