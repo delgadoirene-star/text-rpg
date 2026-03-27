@@ -67,6 +67,44 @@ public class CombatView {
             combatLogView.scrollTo(controller.getCombatLog().size() - 1);
         });
         
+        // Color the combat log based on message type
+        combatLogView.setCellFactory(lv -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    String color = getCombatLogColor(item);
+                    String bgColor = getCombatLogBgColor(item);
+                    setStyle("-fx-text-fill: " + color + "; -fx-font-family: 'Consolas', 'Courier New', monospace; " +
+                            "-fx-font-size: 12px; -fx-background-color: " + bgColor + ";");
+                }
+            }
+            
+            private String getCombatLogColor(String text) {
+                if (text.contains("=== Victory") || text.contains("LEVEL UP")) return "#228b22";
+                if (text.contains("=== Defeat")) return "#c41e3a";
+                if (text.contains("deals") || text.contains("damage")) return "#e6c35c";
+                if (text.contains("heals") || text.contains("HP restored")) return "#4a90d9";
+                if (text.contains("focus") || text.contains("Focus")) return "#7b68ee";
+                if (text.contains("poison") || text.contains("burn") || text.contains("bleed")) return "#9370db";
+                if (text.contains("miss") || text.contains("dodge")) return "#8b7a5a";
+                if (text.contains("[Party]")) return "#b8860b";
+                if (text.contains("===")) return "#d4a844";
+                return "#c4a875";
+            }
+            
+            private String getCombatLogBgColor(String text) {
+                if (text.contains("=== Victory")) return "#0a1a0a";
+                if (text.contains("=== Defeat")) return "#1a0a0a";
+                if (text.contains("LEVEL UP")) return "#0a1a0a";
+                return "transparent";
+            }
+        });
+        
         // Action buttons
         actionPanel = new VBox(8);
         actionPanel.setPadding(new Insets(10, 0, 0, 0));
@@ -236,8 +274,8 @@ public class CombatView {
         hpBar.setPrefHeight(8);
         hpBar.setStyle("-fx-accent: #dc143c;");
         
-        Text element = new Text(enemy.getElementAffinity().name());
-        element.setStyle("-fx-fill: #888888; -fx-font-size: 9px;");
+        Text element = new Text(getElementDisplayName(enemy.getElementAffinity()));
+        element.setStyle("-fx-fill: " + getElementColor(enemy.getElementAffinity()) + "; -fx-font-size: 10px; -fx-font-weight: bold;");
         
         card.getChildren().addAll(name, level, hpBar, hp, element);
         
@@ -350,6 +388,18 @@ public class CombatView {
             case LIGHT -> "#ffd700";
             case DARK -> "#4b0082";
             case NEUTRAL, NONE -> "#c9a227";
+        };
+    }
+    
+    private String getElementDisplayName(Element element) {
+        return switch (element) {
+            case FIRE -> "Fire";
+            case WATER -> "Water";
+            case EARTH -> "Earth";
+            case WIND -> "Wind";
+            case LIGHT -> "Light";
+            case DARK -> "Dark";
+            case NEUTRAL, NONE -> "Neutral";
         };
     }
     

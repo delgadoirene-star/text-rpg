@@ -132,35 +132,42 @@ public class ExplorationView {
         repBox.setPadding(new Insets(5, 0, 10, 0));
         repBox.setAlignment(Pos.CENTER_LEFT);
         
-        Label repIcon = new Label();
+        String icon;
         String statusText;
         String style;
         
         if (rep >= 75) {
-            repIcon.setText("\u2605");
-            statusText = " BELOVED - The people here revere you!";
-            style = "-fx-text-fill: #228b22; -fx-font-size: 12px;";
+            icon = "\u2605";
+            statusText = "Beloved";
+            style = "-fx-text-fill: #228b22; -fx-font-size: 13px;";
         } else if (rep > 0) {
-            repIcon.setText("\u2665");
-            statusText = " FRIENDLY - People greet you warmly.";
-            style = "-fx-text-fill: #32cd32; -fx-font-size: 12px;";
+            icon = "\u2665";
+            statusText = "Friendly";
+            style = "-fx-text-fill: #32cd32; -fx-font-size: 13px;";
         } else if (rep == 0) {
-            repIcon.setText("\u2022");
-            statusText = " NEUTRAL - You are an unknown traveler.";
-            style = "-fx-text-fill: #a89878; -fx-font-size: 12px;";
+            icon = "\u2022";
+            statusText = "Neutral";
+            style = "-fx-text-fill: #a89068; -fx-font-size: 13px;";
         } else if (rep > -50) {
-            repIcon.setText("\u2661");
-            statusText = " UNFRIENDLY - People eye you suspiciously.";
-            style = "-fx-text-fill: #ff8c00; -fx-font-size: 12px;";
+            icon = "\u2661";
+            statusText = "Unfriendly";
+            style = "-fx-text-fill: #ff8c00; -fx-font-size: 13px;";
         } else {
-            repIcon.setText("\u2620");
-            statusText = " SULLIED - Shops refuse service! Enemies hunt you!";
-            style = "-fx-text-fill: #dc143c; -fx-font-size: 12px; -fx-font-weight: bold;";
+            icon = "\u2620";
+            statusText = "Sullied";
+            style = "-fx-text-fill: #c41e3a; -fx-font-size: 13px; -fx-font-weight: bold;";
         }
         
-        repIcon.setStyle(style);
-        Label repLabel = new Label(repIcon.getText() + " Reputation: " + rep + statusText);
+        Label repLabel = new Label(icon + " Rep: " + rep + " (" + statusText + ")");
         repLabel.setStyle(style);
+        
+        // Tooltip with detailed info on hover
+        String tooltipText = getRepTooltipText(rep, regionType, repSystem);
+        Tooltip tooltip = new Tooltip(tooltipText);
+        tooltip.getStyleClass().add("game-tooltip");
+        tooltip.setMaxWidth(350);
+        tooltip.setWrapText(true);
+        Tooltip.install(repLabel, tooltip);
         
         repBox.getChildren().add(repLabel);
         eventArea.getChildren().add(repBox);
@@ -169,6 +176,40 @@ public class ExplorationView {
         Separator sep = new Separator();
         sep.setPadding(new Insets(5, 0, 5, 0));
         eventArea.getChildren().add(sep);
+    }
+    
+    private String getRepTooltipText(int rep, RegionType region, ReputationSystem repSystem) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Reputation in ").append(region.getDisplayName()).append(": ").append(rep).append("\n\n");
+        
+        if (rep >= 75) {
+            sb.append("BELOVED: The people revere you.\n");
+            sb.append("Shops offer best prices. Unique quests available.");
+        } else if (rep > 0) {
+            sb.append("FRIENDLY: People greet you warmly.\n");
+            sb.append("Shops offer discounts.");
+        } else if (rep == 0) {
+            sb.append("NEUTRAL: You are an unknown traveler.\n");
+            sb.append("Shops offer standard prices.");
+        } else if (rep > -50) {
+            sb.append("UNFRIENDLY: People eye you suspiciously.\n");
+            sb.append("Shops charge more. Some NPCs refuse service.");
+        } else {
+            sb.append("SULLIED: Shops refuse service!\n");
+            sb.append("Enemies hunt you. NPCs flee or attack.");
+        }
+        
+        sb.append("\n\n--- Other Regions ---\n");
+        for (RegionType rt : RegionType.values()) {
+            if (rt != region) {
+                int otherRep = repSystem.getReputation(rt);
+                String status = otherRep >= 75 ? "Beloved" : otherRep > 0 ? "Friendly" : 
+                               otherRep == 0 ? "Neutral" : otherRep > -50 ? "Unfriendly" : "Sullied";
+                sb.append(rt.getDisplayName()).append(": ").append(status).append(" (").append(otherRep).append(")\n");
+            }
+        }
+        
+        return sb.toString();
     }
     
     private void addLocationOptions(Location location) {

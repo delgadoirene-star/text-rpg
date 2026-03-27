@@ -417,12 +417,16 @@ public class GameView {
             card.getStyleClass().add("player-card");
         }
         card.setPadding(new Insets(8));
-        card.setPrefWidth(160);
+        card.setMinWidth(150);
+        card.setPrefWidth(150);
+        card.setMaxWidth(150);
         
         // Name with element icon
         String elementSymbol = getElementSymbol(character.getElementAffinity());
         Label nameLabel = new Label(elementSymbol + " " + character.getName());
         nameLabel.getStyleClass().add("character-name");
+        nameLabel.setMaxWidth(134); // Prevent name from expanding card
+        nameLabel.setEllipsisString("...");
         
         // Class and level
         String className = "Unknown";
@@ -433,6 +437,7 @@ public class GameView {
         }
         Label levelLabel = new Label("Lv." + character.getLevel() + " " + className);
         levelLabel.getStyleClass().add("character-class");
+        levelLabel.setMaxWidth(134);
         
         // HP Bar
         HBox hpBar = createStatBar("HP", character.getCurrentHP(), character.getMaxHP(), "hp-bar");
@@ -452,6 +457,7 @@ public class GameView {
             String loyaltyColor = loyalty >= 60 ? "#228b22" : loyalty >= 30 ? "#c9a227" : "#dc143c";
             Label loyaltyLabel = new Label(getLoyaltyHeart(loyalty) + " " + companion.getLoyaltyDescription());
             loyaltyLabel.setStyle("-fx-text-fill: " + loyaltyColor + "; -fx-font-size: 9px;");
+            loyaltyLabel.setMaxWidth(134);
             card.getChildren().add(loyaltyLabel);
         }
         
