@@ -7,6 +7,8 @@ import com.rpg.models.Stats;
 import com.rpg.ui.fx.GameController;
 import com.rpg.ui.fx.components.TooltipFactory;
 import com.rpg.world.Location;
+import com.rpg.world.RegionType;
+import com.rpg.world.ReputationSystem;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -68,7 +70,7 @@ public class ExplorationView {
         eventArea.getStyleClass().add("location-card");
         eventArea.setPadding(new Insets(15));
         
-        Label eventTitle = new Label("Events");
+        Label eventTitle = new Label("What would you like to do?");
         eventTitle.getStyleClass().add("panel-title");
         eventArea.getChildren().add(eventTitle);
         
@@ -100,8 +102,9 @@ public class ExplorationView {
         if (location == null) return;
         
         locationName.setText(location.getName());
-        String regionName = location.getRegionType() != null ? location.getRegionType().name() : "Unknown Region";
-        locationType.setText(regionName);
+        RegionType regionType = location.getRegionType();
+        String regionName = regionType != null ? regionType.getDisplayName() : "Unknown Region";
+        locationType.setText(regionName + " Region");
         locationDescription.setText(location.getDescription());
         
         // Clear old events
@@ -110,8 +113,62 @@ public class ExplorationView {
         eventTitle.getStyleClass().add("panel-title");
         eventArea.getChildren().add(eventTitle);
         
+        // Show reputation status for this region
+        addReputationStatus(regionType);
+        
         // Add location-specific options
         addLocationOptions(location);
+    }
+    
+    private void addReputationStatus(RegionType regionType) {
+        if (regionType == null) return;
+        
+        ReputationSystem repSystem = controller.getReputationSystem();
+        if (repSystem == null) return;
+        
+        int rep = repSystem.getReputation(regionType);
+        
+        HBox repBox = new HBox(10);
+        repBox.setPadding(new Insets(5, 0, 10, 0));
+        repBox.setAlignment(Pos.CENTER_LEFT);
+        
+        Label repIcon = new Label();
+        String statusText;
+        String style;
+        
+        if (rep >= 75) {
+            repIcon.setText("\u2605");
+            statusText = " BELOVED - The people here revere you!";
+            style = "-fx-text-fill: #228b22; -fx-font-size: 12px;";
+        } else if (rep > 0) {
+            repIcon.setText("\u2665");
+            statusText = " FRIENDLY - People greet you warmly.";
+            style = "-fx-text-fill: #32cd32; -fx-font-size: 12px;";
+        } else if (rep == 0) {
+            repIcon.setText("\u2022");
+            statusText = " NEUTRAL - You are an unknown traveler.";
+            style = "-fx-text-fill: #a89878; -fx-font-size: 12px;";
+        } else if (rep > -50) {
+            repIcon.setText("\u2661");
+            statusText = " UNFRIENDLY - People eye you suspiciously.";
+            style = "-fx-text-fill: #ff8c00; -fx-font-size: 12px;";
+        } else {
+            repIcon.setText("\u2620");
+            statusText = " SULLIED - Shops refuse service! Enemies hunt you!";
+            style = "-fx-text-fill: #dc143c; -fx-font-size: 12px; -fx-font-weight: bold;";
+        }
+        
+        repIcon.setStyle(style);
+        Label repLabel = new Label(repIcon.getText() + " Reputation: " + rep + statusText);
+        repLabel.setStyle(style);
+        
+        repBox.getChildren().add(repLabel);
+        eventArea.getChildren().add(repBox);
+        
+        // Add separator
+        Separator sep = new Separator();
+        sep.setPadding(new Insets(5, 0, 5, 0));
+        eventArea.getChildren().add(sep);
     }
     
     private void addLocationOptions(Location location) {

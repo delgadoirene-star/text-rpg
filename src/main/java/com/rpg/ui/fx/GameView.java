@@ -3,6 +3,8 @@ package com.rpg.ui.fx;
 import com.rpg.models.*;
 import com.rpg.ui.fx.components.TooltipFactory;
 import com.rpg.ui.fx.views.*;
+import com.rpg.world.RegionType;
+import com.rpg.world.ReputationSystem;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -111,6 +113,11 @@ public class GameView {
         locationLabel.setId("location-label");
         locationLabel.getStyleClass().add("info-label");
         
+        // Region reputation label
+        Label repLabel = new Label("Rep: 0 [NEUTRAL]");
+        repLabel.setId("rep-label");
+        repLabel.getStyleClass().add("info-label");
+        
         // Day counter
         Label dayLabel = new Label("Day: 1");
         dayLabel.setId("day-label");
@@ -121,6 +128,15 @@ public class GameView {
         goldLabel.setId("gold-label");
         goldLabel.getStyleClass().add("info-label");
         
+        // Reputation button
+        Button repBtn = new Button("Rep");
+        repBtn.setId("rep-btn");
+        repBtn.getStyleClass().add("menu-button");
+        repBtn.setOnAction(e -> showReputationDialog());
+        Tooltip repTooltip = new Tooltip("View regional reputation");
+        repTooltip.getStyleClass().add("game-tooltip");
+        repBtn.setTooltip(repTooltip);
+        
         // Spacer
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -130,7 +146,7 @@ public class GameView {
         menuBtn.getStyleClass().add("menu-button");
         menuBtn.setOnAction(e -> showGameMenu());
         
-        bar.getChildren().addAll(locationLabel, dayLabel, goldLabel, spacer, menuBtn);
+        bar.getChildren().addAll(locationLabel, repLabel, dayLabel, goldLabel, repBtn, spacer, menuBtn);
         
         return bar;
     }
@@ -325,12 +341,46 @@ public class GameView {
         var state = controller.getState();
         
         Label locationLabel = (Label) topBar.lookup("#location-label");
+        Label repLabel = (Label) topBar.lookup("#rep-label");
         Label dayLabel = (Label) topBar.lookup("#day-label");
         Label goldLabel = (Label) topBar.lookup("#gold-label");
         
         if (location != null && locationLabel != null) {
             locationLabel.setText("Location: " + location.getName());
         }
+        
+        if (location != null && repLabel != null) {
+            ReputationSystem repSystem = controller.getReputationSystem();
+            if (repSystem != null && location.getRegionType() != null) {
+                int rep = repSystem.getReputation(location.getRegionType());
+                String status;
+                String style;
+                
+                if (rep >= 75) {
+                    status = "[BELOVED]";
+                    style = "-fx-text-fill: #228b22;";
+                } else if (rep > 0) {
+                    status = "[FRIENDLY]";
+                    style = "-fx-text-fill: #32cd32;";
+                } else if (rep == 0) {
+                    status = "[NEUTRAL]";
+                    style = "-fx-text-fill: #a89878;";
+                } else if (rep > -50) {
+                    status = "[UNFRIENDLY]";
+                    style = "-fx-text-fill: #ff8c00;";
+                } else {
+                    status = "[SULLIED]";
+                    style = "-fx-text-fill: #dc143c;";
+                }
+                
+                repLabel.setText("Rep: " + rep + " " + status);
+                repLabel.setStyle(style);
+            } else {
+                repLabel.setText("Rep: 0 [NEUTRAL]");
+                repLabel.setStyle("-fx-text-fill: #a89878;");
+            }
+        }
+        
         if (state != null && dayLabel != null) {
             dayLabel.setText("Day: " + state.getCurrentDay());
         }
@@ -562,6 +612,79 @@ public class GameView {
         
         dialog.getDialogPane().setContent(content);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        
+        dialog.showAndWait();
+    }
+    
+    public void showReputationDialog() {
+        ReputationSystem repSystem = controller.getReputationSystem();
+        if (repSystem == null) return;
+        
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Regional Reputation");
+        dialog.setHeaderText("Your standing across the realm");
+        dialog.getDialogPane().getStylesheets().add(
+            getClass().getResource("/css/dark-fantasy.css").toExternalForm()
+        );
+        dialog.getDialogPane().getStyleClass().add("game-dialog");
+        
+        VBox content = new VBox(15);
+        content.setPadding(new Insets(15));
+        
+        for (RegionType region : RegionType.values()) {
+            int rep = repSystem.getReputation(region);
+            String status;
+            String style;
+            
+            if (rep >= 75) {
+                status = "BELOVED";
+                style = "-fx-text-fill: #228b22;";
+            } else if (rep > 0) {
+                status = "FRIENDLY";
+                style = "-fx-text-fill: #32cd32;";
+            } else if (rep == 0) {
+                status = "NEUTRAL";
+                style = "-fx-text-fill: #a89878;";
+            } else if (rep > -50) {
+                status = "UNFRIENDLY";
+                style = "-fx-text-fill: #ff8c00;";
+            } else {
+                status = "SULLIED";
+                style = "-fx-text-fill: #dc143c; -fx-font-weight: bold;";
+            }
+            
+            HBox regionRow = new HBox(15);
+            regionRow.setAlignment(Pos.CENTER_LEFT);
+            
+            Label regionLabel = new Label(region.getDisplayName());
+            regionLabel.setMinWidth(150);
+            regionLabel.setStyle("-fx-font-weight: bold;");
+            
+            Label repValue = new Label(String.format("%+4d", rep));
+            repValue.setStyle(style);
+            repValue.setMinWidth(50);
+            
+            Label statusLabel = new Label("[" + status + "]");
+            statusLabel.setStyle(style);
+            
+            regionRow.getChildren().addAll(regionLabel, repValue, statusLabel);
+            content.getChildren().add(regionRow);
+        }
+        
+        Separator sep = new Separator();
+        sep.setPadding(new Insets(10, 0, 10, 0));
+        content.getChildren().add(sep);
+        
+        Label hintLabel = new Label("Reputation affects: Shop prices, Safe zones, Enemy aggression");
+        hintLabel.setStyle("-fx-text-fill: #888888; -fx-font-size: 11px;");
+        content.getChildren().add(hintLabel);
+        
+        Label hintLabel2 = new Label("Sullied (Rep <= -50): Shops refuse service, enemies hunt you");
+        hintLabel2.setStyle("-fx-text-fill: #dc143c; -fx-font-size: 11px;");
+        content.getChildren().add(hintLabel2);
+        
+        dialog.getDialogPane().setContent(content);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         
         dialog.showAndWait();
     }

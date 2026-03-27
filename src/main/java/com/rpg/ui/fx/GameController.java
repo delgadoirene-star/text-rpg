@@ -19,6 +19,9 @@ import com.rpg.models.Background;
 import com.rpg.systems.AlignmentSystem;
 import com.rpg.systems.PartyDynamics;
 import com.rpg.world.Location;
+import com.rpg.world.RegionType;
+import com.rpg.world.ReputationSystem;
+import com.rpg.world.Rumor;
 import com.rpg.world.WorldMap;
 
 import javafx.beans.property.*;
@@ -155,6 +158,10 @@ public class GameController {
         
         WorldMap worldMap = new WorldMap();
         worldMap.initializeWorld();
+        
+        ReputationSystem repSystem = state.getReputationSystem();
+        worldMap.setReputationSystem(repSystem);
+        
         state.setWorldMap(worldMap);
         state.setCurrentLocation(worldMap.getStartingLocation());
         
@@ -197,13 +204,32 @@ public class GameController {
         if (state == null) return;
         
         Location current = state.getCurrentLocation();
-        Location destination = state.getWorldMap().travel(current, direction);
+        WorldMap worldMap = state.getWorldMap();
+        Location destination = worldMap.travel(current, direction);
         
         if (destination != null) {
             if (destination.canEnter(state.getFlagManager().getAllFlags())) {
+                RegionType destRegion = destination.getRegionType();
+                ReputationSystem repSystem = state.getReputationSystem();
+                
+                int travelDays = worldMap.calculateTravelDays(destRegion);
+                for (int i = 0; i < travelDays; i++) {
+                    state.advanceDay();
+                }
+                repSystem.processRumors(travelDays);
+                
+                worldMap.setCurrentLocation(destination);
                 state.setCurrentLocation(destination);
-                state.advanceDay();
-                addMessage("Traveled to " + destination.getName());
+                
+                addMessage("Traveled to " + destination.getName() + " (" + destRegion.getDisplayName() + ")");
+                
+                if (repSystem.isSullied(destRegion)) {
+                    addMessage("[WARNING] You are SULLIED in this region! Shops are hostile and enemies are aggressive.");
+                }
+                
+                int currentRep = repSystem.getReputation(destRegion);
+                addMessage("Your reputation here: " + currentRep);
+                
                 showExploration();
             } else {
                 addMessage("You cannot enter this area yet.");
@@ -683,6 +709,7 @@ public class GameController {
     public Player getPlayer() { return state != null ? state.getPlayer() : null; }
     public Location getCurrentLocation() { return state != null ? state.getCurrentLocation() : null; }
     public AlignmentSystem getAlignment() { return state != null ? state.getAlignmentSystem() : null; }
+    public ReputationSystem getReputationSystem() { return state != null ? state.getReputationSystem() : null; }
     
     public StringProperty currentScreenProperty() { return currentScreen; }
     public StringProperty messageLogProperty() { return messageLog; }

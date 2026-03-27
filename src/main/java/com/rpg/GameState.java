@@ -7,6 +7,7 @@ import com.rpg.systems.FlagManager;
 import com.rpg.systems.PartyDynamics;
 import com.rpg.systems.QuestManager;
 import com.rpg.world.Location;
+import com.rpg.world.ReputationSystem;
 import com.rpg.world.WorldMap;
 
 import java.util.*;
@@ -25,6 +26,7 @@ public class GameState {
     // World
     private WorldMap worldMap;
     private Location currentLocation;
+    private ReputationSystem reputationSystem;
     
     // Systems
     private FlagManager flagManager;
@@ -53,6 +55,7 @@ public class GameState {
         this.gold = 100; // Starting gold
         this.gameOver = false;
         this.gameWon = false;
+        this.reputationSystem = new ReputationSystem();
     }
     
     // ==================== Player ====================
@@ -154,7 +157,15 @@ public class GameState {
     // ==================== World ====================
     
     public WorldMap getWorldMap() { return worldMap; }
-    public void setWorldMap(WorldMap worldMap) { this.worldMap = worldMap; }
+    public void setWorldMap(WorldMap worldMap) { 
+        this.worldMap = worldMap; 
+        if (worldMap != null) {
+            worldMap.setReputationSystem(reputationSystem);
+            worldMap.setCurrentLocation(currentLocation);
+        }
+    }
+    
+    public ReputationSystem getReputationSystem() { return reputationSystem; }
     
     public Location getCurrentLocation() { return currentLocation; }
     public void setCurrentLocation(Location location) { 
@@ -162,6 +173,9 @@ public class GameState {
         if (location != null) {
             location.setDiscovered(true);
             location.onFirstVisit();
+        }
+        if (worldMap != null) {
+            worldMap.setCurrentLocation(location);
         }
     }
     

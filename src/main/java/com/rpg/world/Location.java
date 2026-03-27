@@ -155,6 +155,101 @@ public class Location {
         return true;
     }
     
+    // ==================== Regional Reputation ====================
+    
+    private boolean shopAvailable = true;
+    private boolean innAvailable = true;
+    private boolean healingAvailable = true;
+    
+    /**
+     * Called when player enters this location.
+     * Checks if player is Sullied in this region, triggering hostile events.
+     * 
+     * @param reputation The reputation system to check
+     */
+    public void onEnter(ReputationSystem reputation) {
+        visited = true;
+        discovered = true;
+        
+        if (reputation != null && reputation.isSullied(regionType)) {
+            handleSulliedEntry();
+        } else {
+            handleNormalEntry();
+        }
+    }
+    
+    /**
+     * Handle entry when player is NOT sullied in this region
+     */
+    private void handleNormalEntry() {
+        System.out.printf("%n=== ENTERING: %s [%s] ===%n", name, 
+            regionType != null ? regionType.getDisplayName() : "Unknown Region");
+        System.out.println(description);
+        
+        if (!shopAvailable) {
+            System.out.println("[WARNING] The local shop is closed.");
+        }
+        if (!innAvailable) {
+            System.out.println("[WARNING] No inn is available here.");
+        }
+        if (!healingAvailable) {
+            System.out.println("[WARNING] Healing is not available.");
+        }
+    }
+    
+    /**
+     * Handle entry when player IS sullied in this region
+     * Triggers hostile events, potential combat, locked services
+     */
+    private void handleSulliedEntry() {
+        System.out.printf("%n=== WARNING: ENTERING SULLIED REGION ===%n");
+        System.out.printf("%s [%s]%n", name, 
+            regionType != null ? regionType.getDisplayName() : "Unknown Region");
+        System.out.println("Your reputation precedes you...");
+        
+        System.out.println("\n[HOSTILE] Locals eye you with suspicion and hostility!");
+        
+        if (shopAvailable) {
+            shopAvailable = false;
+            System.out.println("[LOCKED] The shopkeeper slams the door in your face!");
+        }
+        
+        if (innAvailable) {
+            innAvailable = false;
+            System.out.println("[LOCKED] The inn refuses to shelter you!");
+        }
+        
+        if (healingAvailable) {
+            healingAvailable = false;
+            System.out.println("[LOCKED] The healer turns away, citing 'too many enemies'.");
+        }
+        
+        System.out.println("\n[ALERT] Random encounters are now more likely to be hostile!");
+        System.out.println("[ALERT] Consider making amends or leaving this region.");
+    }
+    
+    /**
+     * Attempt to restore services after being sullied (e.g., after quest completion)
+     */
+    public void restoreServices() {
+        shopAvailable = true;
+        innAvailable = true;
+        healingAvailable = true;
+        System.out.println("[SUCCESS] Services have been restored in " + name + "!");
+    }
+    
+    public boolean isShopAvailable() {
+        return shopAvailable;
+    }
+    
+    public boolean isInnAvailable() {
+        return innAvailable;
+    }
+    
+    public boolean isHealingAvailable() {
+        return healingAvailable;
+    }
+    
     // ==================== Display ====================
     
     @Override
