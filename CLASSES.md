@@ -1,17 +1,4 @@
 # Class System Design v2
-
-## The Companion Rework Framework
-
-To rework a companion, put them through this three-step design filter:
-
-1. **The Alignment Anchor**: Where does this companion naturally sit on the Dual-Axis (Honor <-> Deceit, Compassion <-> Cruelty)?
-
-2. **The Breaking Point**: What specific player alignment or action (Flag) will cause them to lose loyalty, leave the party, or even turn hostile?
-
-3. **The Quest Subversion**: How can their personal quest challenge their alignment anchor, forcing the player to either push them toward an "Ultimate/Secret" mindset or ruin their purity?
-
----
-
 ## Alignment System
 
 ### Dual-Axis Morality
