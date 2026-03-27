@@ -143,8 +143,20 @@ mvn exec:java -Dexec.mainClass="com.rpg.Main" -Dexec.args="--console"
 ```
 
 ## Documentation
-- **CLASSES.md**: Complete class system design
-- **COMPANIONS.md**: 11 unique companion designs
+
+### Public Docs
+- **[docs/README.md](docs/README.md)** - Documentation index
+- **[CLASSES.md](CLASSES.md)** - Complete class system design (116+ classes)
+- **[COMPANIONS.md](COMPANIONS.md)** - 11 unique companion designs (spoiler-light)
+- **[docs/world/WORLD_MAP.md](docs/world/WORLD_MAP.md)** - World map and regions
+- **[docs/systems/COMBAT_SYSTEM.md](docs/systems/COMBAT_SYSTEM.md)** - Combat mechanics
+- **[docs/systems/ALIGNMENT_SYSTEM.md](docs/systems/ALIGNMENT_SYSTEM.md)** - Dual-axis morality
+
+### Internal Docs (Spoilers)
+- **[docs/companions/COMPANION_DESIGN_INTERNAL.md](docs/companions/COMPANION_DESIGN_INTERNAL.md)** - Full companion backstories
+- **[docs/companions/COMPANION_MECHANICS_INTERNAL.md](docs/companions/COMPANION_MECHANICS_INTERNAL.md)** - Companion systems
+- **[docs/world/LOCATION_DETAILS_INTERNAL.md](docs/world/LOCATION_DETAILS_INTERNAL.md)** - Detailed locations
+- **[docs/quests/QUEST_SPOILERS_INTERNAL.md](docs/quests/QUEST_SPOILERS_INTERNAL.md)** - Quest walkthroughs
 
 ## License
 MIT
