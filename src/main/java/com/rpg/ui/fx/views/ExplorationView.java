@@ -1,5 +1,6 @@
 package com.rpg.ui.fx.views;
 
+import com.rpg.Debug;
 import com.rpg.models.Element;
 import com.rpg.models.Enemy;
 import com.rpg.models.EnemyFactory;
@@ -99,7 +100,12 @@ public class ExplorationView {
     
     public void refresh() {
         Location location = controller.getCurrentLocation();
-        if (location == null) return;
+        if (location == null) {
+            Debug.logUI("Exploration", "No location set - cannot refresh");
+            return;
+        }
+        
+        Debug.logUI("Exploration", "Refreshing for location: " + location.getName() + " (id: " + location.getId() + ")");
         
         locationName.setText(location.getName());
         RegionType regionType = location.getRegionType();
@@ -121,12 +127,19 @@ public class ExplorationView {
     }
     
     private void addReputationStatus(RegionType regionType) {
-        if (regionType == null) return;
+        if (regionType == null) {
+            Debug.logRep("UI", "RegionType is null - skipping reputation display");
+            return;
+        }
         
         ReputationSystem repSystem = controller.getReputationSystem();
-        if (repSystem == null) return;
+        if (repSystem == null) {
+            Debug.logRep("UI", "ReputationSystem is null - cannot show reputation");
+            return;
+        }
         
         int rep = repSystem.getReputation(regionType);
+        Debug.logRep(regionType.getDisplayName(), "Displaying reputation: " + rep);
         
         HBox repBox = new HBox(10);
         repBox.setPadding(new Insets(5, 0, 10, 0));
@@ -168,6 +181,8 @@ public class ExplorationView {
         tooltip.setMaxWidth(350);
         tooltip.setWrapText(true);
         Tooltip.install(repLabel, tooltip);
+        
+        Debug.logRep("UI", "Tooltip installed for reputation label");
         
         repBox.getChildren().add(repLabel);
         eventArea.getChildren().add(repBox);

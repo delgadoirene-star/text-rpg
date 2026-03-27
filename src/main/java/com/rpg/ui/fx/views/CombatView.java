@@ -1,5 +1,6 @@
 package com.rpg.ui.fx.views;
 
+import com.rpg.Debug;
 import com.rpg.combat.Ability;
 import com.rpg.models.*;
 import com.rpg.ui.fx.GameController;
@@ -87,9 +88,9 @@ public class CombatView {
             private String getCombatLogColor(String text) {
                 if (text.contains("=== Victory") || text.contains("LEVEL UP")) return "#228b22";
                 if (text.contains("=== Defeat")) return "#c41e3a";
-                if (text.contains("deals") || text.contains("damage")) return "#e6c35c";
+                if (text.contains("deals") || text.contains("damage")) return "#c41e3a";
                 if (text.contains("heals") || text.contains("HP restored")) return "#4a90d9";
-                if (text.contains("focus") || text.contains("Focus")) return "#7b68ee";
+                if (text.contains("focus") || text.contains("Focus")) return "#d4a844";
                 if (text.contains("poison") || text.contains("burn") || text.contains("bleed")) return "#9370db";
                 if (text.contains("miss") || text.contains("dodge")) return "#8b7a5a";
                 if (text.contains("[Party]")) return "#b8860b";
@@ -120,13 +121,17 @@ public class CombatView {
         selectedTarget = null;
         selectedTargetLabel.setText("No target selected - click an enemy to target it");
         
+        Debug.logCombat("Refreshing combat view. InCombat: " + controller.isInCombat());
+        
         if (controller.isInCombat()) {
             turnIndicator.setText("Battle in Progress!");
             
             // Build enemy cards
             List<Enemy> enemies = controller.getCurrentEnemies();
+            Debug.logCombat("Enemies found: " + (enemies != null ? enemies.size() : "null"));
             if (enemies != null) {
                 for (Enemy enemy : enemies) {
+                    Debug.logCombat("Creating card for: " + enemy.getName() + " (Element: " + enemy.getElementAffinity() + ")");
                     enemyArea.getChildren().add(createEnemyCard(enemy));
                 }
             }
@@ -384,7 +389,7 @@ public class CombatView {
             case FIRE -> "#ff4500";
             case WATER -> "#4169e1";
             case EARTH -> "#8b4513";
-            case WIND -> "#87ceeb";
+            case WIND -> "#228b22";
             case LIGHT -> "#ffd700";
             case DARK -> "#4b0082";
             case NEUTRAL, NONE -> "#c9a227";
