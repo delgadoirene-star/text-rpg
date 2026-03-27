@@ -251,3 +251,43 @@ This document contains detailed location descriptions for worldbuilding and ques
   - Ultimate trial
   - Achievement location
   - Face inner demons
+---
+
+## Worldbuilding: The Four Regions
+
+### 1. The Archivist Core (Formerly The Hegemony)
+
+- **Cultural Vibe**: Obsessed with permanence, history, and rigid law. They are not "evil military guys" - they record everything. Their magic is geometric and bound by strict laws.
+- **Alignment Tendency**: +Honor (Lawful), -Compassion (Bureaucratic/Cold)
+- **Phonetics**: Persian/Sanskrit rhythms with architectural/metallic concepts. Polysyllabic, rolling, ending in sharp resonant sounds (-ath, -el, -za).
+- **Naming Convention**: [Given Name] + [Caste-Prefix] + [Patron/Guild]
+  - `vex` = military caste
+  - `ves` = academic/licensed mage caste
+  - `nul` = caste-less or exiled
+- **Examples**: Isolde vex-Torvath, Dr. Sybilla ves-Vael, Garrick nul-Kael
+
+### 2. The Sump / The Drowned Wards
+
+- **Cultural Vibe**: A vertical, waterlogged slum built into ancient ruins. Everyone is hustling to survive. Time is money, people speak fast and clip words.
+- **Alignment Tendency**: -Honor (Deceitful/Pragmatic), +Compassion (Community-focused)
+- **Phonetics**: Creole/Pidgin concepts. Short vowels, glottal stops, dropped syllables. Names are often clipped monikers.
+- **Naming Convention**: Surnames don't exist. [One-Syllable Name] + [Earned Moniker/Trade/Flaw]
+- **Examples**: Bram "The Vulture", Sash "Velvet", Vek "Glass"
+
+### 3. The Choke / The Symbiote Wilds
+
+- **Cultural Vibe**: A hyper-evolved, aggressive ecosystem. People survive by merging with nature through biological symbiosis. They romanticize their horrific bond with the wild.
+- **Alignment Tendency**: 0 Honor (Wild), Variable Compassion
+- **Phonetics**: Clicking consonants (Q, K, X) mixed with deep guttural vowels (U, O). Sounds like things snapping and growing.
+- **Naming Convention**: [Given Name] + [Biological Bond]. Their name reflects what organism they are bound to.
+- **Examples**: Oona Pale-Sap, Ghor Iron-Root, Maeva Still-Water
+
+### 4. The Zenith / The Deep Cloisters
+
+- **Cultural Vibe**: Monasteries built in extreme elemental hazard zones (active volcanoes, anti-gravity rocks). They believe mortal attachments weigh the soul down.
+- **Alignment Tendency**: Extreme Purity (+100 or -100)
+- **Phonetics**: Breathless, resonant sounds. Monosyllabic. Lots of M, N, L, and soft vowels. Like meditation chants.
+- **Naming Convention**: Upon joining, they surrender their birth name and take a [Concept Title] + [Numerical Rank]
+- **Examples**: Balance-Ninth, Void-Exile
+
+---
