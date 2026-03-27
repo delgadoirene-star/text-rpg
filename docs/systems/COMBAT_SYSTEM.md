@@ -29,8 +29,8 @@
 ### Element Wheel
 ```
 FIRE → WIND → EARTH → WATER → FIRE
-          ↑
-         LIGHT ←→ DARK
+                 ↑
+          LIGHT ← → DARK
 ```
 
 ### Combinations (11 Total)
@@ -39,7 +39,7 @@ FIRE → WIND → EARTH → WATER → FIRE
 |-------------|----------|--------|
 | Vaporize | Fire + Water | Steam, burns |
 | Melt | Fire + Earth | Molten damage |
-| Freeze | Water + Wind | Ice锁敌 |
+| Freeze | Water + Wind | Ice damage |
 | Surge | Wind + Water | Lightning |
 | Shatter | Earth + Wind | Stone shards |
 | Combust | Fire + Wind | Inferno |
